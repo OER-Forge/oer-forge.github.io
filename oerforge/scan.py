@@ -3,9 +3,9 @@ Module: scan
 
 Purpose: Scans _config.yml and content/ for site information, table of contents information, and page information. Writes SQLite database with three tables: site, toc, and page.
 """
-
 import os
 import sqlite3
+import yaml
 
 def initialize_database():
     """
@@ -109,7 +109,7 @@ def populate_site_info():
     Returns:
         dict: Site information parsed from the YAML configuration file.
     """
-    import yaml
+    
     project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     config_path = os.path.join(project_root, '_config.yml')
     db_path = os.path.join(project_root, 'db', 'sqlite.db')
@@ -153,8 +153,7 @@ def populate_site_info():
     return site_info    
     
 def populate_toc():
-    import yaml
-    import os
+
     project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     config_path = os.path.join(project_root, '_config.yml')
     db_path = os.path.join(project_root, 'db', 'sqlite.db')
