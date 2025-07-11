@@ -45,47 +45,48 @@ def initialize_database():
     # Create toc table
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS toc (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            filename TEXT,
-            title TEXT,
-            filetype TEXT,
-            level INTEGER,
-            automated_build BOOLEAN
+            toc_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            toc_filename TEXT,
+            toc_title TEXT,
+            toc_filetype TEXT,
+            toc_level INTEGER,
+            toc_automated_build BOOLEAN
         )
     """)
 
     # Create page table
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS page (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            filename TEXT,
-            title TEXT,
-            filetype TEXT,
-            convert_md BOOLEAN,
-            convert_ipynb BOOLEAN,
-            convert_docx BOOLEAN,
-            convert_tex BOOLEAN,
-            convert_pdf BOOLEAN,
-            convert_jupyter BOOLEAN,
-            built_ok_md BOOLEAN,
-            built_ok_ipynb BOOLEAN,
-            built_ok_docx BOOLEAN,
-            built_ok_tex BOOLEAN,
-            built_ok_pdf BOOLEAN,
-            built_ok_jupyter BOOLEAN,
-            wcag_ok_md BOOLEAN,
-            wcag_ok_ipynb BOOLEAN,
-            wcag_ok_docx BOOLEAN,
-            wcag_ok_tex BOOLEAN,
-            wcag_ok_pdf BOOLEAN,
-            wcag_ok_jupyter BOOLEAN,
-            filename_md TEXT,
-            filename_ipynb TEXT,
-            filename_docx TEXT,
-            filename_tex TEXT,
-            filename_pdf TEXT,
-            filename_jupyter TEXT,  
-            toc_id INTEGER
+            page_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            page_filename TEXT,
+            page_title TEXT,
+            page_filetype TEXT,
+            page_convert_md BOOLEAN,
+            page_convert_ipynb BOOLEAN,
+            page_convert_docx BOOLEAN,
+            page_convert_tex BOOLEAN,
+            page_convert_pdf BOOLEAN,
+            page_convert_jupyter BOOLEAN,
+            page_built_ok_md BOOLEAN,
+            page_built_ok_ipynb BOOLEAN,
+            page_built_ok_docx BOOLEAN,
+            page_built_ok_tex BOOLEAN,
+            page_built_ok_pdf BOOLEAN,
+            page_built_ok_jupyter BOOLEAN,
+            page_wcag_ok_md BOOLEAN,
+            page_wcag_ok_ipynb BOOLEAN,
+            page_wcag_ok_docx BOOLEAN,
+            page_wcag_ok_tex BOOLEAN,
+            page_wcag_ok_pdf BOOLEAN,
+            page_wcag_ok_jupyter BOOLEAN,
+            page_filename_md TEXT,
+            page_filename_ipynb TEXT,
+            page_filename_docx TEXT,
+            page_filename_tex TEXT,
+            page_filename_pdf TEXT,
+            page_filename_jupyter TEXT,
+            page_level INTEGER,  
+            page_toc_id INTEGER
         )
     """)
     
@@ -93,9 +94,9 @@ def initialize_database():
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS page_images (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            page_id INTEGER,
-            filename TEXT,
-            FOREIGN KEY(page_id) REFERENCES page(id)
+            image_page_id INTEGER,
+            image_filename TEXT,
+            FOREIGN KEY(image_page_id) REFERENCES page(page_id)
         )
     """)
 
@@ -153,7 +154,6 @@ def populate_site_info():
     return site_info    
     
 def populate_toc():
-
     project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     config_path = os.path.join(project_root, '_config.yml')
     db_path = os.path.join(project_root, 'db', 'sqlite.db')
@@ -167,13 +167,25 @@ def populate_toc():
         def insert_toc_items(items, level=0):
             for item in items:
                 toc_item = {
-                    "filename": item.get('file', None),
-                    "title": item.get('title', ''),
-                    "filetype": os.path.splitext(item.get('file', ''))[1][1:] if item.get('file', None) else None,
-                    "level": level,
-                    "automated_build": 0 if item.get('file', None) else 1
+                    "toc_filename": item.get('file', None),
+                    "toc_title": item.get('title', ''),
+                    "toc_filetype": os.path.splitext(item.get('file', ''))[1][1:] if item.get('file', None) else None,
+                    "toc_level": level,
+                    "toc_automated_build": 0 if item.get('file', None) else 1
                 }
-                write_toc_item_to_db(cursor, toc_item)
+                cursor.execute(
+                    """
+                    INSERT INTO toc (toc_filename, toc_title, toc_filetype, toc_level, toc_automated_build)
+                    VALUES (?, ?, ?, ?, ?)
+                    """,
+                    (
+                        toc_item["toc_filename"],
+                        toc_item["toc_title"],
+                        toc_item["toc_filetype"],
+                        toc_item["toc_level"],
+                        toc_item["toc_automated_build"]
+                    )
+                )
                 if 'children' in item:
                     insert_toc_items(item['children'], level=level+1)
         insert_toc_items(toc_items, level=0)
@@ -188,86 +200,126 @@ def populate_toc():
     conn.close()
 
 def read_toc_item_from_db(item_id):
-    """
-    Reads a single TOC item from the 'toc' table in the SQLite database at 'db/sqlite.db'.
-    """
     project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     db_path = os.path.join(project_root, 'db', 'sqlite.db')
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
-    cursor.execute("SELECT id, filename, title, filetype, level, automated_build FROM toc WHERE id = ?", (item_id,))
+    cursor.execute("SELECT toc_id, toc_filename, toc_title, toc_filetype, toc_level, toc_automated_build FROM toc WHERE toc_id = ?", (item_id,))
     row = cursor.fetchone()
     conn.close()
     if row:
         return {
-            "id": row[0],
-            "filename": row[1],
-            "title": row[2],
-            "filetype": row[3],
-            "level": row[4],
-            "automated_build": row[5]
+            "toc_id": row[0],
+            "toc_filename": row[1],
+            "toc_title": row[2],
+            "toc_filetype": row[3],
+            "toc_level": row[4],
+            "toc_automated_build": row[5]
         }
     else:
         return None
 
-
 def write_toc_item_to_db(cursor, toc_item):
     cursor.execute(
         """
-        INSERT INTO toc (filename, title, filetype, level, automated_build)
+        INSERT INTO toc (toc_filename, toc_title, toc_filetype, toc_level, toc_automated_build)
         VALUES (?, ?, ?, ?, ?)
         """,
         (
-            toc_item.get('filename', None),
-            toc_item.get('title', ''),
-            toc_item.get('filetype', None),
-            toc_item.get('level', 0),
-            toc_item.get('automated_build', 0)
+            toc_item.get('toc_filename', None),
+            toc_item.get('toc_title', ''),
+            toc_item.get('toc_filetype', None),
+            toc_item.get('toc_level', 0),
+            toc_item.get('toc_automated_build', 0)
         )
     )
 
-
-def read_page_info_from_config():
+def populate_page_info_from_config():
     """
-    Reads page information from the '_config.yml' file in the project root.
-
-    Returns:
-        list: Page information parsed from the YAML configuration file.
+    Reads page info from '_config.yml' and writes entries to the 'page' table in the SQLite database.
     """
-    pass  # TODO: Implement page info reading logic
+    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    config_path = os.path.join(project_root, '_config.yml')
+    db_path = os.path.join(project_root, 'db', 'sqlite.db')
+    with open(config_path, 'r') as f:
+        config = yaml.safe_load(f)
+    toc_items = config.get('toc', [])
 
+    # Helper to recursively collect page entries
+    def collect_pages(items):
+        pages = []
+        for item in items:
+            if 'file' in item:
+                filename = item['file']
+                title = item.get('title', '')
+                filetype = os.path.splitext(filename)[1][1:] if filename else ''
+                page = {
+                    "filename": filename,
+                    "title": title,
+                    "filetype": filetype,
+                    # You can set other fields to default values or extend as needed
+                }
+                pages.append(page)
+            if 'children' in item:
+                pages.extend(collect_pages(item['children']))
+        return pages
 
-def write_page_info_to_db(page_info):
-    """
-    Writes page information to the 'page' table in the SQLite database at 'db/sqlite.db'.
+    page_entries = collect_pages(toc_items)
 
-    Args:
-        page_info (list): List of page information to write to the database.
-    """
-    pass  # TODO: Implement page info writing logic
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+    for page in page_entries:
+        cursor.execute(
+            """
+            INSERT INTO page (filename, title, filetype)
+            VALUES (?, ?, ?)
+            """,
+            (page['filename'], page['title'], page['filetype'])
+        )
+    conn.commit()
+    conn.close()
 
 
 def read_page_item_from_db(page_id):
     """
     Reads a single page item from the 'page' table in the SQLite database at 'db/sqlite.db'.
-
-    Args:
-        page_id (int): The ID of the page item to read.
-
-    Returns:
-        dict: The page item data.
     """
-    pass  # TODO: Implement page item reading logic
+    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    db_path = os.path.join(project_root, 'db', 'sqlite.db')
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM page WHERE id = ?", (page_id,))
+    row = cursor.fetchone()
+    conn.close()
+    if row:
+        # Get column names for mapping
+        col_names = [description[0] for description in cursor.description]
+        return dict(zip(col_names, row))
+    else:
+        return None
 
 
 def write_page_item_to_db(page_item):
     """
     Writes a single page item to the 'page' table in the SQLite database at 'db/sqlite.db'.
-
-    Args:
-        page_item (dict): The page item data to write.
     """
-    pass  # TODO: Implement page item writing logic
+    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    db_path = os.path.join(project_root, 'db', 'sqlite.db')
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+    cursor.execute(
+        """
+        INSERT INTO page (filename, title, filetype)
+        VALUES (?, ?, ?)
+        """,
+        (
+            page_item.get('filename', None),
+            page_item.get('title', ''),
+            page_item.get('filetype', None)
+        )
+    )
+    conn.commit()
+    conn.close()
 
 def write_page_images_to_db(page_id, image_filenames):
     """
