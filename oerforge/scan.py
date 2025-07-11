@@ -86,7 +86,8 @@ def initialize_database():
             page_filename_pdf TEXT,
             page_filename_jupyter TEXT,
             page_level INTEGER,  
-            page_toc_id INTEGER
+            page_toc_id INTEGER,
+            FOREIGN KEY(page_toc_id) REFERENCES toc(toc_id)
         )
     """)
     
@@ -253,11 +254,30 @@ def populate_page_info_from_config():
                 filename = item['file']
                 title = item.get('title', '')
                 filetype = os.path.splitext(filename)[1][1:] if filename else ''
+                # Set convert flags based on filetype
+                convert_map = {
+                    "ipynb": dict(md=1, ipynb=1, docx=1, tex=1, pdf=1, jupyter=1),
+                    "md": dict(md=1, docx=1, jupyter=1, tex=1, pdf=1),
+                    "docx": dict(md=1, docx=1, tex=1, pdf=1),
+                    "ppt": dict(pdf=1)
+                }
+                flags = convert_map.get(filetype, {})
+                convert_md = flags.get("md", 0)
+                convert_ipynb = flags.get("ipynb", 0)
+                convert_docx = flags.get("docx", 0)
+                convert_tex = flags.get("tex", 0)
+                convert_pdf = flags.get("pdf", 0)
+                convert_jupyter = flags.get("jupyter", 0)
                 page = {
                     "filename": filename,
                     "title": title,
                     "filetype": filetype,
-                    # You can set other fields to default values or extend as needed
+                    "convert_md": convert_md,
+                    "convert_ipynb": convert_ipynb,
+                    "convert_docx": convert_docx,
+                    "convert_tex": convert_tex,
+                    "convert_pdf": convert_pdf,
+                    "convert_jupyter": convert_jupyter,
                 }
                 pages.append(page)
             if 'children' in item:
@@ -269,12 +289,27 @@ def populate_page_info_from_config():
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
     for page in page_entries:
+        # Look up toc_id for this filename
+        cursor.execute("SELECT toc_id FROM toc WHERE toc_filename = ?", (page['filename'],))
+        toc_row = cursor.fetchone()
+        page_toc_id = toc_row[0] if toc_row else None
+
         cursor.execute(
             """
-            INSERT INTO page (filename, title, filetype)
-            VALUES (?, ?, ?)
+            INSERT INTO page (
+                page_filename, page_title, page_filetype,
+                page_convert_md, page_convert_ipynb, page_convert_docx,
+                page_convert_tex, page_convert_pdf, page_convert_jupyter,
+                page_toc_id
+            )
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """,
-            (page['filename'], page['title'], page['filetype'])
+            (
+                page['filename'], page['title'], page['filetype'],
+                page['convert_md'], page['convert_ipynb'], page['convert_docx'],
+                page['convert_tex'], page['convert_pdf'], page['convert_jupyter'],
+                page_toc_id
+            )
         )
     conn.commit()
     conn.close()
@@ -383,5 +418,29 @@ def print_table(table_name):
     # Print rows
     for row in rows:
         print(" | ".join(str(item) if item is not None else "" for item in row))
+    conn.close()
+    
+def verify_toc_page_link():
+    """
+    Verifies that each page's page_toc_id points to a TOC entry with a matching filename.
+    Prints [OK] if linked correctly, [ERROR] otherwise.
+    """
+    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    db_path = os.path.join(project_root, 'db', 'sqlite.db')
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT page.page_id, page.page_filename, page.page_toc_id, toc.toc_filename
+        FROM page
+        LEFT JOIN toc ON page.page_toc_id = toc.toc_id
+    """)
+    for row in cursor.fetchall():
+        page_id, page_filename, page_toc_id, toc_filename = row
+        if page_toc_id is None:
+            print(f"[ERROR] Page ID {page_id} ('{page_filename}') is not linked to any TOC entry.")
+        elif page_filename == toc_filename:
+            print(f"[OK] Page ID {page_id} ('{page_filename}') correctly linked to TOC entry.")
+        else:
+            print(f"[ERROR] Page ID {page_id} ('{page_filename}') linked to TOC entry with mismatched filename ('{toc_filename}').")
     conn.close()
 
