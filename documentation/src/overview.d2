@@ -18,6 +18,14 @@ content: {
   }
 }
 
+wcag: {
+  label: "WCAG Guidelines"
+  shape: package
+  style: {
+    fill: "#ffffff"
+  }
+}
+
 ipynb: {
   label: "*.ipynb"
   shape: document
@@ -40,10 +48,6 @@ docx: {
   }
 }
 
-ipynb -> content
-md -> content
-docx -> content
-
 sqlite_db: {
   label: "sqlite.db"
   shape: cylinder
@@ -52,8 +56,22 @@ sqlite_db: {
   }
 }
 
+build_py: {
+  label: "build.py (orchestrator)"
+  shape: callout
+  style: {
+    fill: "#fffbe6"
+    font: mono
+  }
+}
+
+build_py -> scan_py
+build_py -> make_py
+build_py -> verify_py
+build_py -> confirm_py
+
 scan_py: {
-  label: "scan.py"
+  label: "oerforge/scan.py"
   shape: document
   style: {
     fill: "#d0f0c0"
@@ -62,7 +80,7 @@ scan_py: {
 }
 
 make_py: {
-  label: "make.py"
+  label: "oerforge/make.py"
   shape: document
   style: {
     fill: "#c0e0ff"
@@ -71,7 +89,7 @@ make_py: {
 }
 
 verify_py: {
-    label: "verify.py"
+    label: "oerforge/verify.py"
     shape: document
     style: {
         fill: "#ffe4e1"
@@ -80,7 +98,7 @@ verify_py: {
 }
 
 confirm_py: {
-    label: "confirm.py"
+    label: "oerforge/confirm.py"
     shape: document
     style: {
         fill: "#e0ffff"
@@ -105,6 +123,9 @@ docs: {
 }
 
 
+ipynb -> content
+md -> content
+docx -> content
 config -> scan_py
 content -> scan_py
 scan_py -> sqlite_db
@@ -114,3 +135,4 @@ build -> verify_py
 verify_py -> sqlite_db
 sqlite_db -> confirm_py
 confirm_py -> docs
+wcag -> verify_py
