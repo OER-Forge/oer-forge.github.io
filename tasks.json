@@ -1,0 +1,14 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Run viewdb.py --all",
+      "type": "shell",
+      "command": "python oerforge_admin/viewdb.py --all",
+      "group": "build",
+      "presentation": {
+        "reveal": "always"
+      }
+    }
+  ]
+}

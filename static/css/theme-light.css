@@ -20,6 +20,18 @@ Description: Bright, accessible palette for daylight viewing.
   outline: none;
 }
 
+/* Add to static/css/theme-light.css and static/css/theme-dark.css */
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.table-wrapper table {
+  min-width: 600px; /* or whatever fits your data */
+  border-collapse: collapse;
+  width: 100%;
+}
+
 
 /*
   =============================

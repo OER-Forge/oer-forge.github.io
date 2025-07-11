@@ -35,9 +35,7 @@ def render_table_html(db_path, table_name):
     row_html = "".join(
         f"<tr>{''.join(f'<td>{val}</td>' for val in row)}</tr>" for row in rows
     )
-    html = template.replace("{{ table_name }}", table_name)
-    html = html.replace("{{ columns }}", col_html)
-    html = html.replace("{{ rows }}", row_html)
+    html = template.replace("{{ table_name }}", table_name).replace("{{ columns }}", col_html).replace("{{ rows }}", row_html)
     return html
 
 def write_table_html(table_name, html, output_dir):
@@ -70,24 +68,6 @@ def generate_all_table_webpages(db_path, output_dir):
         f.write(html)
     print(f"[INFO] Wrote {out_path}")
     print(f"[INFO] Generated admin pages for tables: {tables}")
-
-if __name__ == "__main__":
-    import sys
-    db_path = "db/sqlite.db"
-    if len(sys.argv) == 2 and sys.argv[1] == "--all":
-        generate_all_table_webpages(db_path, "build/admin")
-    elif len(sys.argv) >= 2:
-        table_name = sys.argv[1]
-        tables = get_table_names(db_path)
-        if table_name not in tables:
-            print(f"Table '{table_name}' not found in database. Available tables: {tables}")
-            sys.exit(1)
-        html = render_table_html(db_path, table_name)
-        print(html)
-        write_table_html(table_name, html, "build/admin")
-    else:
-        print("Usage: python oerforge_admin/viewdb.py <table_name> | --all")
-        sys.exit(1)
 
 if __name__ == "__main__":
     import sys
