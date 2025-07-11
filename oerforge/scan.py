@@ -6,6 +6,8 @@ Purpose: Scans _config.yml and content/ for site information, table of contents 
 import os
 import sqlite3
 import yaml
+import nbformat
+from markdown_it import MarkdownIt
 
 def initialize_database():
     """
@@ -92,11 +94,14 @@ def initialize_database():
     """)
     
     # Create page_images table
+    # In initialize_database()
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS page_images (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             image_page_id INTEGER,
             image_filename TEXT,
+            image_remote BOOLEAN,
+            image_type TEXT,
             FOREIGN KEY(image_page_id) REFERENCES page(page_id)
         )
     """)
@@ -313,7 +318,7 @@ def populate_page_info_from_config():
         )
     conn.commit()
     conn.close()
-
+    
 
 def read_page_item_from_db(page_id):
     """
@@ -332,7 +337,6 @@ def read_page_item_from_db(page_id):
         return dict(zip(col_names, row))
     else:
         return None
-
 
 def write_page_item_to_db(page_item):
     """
@@ -356,15 +360,67 @@ def write_page_item_to_db(page_item):
     conn.commit()
     conn.close()
 
-def write_page_images_to_db(page_id, image_filenames):
+def extract_image_info_from_ipynb(ipynb_path, page_id):
     """
-    Writes image filenames to the 'page_images' table in the SQLite database at 'db/sqlite.db'.
+    Extracts image references from a single Jupyter notebook (.ipynb) file and writes them to the page_images table.
 
     Args:
-        page_id (int): The ID of the page to associate images with.
-        image_filenames (list): List of image filenames to write.
+        ipynb_path (str): Path to the .ipynb file.
+        page_id (int): The ID of the page in the database.
     """
-    pass  # TODO: Implement page images writing logic
+    image_filenames = []
+    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    print(f"[DEBUG] project root path: {project_root}" )
+    full_ipynb_path = os.path.join(project_root, ipynb_path)
+    print(f"[DEBUG] Full path to notebook file: {full_ipynb_path}" )
+    try:
+        print(f"[DEBUG] Opening notebook file: {full_ipynb_path}")
+        with open(full_ipynb_path, 'r', encoding='utf-8') as f:
+            nb = nbformat.read(f, as_version=4)
+        print(f"[DEBUG] Notebook loaded. Number of cells: {len(nb.cells)}")
+        md = MarkdownIt()
+        for idx, cell in enumerate(nb.cells):
+            print(f"[DEBUG] Processing cell {idx} of type {cell.cell_type}")
+            print(f"[DEBUG] Markdown cell source:\n{cell.source}")
+            if cell.cell_type == "markdown":
+                tokens = md.parse(cell.source)
+                print(f"[DEBUG] Markdown cell tokens: {[t.type for t in tokens]}")
+                for token in tokens:
+                    if token.type == "inline":
+                        for child in token.children or []:
+                            if child.type == "image":
+                                src = child.attrs.get("src") if child.attrs else None
+                                print(f"[DEBUG] Found image src: {src}")
+                                if src:
+                                    image_filenames.append(src)
+        print(f"[DEBUG] Total images found: {len(image_filenames)}")
+        if image_filenames:
+            write_page_images_to_db(page_id, image_filenames)
+            print(f"[DEBUG] Images written to DB for page_id {page_id}")
+        else:
+            print(f"[DEBUG] No images found in notebook: {ipynb_path}")
+    except Exception as e:
+        print(f"[ERROR] Failed to extract images from {ipynb_path}: {e}")
+
+
+
+def write_page_images_to_db(page_id, image_filenames):
+    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    db_path = os.path.join(project_root, 'db', 'sqlite.db')
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+    for img in image_filenames:
+        is_remote = 1 if img.startswith('http://') or img.startswith('https://') else 0
+        ext = os.path.splitext(img)[1].lower().replace('.', '')
+        cursor.execute(
+            """
+            INSERT INTO page_images (image_page_id, image_filename, image_remote, image_type)
+            VALUES (?, ?, ?, ?)
+            """,
+            (page_id, img, is_remote, ext)
+        )
+    conn.commit()
+    conn.close()
 
 def read_page_images_from_db(page_id):
     """

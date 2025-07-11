@@ -29,8 +29,19 @@ def main():
     # print_table("site")
     # print("\n[INFO] TOC Table:")
     # print_table("toc")
-    print("\n[INFO] Page Table:")
-    print_table("page")
+    # print("\n[INFO] Page Table:")
+    # print_table("page")
+
+    # Step 6: Demonstrate extracting images from a single notebook file
+    from oerforge.scan import extract_image_info_from_ipynb
+    # Example: Use a known notebook and page_id (update these as needed)
+    ipynb_path = "content/notebooks/1_mechanics/dynamical_systems/activity-duffing.ipynb"
+    page_id = 1  # Replace with the actual page_id for this notebook
+    print(f"[INFO] Extracting images from {ipynb_path} for page_id {page_id}...")
+    extract_image_info_from_ipynb(ipynb_path, page_id)
+    print("[INFO] Image extraction complete.")
+    print("\n[INFO] Page Images Table:")
+    print_table("page_images")
 
     # # Step 6: Verify page-to-TOC links
     # print("\n[INFO] Verifying page-to-TOC links:")
