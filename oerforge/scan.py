@@ -49,7 +49,8 @@ def initialize_database():
             filename TEXT,
             title TEXT,
             filetype TEXT,
-            "order" INTEGER
+            level INTEGER,
+            automated_build BOOLEAN
         )
     """)
 
@@ -153,10 +154,8 @@ def populate_site_info():
 
 
 def populate_toc():
-    """
-    Reads table of contents information from the '_config.yml' file and writes it to the 'toc' table in the SQLite database at 'db/sqlite.db'.
-    """
     import yaml
+    import os
     project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     config_path = os.path.join(project_root, '_config.yml')
     db_path = os.path.join(project_root, 'db', 'sqlite.db')
@@ -164,28 +163,28 @@ def populate_toc():
         config = yaml.safe_load(f)
     toc_items = config.get('toc', [])
 
-    def insert_toc_items(items, order=0):
-        conn = sqlite3.connect(db_path)
-        cursor = conn.cursor()
-        for idx, item in enumerate(items):
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+
+    def insert_toc_items(items, level=0):
+        for item in items:
             title = item.get('title', '')
-            filename = item.get('file', '')
-            filetype = os.path.splitext(filename)[1][1:] if filename else ''
+            filename = item.get('file', None)
+            filetype = os.path.splitext(filename)[1][1:] if filename else None
+            automated_build = 0 if filename else 1
             cursor.execute(
                 """
-                INSERT INTO toc (filename, title, filetype, "order")
-                VALUES (?, ?, ?, ?)
+                INSERT INTO toc (filename, title, filetype, level, automated_build)
+                VALUES (?, ?, ?, ?, ?)
                 """,
-                (filename, title, filetype, order + idx)
+                (filename, title, filetype, level, automated_build)
             )
-            toc_id = cursor.lastrowid
-            # Recursively insert children
             if 'children' in item:
-                insert_toc_items(item['children'], order=0)
-        conn.commit()
-        conn.close()
+                insert_toc_items(item['children'], level=level+1)
 
-    insert_toc_items(toc_items)
+    insert_toc_items(toc_items, level=0)
+    conn.commit()
+    conn.close()
 
 def read_toc_item_from_db(item_id):
     """
