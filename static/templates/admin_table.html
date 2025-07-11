@@ -1,0 +1,26 @@
+<!-- static/templates/admin_table.html: Minimal WCAG-compliant HTML table template for admin pages -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ table_name }}</title>
+  <link rel="stylesheet" href="/static/css/admin.css">
+</head>
+<body>
+  <h1>Table: {{ table_name }}</h1>
+  <table>
+    <thead>
+      <tr>
+        {% for col in columns %}<th>{{ col }}</th>{% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in rows %}
+      <tr>
+        {% for val in row %}<td>{{ val }}</td>{% endfor %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</body>
+</html>

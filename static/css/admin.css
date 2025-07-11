@@ -1,0 +1,50 @@
+/* static/css/admin.css - Minimal WCAG-compliant admin CSS */
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #fff;
+  color: #222;
+  margin: 0;
+  padding: 1em;
+}
+h1 {
+  font-size: 1.5em;
+  margin-bottom: 1em;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 2em;
+}
+th, td {
+  border: 1px solid #444;
+  padding: 0.5em 1em;
+  text-align: left;
+}
+th {
+  background: #f4f4f4;
+}
+tr:nth-child(even) {
+  background: #f9f9f9;
+}
+tr:focus, td:focus {
+  outline: 2px solid #005fcc;
+}
+a {
+  color: #005fcc;
+  text-decoration: underline;
+}
+@media (prefers-color-scheme: dark) {
+  body {
+    background: #222;
+    color: #eee;
+  }
+  th {
+    background: #333;
+  }
+  tr:nth-child(even) {
+    background: #2a2a2a;
+  }
+  a {
+    color: #66aaff;
+  }
+}
