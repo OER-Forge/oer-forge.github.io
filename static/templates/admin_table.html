@@ -1,26 +1,28 @@
-<!-- static/templates/admin_table.html: Minimal WCAG-compliant HTML table template for admin pages -->
+
+<!-- static/templates/admin_table.html: Enhanced WCAG-compliant HTML table template for admin pages -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>{{ table_name }}</title>
-  <link rel="stylesheet" href="/static/css/admin.css">
+  <link rel="stylesheet" href="../css/admin.css">
 </head>
 <body>
-  <h1>Table: {{ table_name }}</h1>
-  <table>
-    <thead>
-      <tr>
-        {% for col in columns %}<th>{{ col }}</th>{% endfor %}
-      </tr>
-    </thead>
-    <tbody>
-      {% for row in rows %}
-      <tr>
-        {% for val in row %}<td>{{ val }}</td>{% endfor %}
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+  <div class="container">
+    <h1>Table: {{ table_name }}</h1>
+    <a href="index.html" class="back-btn" aria-label="Back to table index">&larr; Back to Table Index</a>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            {{ columns }}
+          </tr>
+        </thead>
+        <tbody>
+          {{ rows }}
+        </tbody>
+      </table>
+    </div>
+  </div>
 </body>
 </html>

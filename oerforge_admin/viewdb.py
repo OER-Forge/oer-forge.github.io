@@ -30,16 +30,14 @@ def render_table_html(db_path, table_name):
     template_path = os.path.join("static", "templates", "admin_table.html")
     with open(template_path, "r", encoding="utf-8") as f:
         template = f.read()
-    # Simple template rendering (no Jinja): replace {{ table_name }}, columns, rows
-    # Render columns
+    # Simple template rendering: replace {{ table_name }}, {{ columns }}, {{ rows }}
     col_html = "".join(f"<th>{col}</th>" for col in columns)
-    # Render rows
     row_html = "".join(
         f"<tr>{''.join(f'<td>{val}</td>' for val in row)}</tr>" for row in rows
     )
     html = template.replace("{{ table_name }}", table_name)
-    html = html.replace("{% for col in columns %}<th>{{ col }}</th>{% endfor %}", col_html)
-    html = html.replace("{% for row in rows %}\n      <tr>\n        {% for val in row %}<td>{{ val }}</td>{% endfor %}\n      </tr>\n      {% endfor %}", row_html)
+    html = html.replace("{{ columns }}", col_html)
+    html = html.replace("{{ rows }}", row_html)
     return html
 
 def write_table_html(table_name, html, output_dir):
@@ -49,22 +47,63 @@ def write_table_html(table_name, html, output_dir):
     out_path = os.path.join(output_dir, f"{table_name}.html")
     with open(out_path, "w", encoding="utf-8") as f:
         f.write(html)
+
     print(f"[INFO] Wrote {out_path}")
+
+def generate_all_table_webpages(db_path, output_dir):
+    """Generate a webpage for each table in the database."""
+    tables = get_table_names(db_path)
+    # Generate table pages
+    for table_name in tables:
+        html = render_table_html(db_path, table_name)
+        write_table_html(table_name, html, output_dir)
+    # Generate index page with links to all tables
+    index_html = [
+        "<!DOCTYPE html>",
+        "<html lang='en'>",
+        "<head>",
+        "  <meta charset='UTF-8'>",
+        "  <title>Database Tables</title>",
+        "  <link rel='stylesheet' href='../css/admin.css'>",
+        "</head>",
+        "<body>",
+        "  <div class='container'>",
+        "    <h1>Database Tables</h1>",
+        "    <nav aria-label='Admin Table Navigation'>",
+        "      <ul class='admin-menu'>"
+    ]
+    for table_name in tables:
+        index_html.append(f"        <li><a href='{table_name}.html'>{table_name}</a></li>")
+    index_html.extend([
+        "      </ul>",
+        "    </nav>",
+        "  </div>",
+        "</body>",
+        "</html>"
+    ])
+    out_path = os.path.join(output_dir, "index.html")
+    with open(out_path, "w", encoding="utf-8") as f:
+        f.write("\n".join(index_html))
+    print(f"[INFO] Wrote {out_path}")
+    print(f"[INFO] Generated admin pages for tables: {tables}")
 
 if __name__ == "__main__":
     import sys
     db_path = "db/sqlite.db"
-    if len(sys.argv) < 2:
-        print("Usage: python oerforge_admin/viewdb.py <table_name>")
+    if len(sys.argv) == 2 and sys.argv[1] == "--all":
+        generate_all_table_webpages(db_path, "build/admin")
+    elif len(sys.argv) >= 2:
+        table_name = sys.argv[1]
+        tables = get_table_names(db_path)
+        if table_name not in tables:
+            print(f"Table '{table_name}' not found in database. Available tables: {tables}")
+            sys.exit(1)
+        html = render_table_html(db_path, table_name)
+        print(html)
+        write_table_html(table_name, html, "build/admin")
+    else:
+        print("Usage: python oerforge_admin/viewdb.py <table_name> | --all")
         sys.exit(1)
-    table_name = sys.argv[1]
-    tables = get_table_names(db_path)
-    if table_name not in tables:
-        print(f"Table '{table_name}' not found in database. Available tables: {tables}")
-        sys.exit(1)
-    html = render_table_html(db_path, table_name)
-    print(html)
-    write_table_html(table_name, html, "build/admin")
 
 def generate_all_table_webpages(db_path, output_dir):
     """Main function to generate a webpage for each table in the database."""
