@@ -108,6 +108,7 @@ def initialize_database():
 
     conn.commit()
     conn.close()
+    
 
 def populate_site_info():
     """
@@ -316,9 +317,30 @@ def populate_page_info_from_config():
                 page_toc_id
             )
         )
+    
     conn.commit()
     conn.close()
-    
+
+def scan_all_images():
+    """
+    Scans all files listed in the 'page' table and extracts image references, writing them to the page_images table.
+    """
+    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    db_path = os.path.join(project_root, 'db', 'sqlite.db')
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+    cursor.execute("SELECT page_id, page_filename, page_filetype FROM page")
+    pages = cursor.fetchall()
+    conn.close()
+
+    for page_id, filename, filetype in pages:
+        if not filename or not filetype:
+            continue
+        if filetype == "ipynb":
+            extract_image_info_from_ipynb(filename, page_id)
+        # elif filetype == "md":
+        #     extract_image_info_from_md(filename, page_id)
+        # Add more filetype handlers as needed   
 
 def read_page_item_from_db(page_id):
     """
@@ -424,37 +446,23 @@ def write_page_images_to_db(page_id, image_filenames):
 
 def read_page_images_from_db(page_id):
     """
-    Reads image filenames for a given page from the 'page_images' table in the SQLite database at 'db/sqlite.db'.
+    Reads image records for a given page from the 'page_images' table in the SQLite database at 'db/sqlite.db'.
 
     Args:
         page_id (int): The ID of the page to read images for.
 
     Returns:
-        list: List of image filenames associated with the page.
+        list: List of dicts with image info for the page.
     """
-    pass  # TODO: Implement page images reading logic
+    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    db_path = os.path.join(project_root, 'db', 'sqlite.db')
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+    cursor.execute("SELECT id, image_page_id, image_filename, image_remote, image_type FROM page_images WHERE image_page_id = ?", (page_id,))
+    rows = cursor.fetchall()
+    col_names = [description[0] for description in cursor.description]
+    conn.close()
 
-def write_page_image_item_to_db(page_id, filename):
-    """
-    Writes a single image filename to the 'page_images' table in the SQLite database at 'db/sqlite.db'.
-
-    Args:
-        page_id (int): The ID of the page to associate the image with.
-        filename (str): The image filename to write.
-    """
-    pass  # TODO: Implement single page image item writing logic
-
-def read_page_image_item_from_db(image_id):
-    """
-    Reads a single image item from the 'page_images' table in the SQLite database at 'db/sqlite.db'.
-
-    Args:
-        image_id (int): The ID of the image item to read.
-
-    Returns:
-        dict: The image item data.
-    """
-    pass  # TODO: Implement single page image item reading logic
 
 def print_table(table_name):
     """
