@@ -1,17 +1,25 @@
-"""
-Main build orchestration script.
+from oerforge.scan import *
 
-Purpose: Handles command-line flags and calls modules to build the site. This script should:
-- Parse command-line arguments (e.g., --pdf, --tex, --html, --files, --debug).
-- Orchestrate the build process using the modules above.
-- Print progress and summary.
-- Log all actions and errors.
-- Use type hints and clear docstrings for all functions.
-"""
 def main():
-    """Main entry point for build orchestration."""
-    pass
+    # Initialize the database and tables
+    initialize_database()
+    
+    # Populate the site info from _config.yml into the database
+    site_info = populate_site_info()
+    print("Site info inserted:", site_info)
+    
+    # Print all rows in the 'site' table
+    print("Site table contents:")
+    print_table('site')
+    
+    # Populate the site info from _config.yml into the database
+    site_info = populate_site_info()
+    print("Site info inserted:", site_info)
+    
+    # Populate the TOC from _config.yml into the database
+    populate_toc()
+    print("TOC table contents:")
+    print_table('toc')
 
 if __name__ == "__main__":
     main()
-
