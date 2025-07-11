@@ -150,9 +150,8 @@ def populate_site_info():
         raise
     conn.commit()
     conn.close()
-    return site_info
-
-
+    return site_info    
+    
 def populate_toc():
     import yaml
     import os
@@ -165,48 +164,68 @@ def populate_toc():
 
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
-
-    def insert_toc_items(items, level=0):
-        for item in items:
-            title = item.get('title', '')
-            filename = item.get('file', None)
-            filetype = os.path.splitext(filename)[1][1:] if filename else None
-            automated_build = 0 if filename else 1
-            cursor.execute(
-                """
-                INSERT INTO toc (filename, title, filetype, level, automated_build)
-                VALUES (?, ?, ?, ?, ?)
-                """,
-                (filename, title, filetype, level, automated_build)
-            )
-            if 'children' in item:
-                insert_toc_items(item['children'], level=level+1)
-
-    insert_toc_items(toc_items, level=0)
+    try:
+        def insert_toc_items(items, level=0):
+            for item in items:
+                toc_item = {
+                    "filename": item.get('file', None),
+                    "title": item.get('title', ''),
+                    "filetype": os.path.splitext(item.get('file', ''))[1][1:] if item.get('file', None) else None,
+                    "level": level,
+                    "automated_build": 0 if item.get('file', None) else 1
+                }
+                write_toc_item_to_db(cursor, toc_item)
+                if 'children' in item:
+                    insert_toc_items(item['children'], level=level+1)
+        insert_toc_items(toc_items, level=0)
+    except sqlite3.OperationalError as e:
+        print("\n[ERROR] Could not insert toc info into the database.")
+        print(f"[ERROR] SQLite error: {e}")
+        print("[HINT] This usually means your table columns and the keys in your INSERT statement do not match.")
+        print("[ACTION] Please check your database schema and the keys in your config file.")
+        conn.close()
+        raise
     conn.commit()
     conn.close()
 
 def read_toc_item_from_db(item_id):
     """
     Reads a single TOC item from the 'toc' table in the SQLite database at 'db/sqlite.db'.
-
-    Args:
-        item_id (int): The ID of the TOC item to read.
-
-    Returns:
-        dict: The TOC item data.
     """
-    pass  # TODO: Implement TOC item reading logic
+    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    db_path = os.path.join(project_root, 'db', 'sqlite.db')
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+    cursor.execute("SELECT id, filename, title, filetype, level, automated_build FROM toc WHERE id = ?", (item_id,))
+    row = cursor.fetchone()
+    conn.close()
+    if row:
+        return {
+            "id": row[0],
+            "filename": row[1],
+            "title": row[2],
+            "filetype": row[3],
+            "level": row[4],
+            "automated_build": row[5]
+        }
+    else:
+        return None
 
 
-def write_toc_item_to_db(toc_item):
-    """
-    Writes a single TOC item to the 'toc' table in the SQLite database at 'db/sqlite.db'.
-
-    Args:
-        toc_item (dict): The TOC item data to write.
-    """
-    pass  # TODO: Implement TOC item writing logic
+def write_toc_item_to_db(cursor, toc_item):
+    cursor.execute(
+        """
+        INSERT INTO toc (filename, title, filetype, level, automated_build)
+        VALUES (?, ?, ?, ?, ?)
+        """,
+        (
+            toc_item.get('filename', None),
+            toc_item.get('title', ''),
+            toc_item.get('filetype', None),
+            toc_item.get('level', 0),
+            toc_item.get('automated_build', 0)
+        )
+    )
 
 
 def read_page_info_from_config():

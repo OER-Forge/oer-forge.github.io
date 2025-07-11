@@ -1,25 +1,13 @@
-from oerforge.scan import *
+from oerforge.scan import initialize_database, populate_site_info, populate_toc, read_toc_item_from_db
 
 def main():
-    # Initialize the database and tables
     initialize_database()
-    
-    # Populate the site info from _config.yml into the database
-    site_info = populate_site_info()
-    print("Site info inserted:", site_info)
-    
-    # Print all rows in the 'site' table
-    print("Site table contents:")
-    print_table('site')
-    
-    # Populate the site info from _config.yml into the database
-    site_info = populate_site_info()
-    print("Site info inserted:", site_info)
-    
-    # Populate the TOC from _config.yml into the database
+    populate_site_info()
     populate_toc()
-    print("TOC table contents:")
-    print_table('toc')
+    # Print a single TOC item
+    item_id = 2 # Change as needed
+    toc_item = read_toc_item_from_db(item_id)
+    print("TOC Item:", toc_item)
 
 if __name__ == "__main__":
     main()
