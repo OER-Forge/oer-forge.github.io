@@ -1,0 +1,116 @@
+direction: down
+
+config: "_config.yml"
+
+config: {
+    label: "_config.yml"
+    shape: document
+    style: {
+    fill: "#ffe4b5"
+  }
+}
+
+content: {
+  label: "content/"
+  shape: package
+  style: {
+    fill: "#ffffff"
+  }
+}
+
+ipynb: {
+  label: "*.ipynb"
+  shape: document
+  style: {
+    fill: "#ffe4b5"
+  }
+}
+md: {
+  label: "*.md"
+  shape: document
+  style: {
+    fill: "#e6e6fa"
+  }
+}
+docx: {
+  label: "*.docx"
+  shape: document
+  style: {
+    fill: "#fafad2"
+  }
+}
+
+ipynb -> content
+md -> content
+docx -> content
+
+sqlite_db: {
+  label: "sqlite.db"
+  shape: cylinder
+  style: {
+    fill: "#f5e6b2"
+  }
+}
+
+scan_py: {
+  label: "scan.py"
+  shape: document
+  style: {
+    fill: "#d0f0c0"
+    font: mono
+  }
+}
+
+make_py: {
+  label: "make.py"
+  shape: document
+  style: {
+    fill: "#c0e0ff"
+    font: mono
+  }
+}
+
+verify_py: {
+    label: "verify.py"
+    shape: document
+    style: {
+        fill: "#ffe4e1"
+        font: mono
+    }
+}
+
+confirm_py: {
+    label: "confirm.py"
+    shape: document
+    style: {
+        fill: "#e0ffff"
+        font: mono
+    }
+}
+
+build: {
+  label: "build/ (temp folder)"
+  shape: package
+  style: {
+    fill: "#e0e0e0"
+  }
+}
+
+docs: {
+  label: "docs/ (public folder)"
+  shape: package
+  style: {
+    fill: "#cce5ff"
+  }
+}
+
+
+config -> scan_py
+content -> scan_py
+scan_py -> sqlite_db
+sqlite_db -> make_py
+make_py -> build
+build -> verify_py
+verify_py -> sqlite_db
+sqlite_db -> confirm_py
+confirm_py -> docs
