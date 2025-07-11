@@ -9,6 +9,32 @@
       "presentation": {
         "reveal": "always"
       }
+    },
+    {
+      "label": "Run build.py",
+      "type": "shell",
+      "command": "python build.py",
+      "group": "build",
+      "presentation": {
+        "reveal": "always"
+      }
+    },
+    {
+      "label": "Open build/index.html",
+      "type": "shell",
+      "command": "open build/index.html",
+      "group": "build",
+      "presentation": {
+        "reveal": "always"
+      }
+    },
+    {
+      "label": "Open build/admin/index.html",
+      "type": "shell",
+      "command": "open build/admin/index.html",
+      "group": "build",
+      "presentation": {
+        "reveal": "always"
+      }
     }
   ]
-}
