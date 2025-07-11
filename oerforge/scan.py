@@ -102,6 +102,10 @@ def initialize_database():
             image_filename TEXT,
             image_remote BOOLEAN,
             image_type TEXT,
+            image_filepath TEXT,
+            image_url TEXT,
+            image_downloaded BOOLEAN,
+            image_relocated_filename TEXT,
             FOREIGN KEY(image_page_id) REFERENCES page(page_id)
         )
     """)
@@ -434,13 +438,27 @@ def write_page_images_to_db(page_id, image_filenames):
     for img in image_filenames:
         is_remote = 1 if img.startswith('http://') or img.startswith('https://') else 0
         ext = os.path.splitext(img)[1].lower().replace('.', '')
+        # Populate new columns. Adjust logic as needed.
+        if is_remote:
+            image_filepath = ""
+            image_filename = ""  # Or keep as img, depending on desired behavior
+            image_url = img
+        else:  # Local file
+            filepath, filename = os.path.split(img)
+            image_filepath = filepath + "/" if filepath else ""  # Add trailing slash if not empty
+            image_filename = filename
+            image_url = ""
+        image_downloaded = 0  # Assume not downloaded initially
+        image_relocated_filename = ""  # Empty initially, to be populated later
         cursor.execute(
-            """
-            INSERT INTO page_images (image_page_id, image_filename, image_remote, image_type)
-            VALUES (?, ?, ?, ?)
+            """INSERT INTO page_images (image_page_id, image_filename, image_remote, image_type, image_filepath, image_url, image_downloaded, image_relocated_filename)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
             """,
-            (page_id, img, is_remote, ext)
+            (page_id, image_filename, is_remote, ext,
+             image_filepath, image_url, image_downloaded, image_relocated_filename)
         )
+
+
     conn.commit()
     conn.close()
 
@@ -507,4 +525,3 @@ def verify_toc_page_link():
         else:
             print(f"[ERROR] Page ID {page_id} ('{page_filename}') linked to TOC entry with mismatched filename ('{toc_filename}').")
     conn.close()
-

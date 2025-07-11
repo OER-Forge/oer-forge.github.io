@@ -5,7 +5,7 @@
 <head>
   <meta charset="UTF-8">
   <title>{{ table_name }}</title>
-  <link id="theme-css" rel="stylesheet" href="../css/admin-light.css">
+  <link id="theme-css" rel="stylesheet" href="../css/theme-light.css">
 </head>
 <body>
   <div class="container">
@@ -35,13 +35,13 @@
       themeToggle.addEventListener('click', function() {
         darkMode = !darkMode;
         if (darkMode) {
-          themeCss.setAttribute('href', '../css/admin-dark.css');
+          themeCss.setAttribute('href', '../css/theme-dark.css');
           themeToggle.textContent = 'Switch to Light Mode';
           themeToggle.style.background = '#1a2332';
           themeToggle.style.color = '#e5eaf5';
           themeToggle.style.borderColor = '#e5eaf5';
         } else {
-          themeCss.setAttribute('href', '../css/admin-light.css');
+          themeCss.setAttribute('href', '../css/theme-light.css');
           themeToggle.textContent = 'Switch to Dark Mode';
           themeToggle.style.background = '#e0e7ef';
           themeToggle.style.color = '#1a237e';

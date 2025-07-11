@@ -38,6 +38,7 @@ def render_table_html(db_path, table_name):
     html = template.replace("{{ table_name }}", table_name).replace("{{ columns }}", col_html).replace("{{ rows }}", row_html)
     return html
 
+
 def write_table_html(table_name, html, output_dir):
     """Write the HTML string to build/admin/{table_name}.html."""
     if not os.path.exists(output_dir):
