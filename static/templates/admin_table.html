@@ -5,10 +5,13 @@
 <head>
   <meta charset="UTF-8">
   <title>{{ table_name }}</title>
-  <link rel="stylesheet" href="../css/admin.css">
+  <link id="theme-css" rel="stylesheet" href="../css/admin-light.css">
 </head>
 <body>
   <div class="container">
+    <div class="theme-switcher" style="text-align:right; margin-bottom:1em;">
+      <button id="theme-toggle" aria-label="Switch theme" style="padding:0.5em 1em; font-weight:700; border-radius:6px; border:2px solid #1a237e; background:#e0e7ef; color:#1a237e; cursor:pointer;">Switch to Dark Mode</button>
+    </div>
     <h1>Table: {{ table_name }}</h1>
     <a href="index.html" class="back-btn" aria-label="Back to table index">&larr; Back to Table Index</a>
     <div class="table-wrapper">
@@ -24,5 +27,28 @@
       </table>
     </div>
   </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const themeToggle = document.getElementById('theme-toggle');
+      const themeCss = document.getElementById('theme-css');
+      let darkMode = false;
+      themeToggle.addEventListener('click', function() {
+        darkMode = !darkMode;
+        if (darkMode) {
+          themeCss.setAttribute('href', '../css/admin-dark.css');
+          themeToggle.textContent = 'Switch to Light Mode';
+          themeToggle.style.background = '#1a2332';
+          themeToggle.style.color = '#e5eaf5';
+          themeToggle.style.borderColor = '#e5eaf5';
+        } else {
+          themeCss.setAttribute('href', '../css/admin-light.css');
+          themeToggle.textContent = 'Switch to Dark Mode';
+          themeToggle.style.background = '#e0e7ef';
+          themeToggle.style.color = '#1a237e';
+          themeToggle.style.borderColor = '#1a237e';
+        }
+      });
+    });
+  </script>
 </body>
 </html>
