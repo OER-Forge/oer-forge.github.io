@@ -66,6 +66,7 @@ build_py: {
 }
 
 build_py -> scan_py
+build_py -> convert_py
 build_py -> make_py
 build_py -> verify_py
 build_py -> confirm_py
@@ -75,6 +76,15 @@ scan_py: {
   shape: document
   style: {
     fill: "#d0f0c0"
+    font: mono
+  }
+}
+
+convert_py: {
+  label: "oerforge/convert.py"
+  shape: document
+  style: {
+    fill: "#c0e0ff"
     font: mono
   }
 }
@@ -129,7 +139,9 @@ docx -> content
 config -> scan_py
 content -> scan_py
 scan_py -> sqlite_db
+sqlite_db -> convert_py
 sqlite_db -> make_py
+convert_py -> build
 make_py -> build
 build -> verify_py
 verify_py -> sqlite_db

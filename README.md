@@ -4,9 +4,10 @@
 
 OERForge is a package with four modules (`oerforge/`):
 - `scan.py` - uses `_config.yml` and the files present in `content/` to populate an sqlite database with site and file info.
-- `make.py` - draws from `sqlite.db` to convert files in `content/` to other forms based on the source file and builds a temporary site in `build`.
+- `convert.py` - draws from `sqlite.db` to convert files in `content/` and places them in `build/files` preserving the user's file structure
+- `make.py` - draws from `sqlite.db` to builds a temporary WCAG compliant site in `build`.
 - `verify.py` - reviews `build` in the context of WCAG Guidelines to generate a report and update pages on the site indicating level of compliance.
-- `confirm.py` - integrates the information into the site and rebuilds as a public site in `docs/`
+- `confirm.py` - integrates the WCAG reporting information into the site and rebuilds as a public site in `docs/`
 
 ### Orchestration
 
