@@ -2,51 +2,24 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Project Documentation</title>
-  <link id="theme-css" rel="stylesheet" href="css/theme-light.css">
-<link rel="stylesheet" href="css/theme-dark.css">
+  <title>OER-Forge Documentation</title>
+  <link id="theme-css" rel="stylesheet" href="css/theme-dark.css">
 <script src="js/main.js"></script>
 </head>
 <body>
   <header class="site-header">
-    <h2 class="site-title">OER Forge Documentation</h2>
+    <h2 class="site-title">OER-Forge Documentation</h2>
   </header>
   <div class="container">
-    <div class="font-controls" aria-label="Text appearance controls">
-  <fieldset>
-    <legend>Font family</legend>
-    <label><input type="radio" name="font-family" value="system-ui, sans-serif" checked>Default</label>
-    <label><input type="radio" name="font-family" value="serif">Serif</label>
-    <label><input type="radio" name="font-family" value="monospace">Monospace</label>
-  </fieldset>
-  <fieldset>
-    <legend>Font size</legend>
-    <label><input type="radio" name="font-size" value="1em" checked>Normal</label>
-    <label><input type="radio" name="font-size" value="1.2em">Large</label>
-    <label><input type="radio" name="font-size" value="1.5em">Extra Large</label>
-  </fieldset>
-  <fieldset>
-    <legend>Letter spacing</legend>
-    <label><input type="radio" name="letter-spacing" value="0.03em" checked>Normal</label>
-    <label><input type="radio" name="letter-spacing" value="0.08em">Wide</label>
-    <label><input type="radio" name="letter-spacing" value="0.15em">Extra Wide</label>
-  </fieldset>
-  <fieldset>
-    <legend>Line spacing</legend>
-    <label><input type="radio" name="line-height" value="1.7" checked>Normal</label>
-    <label><input type="radio" name="line-height" value="2">Wide</label>
-    <label><input type="radio" name="line-height" value="2.5">Extra Wide</label>
-  </fieldset>
-</div>
     <div class="theme-switcher" style="text-align:right; margin-bottom:0em;">
-  <button id="theme-toggle" aria-label="Switch theme" class="theme-btn">🌙</button>
+  <button id="theme-toggle" aria-label="Switch theme" class="theme-btn">🌙</button><a href="#font-control">Jump to Font Control</a>
 </div>
     <div class="readme-content">
       <h1>OER-Forge</h1>
-<p>OER-Forge is a suite of tools to help authors create WCAG-compliant Open Educational Resources (OERs). The project is currently under development.</p>
+<p><a href="https://open-physics-ed-org.github.io/oer-forge">OER-Forge</a> is a suite of tools to help authors create WCAG-compliant Open Educational Resources (OERs). The project is currently under development.</p>
 <p>Below we describe the build system and its components; note that only <code>scan.py</code> and parts of <code>convert.py</code> are currently functional. And <code>convert.py</code> currently only supports conversion of Jupyter Notebooks (<code>.ipynb</code>) to Markdown (<code>.md</code>) and Word (<code>.docx</code>).</p>
 <h2>OER-Forge Build System</h2>
-<p>OER-Forge is a Python package with five modules (<code>oerforge/</code>):</p>
+<p><a href="https://open-physics-ed-org.github.io/oer-forge">OER-Forge</a> is a Python package with five modules (<code>oerforge/</code>):</p>
 <ul>
 <li><code>scan.py</code> - uses <code>_config.yml</code> and the files present in <code>content/</code> to populate an sqlite database with site and file info.</li>
 <li><code>convert.py</code> - draws from <code>sqlite.db</code> to convert files in <code>content/</code> and places them in <code>build/files/</code> preserving the user's file structure</li>
@@ -55,7 +28,7 @@
 <li><code>confirm.py</code> - integrates the WCAG reporting information into the site and rebuilds as a public site in <code>docs/</code></li>
 </ul>
 <h3>Orchestration</h3>
-<p>OER-Forge uses <code>build.py</code> to orchestrate the build process.
+<p><a href="https://open-physics-ed-org.github.io/oer-forge">OER-Forge</a> uses <code>build.py</code> to orchestrate the build process.
 - <code>build.py</code> - uses functions from each module to construct the build in <code>build/</code></p>
 <h3>Overview of the Build Process</h3>
 <p>The following diagram illustrates the envisioned build process:</p>
@@ -68,6 +41,7 @@
 </ol>
 <p><img src="documentation/img/overview.png" alt="Overview of the OERForge Build Process showing the flow of information through the modules to produce a WCAG compliant site" width="600"></p>
 <h3>Build System Punchlist</h3>
+<p><a href="https://open-physics-ed-org.github.io/oer-forge">OER-Forge</a> is under active development. Below is a punchlist of tasks to be completed. If you are interested in contributing, please reach out <a href="mailto:danny@openphysicsed.org">danny@openphysicsed.org</a>.</p>
 <ul>
 <li>[X] <code>scan.py</code> can read <code>content/</code> and <code>_config.yml</code> to populate <code>sqlite.db</code></li>
 <li>[ ] <code>convert.py</code> can convert files in <code>content/</code> to their appropriate forms<ul>
@@ -95,6 +69,33 @@
 <li>[ ] <code>confirm.py</code> can build public site to <code>docs/</code></li>
 </ul>
     </div>
+    <h3 id="font-control" class="section-title">Font Control</h3>
+    <div class="font-controls" aria-label="Text appearance controls">
+  <fieldset>
+    <legend>Font family</legend>
+    <label><input type="radio" name="font-family" value="system-ui, sans-serif" checked>Default</label>
+    <label><input type="radio" name="font-family" value="serif">Serif</label>
+    <label><input type="radio" name="font-family" value="monospace">Monospace</label>
+  </fieldset>
+  <fieldset>
+    <legend>Font size</legend>
+    <label><input type="radio" name="font-size" value="1em" checked>Normal</label>
+    <label><input type="radio" name="font-size" value="1.2em">Large</label>
+    <label><input type="radio" name="font-size" value="1.5em">Extra Large</label>
+  </fieldset>
+  <fieldset>
+    <legend>Letter spacing</legend>
+    <label><input type="radio" name="letter-spacing" value="0.03em" checked>Normal</label>
+    <label><input type="radio" name="letter-spacing" value="0.08em">Wide</label>
+    <label><input type="radio" name="letter-spacing" value="0.15em">Extra Wide</label>
+  </fieldset>
+  <fieldset>
+    <legend>Line spacing</legend>
+    <label><input type="radio" name="line-height" value="1.7" checked>Normal</label>
+    <label><input type="radio" name="line-height" value="2">Wide</label>
+    <label><input type="radio" name="line-height" value="2.5">Extra Wide</label>
+  </fieldset>
+</div>
   </div>
 </body>
 </html>

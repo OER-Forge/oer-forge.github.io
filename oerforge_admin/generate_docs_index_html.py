@@ -78,6 +78,12 @@ def build_index_from_readme(readme_path, output_path, template_path):
     copy_assets(CSS_SRC_DIR, CSS_DEST_DIR)
     copy_assets(JS_SRC_DIR, JS_DEST_DIR)
 
+    # Create empty .nojekyll file in docs/
+    nojekyll_path = os.path.join(os.path.dirname(output_path), '.nojekyll')
+    with open(nojekyll_path, 'w', encoding='utf-8') as f:
+        pass
+    print(f"[INFO] Wrote {nojekyll_path}")
+
 if __name__ == "__main__":
     build_index_from_readme(
         README_PATH,

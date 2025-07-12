@@ -1,12 +1,12 @@
 # OER-Forge
 
-OER-Forge is a suite of tools to help authors create WCAG-compliant Open Educational Resources (OERs). The project is currently under development.
+[OER-Forge](https://open-physics-ed-org.github.io/oer-forge) is a suite of tools to help authors create WCAG-compliant Open Educational Resources (OERs). The project is currently under development.
 
 Below we describe the build system and its components; note that only `scan.py` and parts of `convert.py` are currently functional. And `convert.py` currently only supports conversion of Jupyter Notebooks (`.ipynb`) to Markdown (`.md`) and Word (`.docx`).
 
 ## OER-Forge Build System
 
-OER-Forge is a Python package with five modules (`oerforge/`):
+[OER-Forge](https://open-physics-ed-org.github.io/oer-forge) is a Python package with five modules (`oerforge/`):
 
 - `scan.py` - uses `_config.yml` and the files present in `content/` to populate an sqlite database with site and file info.
 - `convert.py` - draws from `sqlite.db` to convert files in `content/` and places them in `build/files/` preserving the user's file structure
@@ -16,7 +16,7 @@ OER-Forge is a Python package with five modules (`oerforge/`):
 
 ### Orchestration
 
-OER-Forge uses `build.py` to orchestrate the build process.
+[OER-Forge](https://open-physics-ed-org.github.io/oer-forge) uses `build.py` to orchestrate the build process.
 - `build.py` - uses functions from each module to construct the build in `build/`
 
 ### Overview of the Build Process
@@ -32,6 +32,8 @@ The following diagram illustrates the envisioned build process:
 <img src="documentation/img/overview.png" alt="Overview of the OERForge Build Process showing the flow of information through the modules to produce a WCAG compliant site" width="600">
 
 ### Build System Punchlist
+
+[OER-Forge](https://open-physics-ed-org.github.io/oer-forge) is under active development. Below is a punchlist of tasks to be completed. If you are interested in contributing, please reach out [danny@openphysicsed.org](mailto:danny@openphysicsed.org).
 
 - [X] `scan.py` can read `content/` and `_config.yml` to populate `sqlite.db`
 - [ ] `convert.py` can convert files in `content/` to their appropriate forms
