@@ -25,7 +25,7 @@ def fetch_table_data(db_path, table_name):
     print(f"[INFO] Number of rows: {len(rows)}")
     return columns, rows
 
-def render_table_html(db_path, table_name):
+def render_table_html(db_path, table_name, all_tables=None):
     columns, rows = fetch_table_data(db_path, table_name)
     template_path = os.path.join("static", "templates", "admin_table.html")
     with open(template_path, "r", encoding="utf-8") as f:
@@ -50,9 +50,21 @@ def render_table_html(db_path, table_name):
     row_html = "".join(
         f"<tr>{''.join(f'<td>{render_cell(row[i], i)}</td>' for i in range(len(columns)))}</tr>" for row in rows
     )
-    html = template.replace("{{ table_name }}", table_name).replace("{{ columns }}", col_html).replace("{{ rows }}", row_html)
-    return html
 
+    # Add this block to generate and insert table_links
+    if all_tables is None:
+        all_tables = get_table_names(db_path)
+    table_links = "\n".join(
+        f"<li><a href='{tbl}.html'>{tbl}</a></li>" for tbl in all_tables
+    )
+
+    html = (
+        template.replace("{{ table_name }}", table_name)
+                .replace("{{ columns }}", col_html)
+                .replace("{{ rows }}", row_html)
+                .replace("{{ table_links }}", table_links)
+    )
+    return html
 
 def write_table_html(table_name, html, output_dir):
     """Write the HTML string to build/admin/{table_name}.html."""
@@ -86,7 +98,7 @@ def generate_all_table_webpages(db_path, output_dir):
     tables = get_table_names(db_path)
     # Generate table pages
     for table_name in tables:
-        html = render_table_html(db_path, table_name)
+        html = render_table_html(db_path, table_name, tables)
         write_table_html(table_name, html, output_dir)
     # Generate index page using template
     template_path = os.path.join("static", "templates", "admin_index.html")
