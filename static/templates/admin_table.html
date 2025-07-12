@@ -4,9 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <title>{{ table_name }}</title>
-  <link id="theme-css" rel="stylesheet" href="../css/theme-light.css">
-  <!-- Theme and Appearance Controls Script -->
-  <script src="../js/admin.js"></script>
+  <link id="theme-css" rel="stylesheet" href="css/theme-light.css">
+<script src="js/accessiblity.js"></script>
 </head>
 <body>
   <header class="site-header">
@@ -18,6 +17,7 @@
       </ul>
   </nav>
   <div class="container">
+    <a href="index.html" class="download-btn" aria-label="Back to table index">&larr; Back to Table Index</a>
     <div class="font-controls" aria-label="Text appearance controls">
        <fieldset>
         <legend>Font family</legend>
@@ -47,7 +47,6 @@
     <div class="theme-switcher" style="text-align:right; margin-bottom:0em;">
     <button id="theme-toggle" aria-label="Switch theme" class="theme-btn">🌙</button>
   </div>
-    <a href="index.html" class="download-btn" aria-label="Back to table index">&larr; Back to Table Index</a>
     <h1>Table: {{ table_name }}</h1>
     <div class="table-wrapper">
       <table>

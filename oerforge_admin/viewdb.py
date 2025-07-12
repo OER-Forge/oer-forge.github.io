@@ -77,14 +77,21 @@ def write_table_html(table_name, html, output_dir):
     print(f"[INFO] Wrote {out_path}")
 
 def copy_all_files(src_dir, dest_dir):
-    """Copy all files from src_dir to dest_dir."""
+    """Copy all files from src_dir to dest_dir, even if dest_dir is empty or missing."""
+    if not os.path.exists(src_dir):
+        print(f"[WARN] Source directory {src_dir} does not exist.")
+        return
     if not os.path.exists(dest_dir):
         os.makedirs(dest_dir, exist_ok=True)
+    files_copied = False
     for fname in os.listdir(src_dir):
         src_file = os.path.join(src_dir, fname)
         if os.path.isfile(src_file):
             shutil.copy2(src_file, os.path.join(dest_dir, fname))
             print(f"[INFO] Copied {src_file} to {dest_dir}")
+            files_copied = True
+    if not files_copied:
+        print(f"[WARN] No files found in {src_dir} to copy.")
             
 def render_index_html(db_path, all_tables):
     template_path = os.path.join("static", "templates", "admin_index.html")

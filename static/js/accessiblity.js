@@ -4,18 +4,23 @@ document.addEventListener('DOMContentLoaded', function() {
   const themeLink = document.getElementById('theme-css');
 
   function updateThemeButton() {
-    const isLight = themeLink.getAttribute('href').includes('light');
+    if (!themeBtn || !themeLink) return;
+    const href = themeLink.getAttribute('href');
+    const isLight = href && href.includes('light');
     themeBtn.textContent = isLight ? '🌙' : '☀️';
     themeBtn.setAttribute('aria-label', isLight ? 'Switch to Dark Mode' : 'Switch to Light Mode');
   }
 
-  themeBtn.addEventListener('click', function() {
-    const isLight = themeLink.getAttribute('href').includes('light');
-    themeLink.setAttribute('href', isLight ? '../css/theme-dark.css' : '../css/theme-light.css');
-    updateThemeButton();
-  });
+  if (themeBtn && themeLink) {
+    themeBtn.addEventListener('click', function() {
+      const href = themeLink.getAttribute('href');
+      const isLight = href && href.includes('light');
+      themeLink.setAttribute('href', isLight ? 'css/theme-dark.css' : 'css/theme-light.css');
+      updateThemeButton();
+    });
 
-  updateThemeButton();
+    updateThemeButton();
+  }
 
   // --- Font Appearance Controls ---
   document.querySelectorAll('.font-controls input[type=radio]').forEach(function(radio) {
