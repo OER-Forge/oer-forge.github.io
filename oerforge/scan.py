@@ -101,6 +101,10 @@ def initialize_database():
             image_url TEXT,
             image_downloaded BOOLEAN,
             image_relocated_filename TEXT,
+            image_generated BOOLEAN DEFAULT 0,
+            image_generated_cell_index INTEGER,
+            image_generated_output_index INTEGER,
+            image_generated_caption TEXT,
             FOREIGN KEY(image_page_id) REFERENCES page(page_id)
         )
     """)
@@ -383,98 +387,130 @@ def write_page_item_to_db(page_item):
 
 def extract_image_info_from_ipynb(ipynb_path, page_id):
     """
-    Extracts image references from a single Jupyter notebook (.ipynb) file and writes them to the page_images table.
-
-    Args:
-        ipynb_path (str): Path to the .ipynb file.
-        page_id (int): The ID of the page in the database.
+    Extracts image references from a Jupyter notebook (.ipynb) file and writes them to the page_images table.
+    Handles both markdown-referenced and code-generated images.
     """
-    image_filenames = []
     project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    print(f"[DEBUG] project root path: {project_root}" )
     full_ipynb_path = os.path.join(project_root, ipynb_path)
-    print(f"[DEBUG] Full path to notebook file: {full_ipynb_path}" )
+    image_records = []
     try:
-        print(f"[DEBUG] Opening notebook file: {full_ipynb_path}")
         with open(full_ipynb_path, 'r', encoding='utf-8') as f:
             nb = nbformat.read(f, as_version=4)
-        print(f"[DEBUG] Notebook loaded. Number of cells: {len(nb.cells)}")
         md = MarkdownIt()
         for idx, cell in enumerate(nb.cells):
-            print(f"[DEBUG] Processing cell {idx} of type {cell.cell_type}")
-            print(f"[DEBUG] Markdown cell source:\n{cell.source}")
             if cell.cell_type == "markdown":
                 tokens = md.parse(cell.source)
-                print(f"[DEBUG] Markdown cell tokens: {[t.type for t in tokens]}")
                 for token in tokens:
                     if token.type == "inline":
                         for child in token.children or []:
                             if child.type == "image":
                                 src = child.attrs.get("src") if child.attrs else None
-                                print(f"[DEBUG] Found image src: {src}")
                                 if src:
-                                    image_filenames.append(src)
-        print(f"[DEBUG] Total images found: {len(image_filenames)}")
-        if image_filenames:
-            write_page_images_to_db(page_id, image_filenames)
-            print(f"[DEBUG] Images written to DB for page_id {page_id}")
-        else:
-            print(f"[DEBUG] No images found in notebook: {ipynb_path}")
+                                    ext = os.path.splitext(src)[1].lower().replace('.', '')
+                                    is_remote = 1 if src.startswith('http://') or src.startswith('https://') else 0
+                                    filepath, filename = os.path.split(src)
+                                    image_records.append({
+                                        'image_filename': filename,
+                                        'image_remote': is_remote,
+                                        'image_type': ext,
+                                        'image_filepath': filepath,
+                                        'image_url': src if is_remote else '',
+                                        'image_downloaded': 0,
+                                        'image_relocated_filename': '',
+                                        'image_generated': 0,
+                                        'image_generated_cell_index': None,
+                                        'image_generated_output_index': None,
+                                        'image_generated_caption': None
+                                    })
+            elif cell.cell_type == "code":
+                # Check for code-generated images in outputs
+                for out_idx, output in enumerate(cell.get('outputs', [])):
+                    if output.get('data'):
+                        for mime, data in output['data'].items():
+                            if mime.startswith('image/'):
+                                ext = mime.split('/')[-1]
+                                # If nbconvert or your pipeline provides a filename, use it
+                                filename = output.get('metadata', {}).get('filenames', {}).get(mime, '')
+                                relocated_filename = filename if filename else f"codeimg_{page_id}_{idx}_{out_idx}.{ext}"
+                                image_records.append({
+                                    'image_filename': relocated_filename,
+                                    'image_remote': 0,
+                                    'image_type': ext,
+                                    'image_filepath': '',
+                                    'image_url': '',
+                                    'image_downloaded': 1,
+                                    'image_relocated_filename': relocated_filename,
+                                    'image_generated': 1,
+                                    'image_generated_cell_index': idx,
+                                    'image_generated_output_index': out_idx,
+                                    'image_generated_caption': output.get('metadata', {}).get('caption', None)
+                                })
+        if image_records:
+            write_page_images_to_db(page_id, image_records)
     except Exception as e:
         print(f"[ERROR] Failed to extract images from {ipynb_path}: {e}")
 
 
 
-def write_page_images_to_db(page_id, image_filenames):
+def write_page_images_to_db(page_id, image_records):
+    """
+    Writes image records to the page_images table.
+    image_records: list of dicts with keys:
+        - image_filename
+        - image_remote
+        - image_type
+        - image_filepath
+        - image_url
+        - image_downloaded
+        - image_relocated_filename
+        - image_generated
+        - image_generated_cell_index
+        - image_generated_output_index
+        - image_generated_caption
+    """
     project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     db_path = os.path.join(project_root, 'db', 'sqlite.db')
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
-    for img in image_filenames:
-        is_remote = 1 if img.startswith('http://') or img.startswith('https://') else 0
-        ext = os.path.splitext(img)[1].lower().replace('.', '')
-        # Populate new columns. Adjust logic as needed.
-        if is_remote:
-            image_filepath = ""
-            image_filename = ""  # Or keep as img, depending on desired behavior
-            image_url = img
-        else:  # Local file
-            filepath, filename = os.path.split(img)
-            image_filepath = filepath + "/" if filepath else ""  # Add trailing slash if not empty
-            image_filename = filename
-            image_url = ""
-        image_downloaded = 0  # Assume not downloaded initially
-        image_relocated_filename = ""  # Empty initially, to be populated later
+    for img in image_records:
         cursor.execute(
-            """INSERT INTO page_images (image_page_id, image_filename, image_remote, image_type, image_filepath, image_url, image_downloaded, image_relocated_filename)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-            """,
-            (page_id, image_filename, is_remote, ext,
-             image_filepath, image_url, image_downloaded, image_relocated_filename)
+            """INSERT INTO page_images (
+                image_page_id, image_filename, image_remote, image_type, image_filepath, image_url,
+                image_downloaded, image_relocated_filename, image_generated, image_generated_cell_index,
+                image_generated_output_index, image_generated_caption
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+            (
+                page_id,
+                img.get('image_filename', ''),
+                img.get('image_remote', 0),
+                img.get('image_type', ''),
+                img.get('image_filepath', ''),
+                img.get('image_url', ''),
+                img.get('image_downloaded', 0),
+                img.get('image_relocated_filename', ''),
+                img.get('image_generated', 0),
+                img.get('image_generated_cell_index', None),
+                img.get('image_generated_output_index', None),
+                img.get('image_generated_caption', None)
+            )
         )
-
-
     conn.commit()
     conn.close()
 
 def read_page_images_from_db(page_id):
     """
-    Reads image records for a given page from the 'page_images' table in the SQLite database at 'db/sqlite.db'.
-
-    Args:
-        page_id (int): The ID of the page to read images for.
-
-    Returns:
-        list: List of dicts with image info for the page.
+    Reads image records for a given page from the 'page_images' table in the SQLite database.
+    Returns a list of dicts with all image info.
     """
     project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     db_path = os.path.join(project_root, 'db', 'sqlite.db')
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
-    cursor.execute("SELECT id, image_page_id, image_filename, image_remote, image_type FROM page_images WHERE image_page_id = ?", (page_id,))
+    cursor.execute("SELECT * FROM page_images WHERE image_page_id = ?", (page_id,))
     rows = cursor.fetchall()
     col_names = [description[0] for description in cursor.description]
     conn.close()
+    return [dict(zip(col_names, row)) for row in rows]
 
 
 def print_table(table_name):
