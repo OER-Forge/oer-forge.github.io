@@ -85,6 +85,33 @@ def get_images_for_page(page_id, conn):
     print(f"[DEBUG] Found {len(images)} images for page_id {page_id}")
     return images
 
+def build_image_map(page_id, conn):
+    """
+    Returns a dict mapping original image references (filenames or URLs)
+    to relocated filenames for both markdown/static and code-generated images.
+    """
+    images = get_images_for_page(page_id, conn)
+    image_map = {}
+    for img in images:
+        img_filename = img[2]  # image_filename
+        img_remote = img[3]    # image_remote
+        img_filepath = img[5]  # image_filepath
+        img_url = img[6]       # image_url
+        img_relocated_filename = img[8]  # image_relocated_filename
+        img_generated = bool(img[9])     # image_generated
+
+        # For code-generated images, use relocated filename as key and value
+        if img_generated:
+            image_map[img_filename] = img_relocated_filename
+        # For remote images, use URL as key
+        elif img_remote:
+            image_map[img_url] = "REMOTE IMAGE"
+        # For static/markdown images, use filepath or filename as key
+        else:
+            key = img_filepath if img_filepath else img_filename
+            image_map[key] = img_relocated_filename if img_relocated_filename else img_filename
+    return image_map
+
 def ensure_dir(path):
     print(f"[DEBUG] Ensuring directory exists: {path}")
     os.makedirs(path, exist_ok=True)
@@ -189,9 +216,7 @@ def ipynb_to_md(ipynb_path, output_path):
     page_id = page[0]
 
     # Step 3: Configure nbconvert for image extraction
-    # Use a filename template that guarantees uniqueness for each output
     c = Config()
-    # This template uses cell index, output index, and a unique key to avoid collisions
     c.ExtractOutputPreprocessor.output_filename_template = '{cell_index}_{index}_{unique_key}{extension}'
     exporter = MarkdownExporter(config=c)
     exporter.register_preprocessor(ExtractOutputPreprocessor(), enabled=True)
@@ -209,7 +234,11 @@ def ipynb_to_md(ipynb_path, output_path):
         with open(out_path, "wb") as imgf:
             imgf.write(data)
 
-    # Step 5: Write Markdown file
+    # Step 5: Update image references in Markdown
+    image_map = build_image_map(page_id, conn)
+    body = update_image_refs_in_markdown(body, image_map)
+
+    # Step 6: Write Markdown file
     if output_path is None:
         output_filename = os.path.splitext(os.path.basename(ipynb_path))[0] + ".md"
     else:
@@ -219,7 +248,7 @@ def ipynb_to_md(ipynb_path, output_path):
     with open(md_out_path, "w", encoding="utf-8") as f:
         f.write(body)
 
-    # Step 6: Update DB and log
+    # Step 7: Update DB and log
     update_page_conversion_flag(page_id, "page_built_ok_md", conn)
     log_action(f"Converted {ipynb_path} to {md_out_path}")
     conn.close()
