@@ -19,8 +19,18 @@ OERForge uses `build.py` to orchestrate the build process.
 ### Build System Punchlist
 
 - [X] `scan.py` can read `content/` and `_config.yml` to populate `sqlite.db`
-- [ ] `make.py` can convert files in `content/` to their appropriate forms
-- [ ] `make.py` can write location of converted files to `sqlite.db`
+- [ ] `convert.py` can convert files in `content/` to their appropriate forms
+    - [X] `convert.py` can convert `.ipynb` to `.md` with images
+    - [X] `convert.py` can convert `.ipynb` to `.docx` with images
+    - [ ] `convert.py` can convert `.ipynb` to `.tex` with images
+    - [ ] `convert.py` can convert `.ipynb` to `.pdf` with images
+    - [ ] `convert.py` can convert `.docx` to `.md` with images
+    - [ ] `convert.py` can convert `.docx` to `.tex` with images
+    - [ ] `convert.py` can convert `.docx` to `.pdf` with images
+    - [ ] `convert.py` can convert `.md` to `.docx` with images
+    - [ ] `convert.py` can convert `.md` to `.tex` with images
+    - [ ] `convert.py` can convert `.md` to `.pdf` with images
+- [ ] `convert.py` can write location of converted files to `sqlite.db`
 - [ ] `make.py` can build the initial WCAG compliant site to `build/`
 - [ ] `verify.py` can traverse `build/` to indicate which page builds are ok
 - [ ] `verify.py` can write build results to `sqlite.db` for each page
