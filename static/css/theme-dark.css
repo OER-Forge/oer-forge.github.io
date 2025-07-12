@@ -3,7 +3,9 @@ Theme: Dark Theme (dark)
 Description: Accessible palette for low-light viewing.
 */
 
-/* --- Color Variables --- */
+/* =========================
+  Color Variables
+========================= */
 :root {
   --color-bg: #181a20;
   --color-fg: #e3f2fd;
@@ -20,47 +22,9 @@ Description: Accessible palette for low-light viewing.
   --color-btn-hover-text: #fff;
 }
 
-/* --- Main Content Link Styling --- */
-.container a, .markdown-body a {
-  color: var(--color-link);
-  text-decoration: none;
-  transition: color 0.2s, background 0.2s;
-  border-radius: 4px;
-  font-weight: 500;
-}
-.container a:hover, .container a:focus,
-.markdown-body a:hover, .markdown-body a:focus {
-  color: #181a20;
-  background: var(--color-menu-hover);
-  text-decoration: none;
-  outline: none;
-}
-
-/* Table wrapper */
-.table-wrapper {
-  width: 100%;
-  overflow-x: auto;
-}
-
-.table-wrapper table {
-  min-width: 600px;
-  border-collapse: collapse;
-  width: 100%;
-}
-
-.table-wrapper table th,
-.table-wrapper table td {
-  padding: 0.8em 1.2em; /* Increase these values for more space */
-}
-
-.table-wrapper table tr:nth-child(even) {
-  background-color: #23263a;
-}
-.table-wrapper table tr:nth-child(odd) {
-  background-color: #181a20;
-}
-
-/* --- Layout and Container --- */
+/* =========================
+  Layout & Container
+========================= */
 html, body {
   background: var(--color-bg) !important;
   color: var(--color-fg) !important;
@@ -93,52 +57,7 @@ body {
   box-sizing: border-box;
   flex: 1 0 auto;
   transition: background 0.3s, color 0.3s, border 0.3s;
-  overflow-x: auto; /* (if present) */
-}
-
-footer {
-  flex-shrink: 0;
-  text-align: center;
-  padding: 2em 0 1em 0;
-  font-size: 0.9em;
-  color: var(--color-border);
-  background: var(--color-card) !important;
-  border-top: 3px solid var(--color-link);
-}
-
-footer a {
-  color: var(--color-link);
-  text-decoration: underline;
-  transition: color 0.2s, background 0.2s;
-  border-radius: 4px;
-  font-weight: 500;
-}
-footer a:hover, footer a:focus {
-  color: #181a20;
-  background: var(--color-menu-hover);
-  text-decoration: none;
-  outline: none;
-}
-
-/* Code and notebook blocks */
-.markdown-body .highlight,
-.markdown-body pre,
-.markdown-body code,
-.markdown-body .jp-Cell,
-.markdown-body .jp-Notebook,
-.markdown-body .jp-CodeCell,
-.markdown-body .jp-MarkdownCell,
-.markdown-body .jp-OutputArea,
-.markdown-body .jp-InputArea,
-.markdown-body .jp-Cell-inputWrapper,
-.markdown-body .jp-Cell-outputWrapper,
-.markdown-body .jp-OutputPrompt,
-.markdown-body .jp-InputPrompt,
-.markdown-body .jp-OutputArea-output,
-.markdown-body .jp-OutputArea-prompt,
-.markdown-body .jp-InputArea-prompt {
-  background: var(--color-card) !important;
-  color: var(--color-fg) !important;
+  overflow-x: auto;
 }
 
 /* Ensure main content always uses theme background and fills viewport */
@@ -148,27 +67,9 @@ footer a:hover, footer a:focus {
   color: var(--color-fg) !important;
 }
 
-:root {
-  --jp-cell-editor-background: var(--color-card) !important;
-  --jp-cell-editor-active-background: var(--color-card) !important;
-  --jp-layout-color0: var(--color-card) !important;
-  --jp-layout-color1: var(--color-card) !important;
-  --jp-layout-color2: var(--color-card) !important;
-  --jp-layout-color3: var(--color-card) !important;
-  --jp-rendermime-error-background: var(--color-card) !important;
-  --jp-input-background: var(--color-card) !important;
-  --jp-toolbar-background: var(--color-card) !important;
-  --jp-notebook-select-background: var(--color-card) !important;
-  --jp-output-area-background: var(--color-card) !important;
-}
-
-body.dark .markdown-body,
-body.dark .markdown-body * {
-  color: var(--color-fg) !important;
-  border-color: var(--color-border) !important;
-}
-
-/* --- Header and Navigation --- */
+/* =========================
+  Header & Navigation
+========================= */
 .site-header {
   background: var(--color-card);
   margin: 0;
@@ -239,7 +140,6 @@ body.dark .site-header {
   transition: background 0.2s, color 0.2s;
   display: block;
 }
-}
 .site-nav a:hover,
 .site-nav a:focus {
   background: var(--color-menu-hover);
@@ -280,27 +180,111 @@ body.dark .site-header {
   color: #181a20;
 }
 
-.theme-btn {
-  position: sticky;
-  top: 1.5em;
-  right: 2em;
-  z-index: 9999;
-  width: 2.2em;
-  height: 2.2em;
-  font-size: 2em;
+/* Toggle button: always circular, next to menu, never distorted */
+.site-nav {
+  position: relative;
+}
+.toggle-dark {
+  position: absolute;
+  right: 1.2em;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--color-link);
+  color: #181a20;
+  border: none;
   border-radius: 50%;
-  border: 2px solid var(--color-link);
-  background: var(--color-card);
-  color: var(--color-link);
-  box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+  aspect-ratio: 1 / 1;
+  width: 2.5em;
+  min-width: 2.5em;
+  min-height: 2.5em;
+  max-width: 2.5em;
+  max-height: 2.5em;
+  font-size: 1.3em;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.2s, color 0.2s, border 0.2s;
+  box-sizing: border-box;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  z-index: 300;
+}
+.toggle-dark:focus, .toggle-dark:hover {
+  background: var(--color-link-hover);
+  color: #181a20;
+  outline: 2px solid var(--color-link-hover);
+  outline-offset: 2px;
 }
 
-/* Card grid and cards */
+/* =========================
+  Main Content Link Styling
+========================= */
+.container a, .markdown-body a {
+  color: var(--color-link);
+  text-decoration: none;
+  transition: color 0.2s, background 0.2s;
+  border-radius: 4px;
+  font-weight: 500;
+}
+.container a:hover, .container a:focus,
+.markdown-body a:hover, .markdown-body a:focus {
+  color: #181a20;
+  background: var(--color-menu-hover);
+  text-decoration: none;
+  outline: none;
+}
+
+/* =========================
+  Table Styling
+========================= */
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+.table-wrapper table {
+  min-width: 600px;
+  border-collapse: collapse;
+  width: 100%;
+}
+.table-wrapper table th,
+.table-wrapper table td {
+  padding: 0.8em 1.2em;
+}
+.table-wrapper table tr:nth-child(even) {
+  background-color: #23263a;
+}
+.table-wrapper table tr:nth-child(odd) {
+  background-color: #181a20;
+}
+
+/* =========================
+  Footer
+========================= */
+footer {
+  flex-shrink: 0;
+  text-align: center;
+  padding: 2em 0 1em 0;
+  font-size: 0.9em;
+  color: var(--color-border);
+  background: var(--color-card) !important;
+  border-top: 3px solid var(--color-link);
+}
+footer a {
+  color: var(--color-link);
+  text-decoration: underline;
+  transition: color 0.2s, background 0.2s;
+  border-radius: 4px;
+  font-weight: 500;
+}
+footer a:hover, footer a:focus {
+  color: #181a20;
+  background: var(--color-menu-hover);
+  text-decoration: none;
+  outline: none;
+}
+
+/* =========================
+  Card Grid & Cards
+========================= */
 .card-grid {
   display: flex;
   flex-wrap: wrap;
@@ -346,7 +330,9 @@ body.dark .site-header {
   margin-top: 0.7em;
 }
 
-/* Admonitions */
+/* =========================
+  Admonitions
+========================= */
 .admonition {
   margin: 1.5em 0;
   padding: 1em 1.5em 1em 2.5em;
@@ -393,7 +379,9 @@ body.dark .admonition {
 }
 .admonition :last-child { margin-bottom: 0; }
 
-/* --- Work in Progress Banner --- */
+/* =========================
+  Work in Progress Banner
+========================= */
 .wip-banner {
   border: 2px dotted var(--color-title, #90caf9);
   background: var(--color-bg, #23263a);
@@ -406,15 +394,12 @@ body.dark .admonition {
   box-shadow: none;
   outline: none;
 }
-
 html.dark .wip-banner,
 body.dark .wip-banner {
   color: #fff;
   background: var(--color-bg, #181a20);
   border-color: var(--color-title, #90caf9);
 }
-
-/* Ensure sufficient contrast for accessibility */
 .wip-banner a {
   color: var(--color-link, #2a7fff);
   text-decoration: underline;
@@ -425,74 +410,9 @@ body.dark .wip-banner {
   outline-offset: 2px;
 }
 
-/* Nav and toggle button */
-nav {
-  text-align: center;
-}
-
-/* Toggle button: always circular, next to menu, never distorted */
-.site-nav {
-  position: relative;
-}
-.toggle-dark {
-  position: absolute;
-  right: 1.2em;
-  top: 50%;
-  transform: translateY(-50%);
-  background: var(--color-link);
-  color: #181a20;
-  border: none;
-  border-radius: 50%;
-  aspect-ratio: 1 / 1;
-  width: 2.5em;
-  min-width: 2.5em;
-  min-height: 2.5em;
-  max-width: 2.5em;
-  max-height: 2.5em;
-  font-size: 1.3em;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
-  z-index: 300;
-}
-.toggle-dark:focus, .toggle-dark:hover {
-  background: var(--color-link-hover);
-  color: #181a20;
-  outline: 2px solid var(--color-link-hover);
-  outline-offset: 2px;
-}
-
-@media (max-width: 900px) {
-  .site-nav {
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: 100vw;
-    z-index: 1001;
-    max-height: 60vh;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior: contain;
-  }
-  .toggle-dark {
-    position: absolute;
-    right: 0.7em;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 2.3em;
-    min-width: 2.3em;
-    min-height: 2.3em;
-    max-width: 2.3em;
-    max-height: 2.3em;
-    font-size: 1.1em;
-  }
-}
-
-/* Download buttons for chapter sources */
+/* =========================
+  Download Buttons
+========================= */
 .chapter-downloads {
   margin-bottom: 2em;
   padding: 1em 0 0.5em 0;
@@ -532,7 +452,6 @@ html.dark .download-btn {
   outline-offset: 2px;
   box-shadow: 0 0 0 4px rgba(255,183,77,0.28);
 }
-
 .download-btn:hover, .download-btn:focus {
   background: var(--color-btn-hover) !important;
   border-color: var(--color-btn-hover) !important;
@@ -541,7 +460,50 @@ html.dark .download-btn {
   box-shadow: 0 4px 16px rgba(0,0,0,0.28);
 }
 
-/* Ensure images with transparency and black text remain visible in dark mode */
+/* =========================
+  Code & Notebook Blocks
+========================= */
+.markdown-body .highlight,
+.markdown-body pre,
+.markdown-body code,
+.markdown-body .jp-Cell,
+.markdown-body .jp-Notebook,
+.markdown-body .jp-CodeCell,
+.markdown-body .jp-MarkdownCell,
+.markdown-body .jp-OutputArea,
+.markdown-body .jp-InputArea,
+.markdown-body .jp-Cell-inputWrapper,
+.markdown-body .jp-Cell-outputWrapper,
+.markdown-body .jp-OutputPrompt,
+.markdown-body .jp-InputPrompt,
+.markdown-body .jp-OutputArea-output,
+.markdown-body .jp-OutputArea-prompt,
+.markdown-body .jp-InputArea-prompt {
+  background: var(--color-card) !important;
+  color: var(--color-fg) !important;
+}
+:root {
+  --jp-cell-editor-background: var(--color-card) !important;
+  --jp-cell-editor-active-background: var(--color-card) !important;
+  --jp-layout-color0: var(--color-card) !important;
+  --jp-layout-color1: var(--color-card) !important;
+  --jp-layout-color2: var(--color-card) !important;
+  --jp-layout-color3: var(--color-card) !important;
+  --jp-rendermime-error-background: var(--color-card) !important;
+  --jp-input-background: var(--color-card) !important;
+  --jp-toolbar-background: var(--color-card) !important;
+  --jp-notebook-select-background: var(--color-card) !important;
+  --jp-output-area-background: var(--color-card) !important;
+}
+body.dark .markdown-body,
+body.dark .markdown-body * {
+  color: var(--color-fg) !important;
+  border-color: var(--color-border) !important;
+}
+
+/* =========================
+  Images
+========================= */
 .markdown-body img,
 .card img,
 img.content-img {
@@ -550,105 +512,149 @@ img.content-img {
   border-radius: 4px;
 }
 
-/* Responsive styles */
+/* =========================
+  Misc
+========================= */
+nav {
+  text-align: center;
+}
+.theme-btn {
+  position: sticky;
+  top: 1.5em;
+  right: 2em;
+  z-index: 9999;
+  width: 2.2em;
+  height: 2.2em;
+  font-size: 2em;
+  border-radius: 50%;
+  border: 2px solid var(--color-link);
+  background: var(--color-card);
+  color: var(--color-link);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, color 0.2s, border 0.2s;
+}
+
+/* =========================
+  Responsive Styles
+========================= */
 @media (max-width: 900px) {
   main {
-    max-width: 100vw;
-    padding: 1em;
+   max-width: 100vw;
+   padding: 1em;
   }
   .card-grid {
-    flex-direction: column;
-    gap: 1.2em;
-    align-items: stretch;
+   flex-direction: column;
+   gap: 1.2em;
+   align-items: stretch;
   }
   .card {
-    min-width: 0;
-    max-width: 100vw;
-    padding: 1.2em 1em 1em 1em;
+   min-width: 0;
+   max-width: 100vw;
+   padding: 1.2em 1em 1em 1em;
   }
   .site-nav {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
-    padding: 0.5em 0 0.3em 0;
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: 100vw;
-    background: var(--color-card);
-    border-top: 1.5px solid var(--color-border);
-    box-shadow: 0 -2px 12px rgba(0,0,0,0.18);
-    z-index: 1001;
+   flex-direction: row;
+   align-items: center;
+   justify-content: space-around;
+   padding: 0.5em 0 0.3em 0;
+   position: fixed;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   width: 100vw;
+   background: var(--color-card);
+   border-top: 1.5px solid var(--color-border);
+   box-shadow: 0 -2px 12px rgba(0,0,0,0.18);
+   z-index: 1001;
+   max-height: 60vh;
+   overflow-y: auto;
+   -webkit-overflow-scrolling: touch;
+   overscroll-behavior: contain;
   }
   .site-nav ul {
-    flex-direction: row;
-    gap: 1.2em;
-    width: 100vw;
-    justify-content: space-around;
-    align-items: center;
-    margin: 0;
-    padding: 0;
+   flex-direction: row;
+   gap: 1.2em;
+   width: 100vw;
+   justify-content: space-around;
+   align-items: center;
+   margin: 0;
+   padding: 0;
   }
   .site-nav > ul > li > a {
-    font-size: 1.1em;
-    padding: 0.7em 0.7em;
-    border-radius: 0.5em;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-width: 60px;
+   font-size: 1.1em;
+   padding: 0.7em 0.7em;
+   border-radius: 0.5em;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   min-width: 60px;
   }
   .site-nav li ul {
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 3.2em;
-    min-width: 0;
-    width: 100vw;
-    background: var(--color-card);
-    box-shadow: 0 -2px 12px rgba(0,0,0,0.18);
-    border-radius: 0 0 12px 12px;
-    padding: 0.5em 0.5em 0.7em 0.5em;
-    margin: 0;
-    z-index: 1102;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0.2em;
+   position: fixed;
+   left: 0;
+   right: 0;
+   bottom: 3.2em;
+   min-width: 0;
+   width: 100vw;
+   background: var(--color-card);
+   box-shadow: 0 -2px 12px rgba(0,0,0,0.18);
+   border-radius: 0 0 12px 12px;
+   padding: 0.5em 0.5em 0.7em 0.5em;
+   margin: 0;
+   z-index: 1102;
+   display: flex;
+   flex-direction: column;
+   align-items: stretch;
+   gap: 0.2em;
   }
   .site-nav li ul a {
-    padding: 0.9em 1.2em;
-    font-size: 1.08em;
-    border-radius: 0.5em;
-    margin: 0.1em 0;
-    background: none;
-    color: var(--color-link);
-    text-align: left;
-    box-shadow: none;
+   padding: 0.9em 1.2em;
+   font-size: 1.08em;
+   border-radius: 0.5em;
+   margin: 0.1em 0;
+   background: none;
+   color: var(--color-link);
+   text-align: left;
+   box-shadow: none;
   }
   .site-nav li ul a:hover,
   .site-nav li ul a:focus {
-    background: var(--color-link);
-    color: #181a20;
+   background: var(--color-link);
+   color: #181a20;
   }
   header.site-header {
-    margin-bottom: 3.5em;
+   margin-bottom: 3.5em;
   }
   body {
-    padding-bottom: 4.2em;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+   padding-bottom: 4.2em;
+   min-height: 100vh;
+   display: flex;
+   flex-direction: column;
   }
   main {
-    flex: 1 0 auto;
+   flex: 1 0 auto;
   }
   footer {
-    flex-shrink: 0;
+   flex-shrink: 0;
   }
   .site-nav > ul > li > a:after {
-    display: none !important;
+   display: none !important;
+  }
+  .toggle-dark {
+   position: absolute;
+   right: 0.7em;
+   top: 50%;
+   transform: translateY(-50%);
+   width: 2.3em;
+   min-width: 2.3em;
+   min-height: 2.3em;
+   max-width: 2.3em;
+   max-height: 2.3em;
+   font-size: 1.1em;
   }
 }
