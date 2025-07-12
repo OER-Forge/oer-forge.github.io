@@ -20,6 +20,7 @@ import sqlite3
 from nbconvert import MarkdownExporter
 from nbconvert.preprocessors import ExecutePreprocessor, ExtractOutputPreprocessor
 from traitlets.config import Config
+import re
 
 # --- Constants ---
 DB_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "db", "sqlite.db")
@@ -63,6 +64,52 @@ def check_venv_and_packages():
         sys.exit(1)
 
 check_venv_and_packages()
+
+def patch_markdown_with_db(md_path, page_id, conn):
+    """
+    Patch markdown image references using DB mapping from output_*.png to codeimg_*_*.png.
+    Non-destructive: if replacements are made, overwrite original; else, leave .patched.md.
+    """
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT image_generated_cell_index, image_generated_output_index, image_relocated_filename
+        FROM page_images
+        WHERE image_page_id=?
+    """, (page_id,))
+    mapping = {}
+    for cell_idx, out_idx, relocated in cursor.fetchall():
+        if cell_idx is not None and out_idx is not None and relocated:
+            output_fname = f"output_{cell_idx}_{out_idx}.png"
+            mapping[output_fname] = relocated
+
+    if not os.path.isfile(md_path):
+        print(f"[ERROR] Markdown file not found: {md_path}")
+        return
+
+    with open(md_path, "r", encoding="utf-8") as f:
+        md_text = f.read()
+
+    changes = []
+    def replacer(match):
+        fname = match.group(0)
+        new_fname = mapping.get(fname)
+        if new_fname:
+            changes.append((fname, new_fname))
+            return new_fname
+        return fname
+
+    new_md_text = re.sub(r'output_[0-9_]+\.png', replacer, md_text)
+
+    new_md_path = md_path.replace(".md", ".patched.md")
+    with open(new_md_path, "w", encoding="utf-8") as f:
+        f.write(new_md_text)
+
+    if changes:
+        with open(md_path, "w", encoding="utf-8") as f:
+            f.write(new_md_text)
+        print(f"[OK] Replacements made. Original markdown file updated: {md_path}")
+    else:
+        print(f"[INFO] No replacements made. Patched file left at: {new_md_path}")
 
 # --- Database Helpers ---
 
@@ -335,6 +382,9 @@ def ipynb_to_md(ipynb_path, output_path):
     print(f"[DEBUG] Writing Markdown file to: {md_out_path}")
     with open(md_out_path, "w", encoding="utf-8") as f:
         f.write(body)
+
+    # Patch markdown image references using DB mapping
+    patch_markdown_with_db(md_out_path, page_id, conn)
 
     # Step 7: Update DB and log
     update_page_conversion_flag(page_id, "page_built_ok_md", conn)
