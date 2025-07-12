@@ -684,3 +684,49 @@ img.content-img {
    overscroll-behavior: contain;
   }
 }
+
+/* Accessible radio group styling for font controls */
+.font-controls fieldset {
+  border: 2px solid var(--color-border);
+  border-radius: 8px;
+  margin-bottom: 1em;
+  padding: 1em 1.5em;
+  background: var(--color-card);
+}
+
+.font-controls legend {
+  font-weight: 700;
+  color: var(--color-link);
+  font-size: 1.15em;
+  margin-bottom: 0.5em;
+}
+
+.font-controls label {
+  display: inline-block;
+  margin-right: 1.5em;
+  font-size: 1.08em;
+  color: var(--color-fg);
+  cursor: pointer;
+  padding: 0.2em 0.5em;
+  border-radius: 6px;
+  transition: background 0.2s, color 0.2s;
+}
+
+.font-controls input[type="radio"] {
+  accent-color: var(--color-link);
+  margin-right: 0.3em;
+  width: 1.1em;
+  height: 1.1em;
+}
+
+.font-controls input[type="radio"]:focus + label,
+.font-controls label:focus-within {
+  outline: 2px solid var(--color-link);
+  outline-offset: 2px;
+  background: var(--color-bg);
+}
+
+.font-controls input[type="radio"]:checked + label {
+  background: var(--color-link);
+  color: #fff;
+}

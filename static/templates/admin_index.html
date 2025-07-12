@@ -5,35 +5,35 @@
   <title>Admin</title>
   <link id="theme-css" rel="stylesheet" href="../css/theme-light.css">
   <script>
+  // Wait for DOM to be fully loaded
   document.addEventListener('DOMContentLoaded', function() {
-    // Theme toggle
-    const btn = document.getElementById('theme-toggle');
-    const link = document.getElementById('theme-css');
-    function updateButton() {
-      const isLight = link.getAttribute('href').includes('light');
-      btn.textContent = isLight ? '🌙' : '☀️';
-      btn.setAttribute('aria-label', isLight ? 'Switch to Dark Mode' : 'Switch to Light Mode');
-    }
-    btn.addEventListener('click', function() {
-      const isLight = link.getAttribute('href').includes('light');
-      link.setAttribute('href', isLight ? '../css/theme-dark.css' : '../css/theme-light.css');
-      updateButton();
-    });
-    updateButton();
+    // --- Theme Toggle ---
+    const themeBtn = document.getElementById('theme-toggle');
+    const themeLink = document.getElementById('theme-css');
 
-    // Font controls
-    const controls = [
-      { id: 'font-size', var: '--font-size' },
-      { id: 'letter-spacing', var: '--letter-spacing' },
-      { id: 'line-height', var: '--line-height' }
-    ];
-    controls.forEach(({id, var: cssVar}) => {
-      const select = document.getElementById(id);
-      if (select) {
-        select.addEventListener('change', e => {
-          document.documentElement.style.setProperty(cssVar, e.target.value);
-        });
-      }
+    // Updates button icon and label based on current theme
+    function updateThemeButton() {
+      const isLight = themeLink.getAttribute('href').includes('light');
+      themeBtn.textContent = isLight ? '🌙' : '☀️';
+      themeBtn.setAttribute('aria-label', isLight ? 'Switch to Dark Mode' : 'Switch to Light Mode');
+    }
+
+    // Toggle theme stylesheet and update button
+    themeBtn.addEventListener('click', function() {
+      const isLight = themeLink.getAttribute('href').includes('light');
+      themeLink.setAttribute('href', isLight ? '../css/theme-dark.css' : '../css/theme-light.css');
+      updateThemeButton();
+    });
+
+    updateThemeButton();
+
+    // --- Font Appearance Controls ---
+    // Listen for changes on all radio inputs for font size, letter spacing, and line height
+    document.querySelectorAll('input[type=radio]').forEach(function(radio) {
+      radio.addEventListener('change', function(e) {
+        // Set CSS variable based on input name and value
+        document.documentElement.style.setProperty('--' + e.target.name, e.target.value);
+      });
     });
   });
   </script>
@@ -48,26 +48,6 @@
       </ul>
   </nav>
   <div class="container">
-    <div class="font-controls" aria-label="Text appearance controls">
-      <label for="font-size" style="margin-right:0.5em;">Font size:</label>
-      <select id="font-size">
-        <option value="1em">Normal</option>
-        <option value="1.2em">Large</option>
-        <option value="1.5em">Extra Large</option>
-      </select>
-      <label for="letter-spacing" style="margin-left:1em; margin-right:0.5em;">Letter spacing:</label>
-      <select id="letter-spacing">
-        <option value="0.03em">Normal</option>
-        <option value="0.08em">Wide</option>
-        <option value="0.15em">Extra Wide</option>
-      </select>
-      <label for="line-height" style="margin-left:1em; margin-right:0.5em;">Line spacing:</label>
-      <select id="line-height">
-        <option value="1.7">Normal</option>
-        <option value="2">Wide</option>
-        <option value="2.5">Extra Wide</option>
-      </select>
-    </div>
     <div class="theme-switcher" style="text-align:right; margin-bottom:0em;">
     <button id="theme-toggle" aria-label="Switch theme" class="theme-btn">🌙</button>
   </div>
@@ -77,5 +57,25 @@
         {{ table_links }}
       </ul>
   </div>
+  <div class="font-controls" aria-label="Text appearance controls">
+      <fieldset>
+        <legend>Font size</legend>
+        <label><input type="radio" name="font-size" value="1em" checked>Normal</label>
+        <label><input type="radio" name="font-size" value="1.2em">Large</label>
+        <label><input type="radio" name="font-size" value="1.5em">Extra Large</label>
+      </fieldset>
+      <fieldset>
+        <legend>Letter spacing</legend>
+        <label><input type="radio" name="letter-spacing" value="0.03em" checked>Normal</label>
+        <label><input type="radio" name="letter-spacing" value="0.08em">Wide</label>
+        <label><input type="radio" name="letter-spacing" value="0.15em">Extra Wide</label>
+      </fieldset>
+      <fieldset>
+        <legend>Line spacing</legend>
+        <label><input type="radio" name="line-height" value="1.7" checked>Normal</label>
+        <label><input type="radio" name="line-height" value="2">Wide</label>
+        <label><input type="radio" name="line-height" value="2.5">Extra Wide</label>
+      </fieldset>
+    </div>
 </body>
 </html>
