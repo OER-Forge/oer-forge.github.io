@@ -189,6 +189,7 @@ def copy_images_for_ipynb(ipynb_path, conn=None):
     """
     Copy all images associated with a notebook to the build directory,
     updating the database and returning an image map.
+    Uses relocated filenames for code-generated images.
     """
     print(f"[DEBUG] Copying images for notebook: {ipynb_path}")
     if conn is None:
@@ -206,10 +207,25 @@ def copy_images_for_ipynb(ipynb_path, conn=None):
         img_remote = img[3]
         img_filepath = img[5]
         img_url = img[6]
-        print(f"[DEBUG] Processing image: id={img_id}, filename={img_filename}, remote={img_remote}, filepath={img_filepath}")
+        img_relocated_filename = img[8]
+        img_generated = bool(img[9])
+        print(f"[DEBUG] Processing image: id={img_id}, filename={img_filename}, remote={img_remote}, filepath={img_filepath}, relocated={img_relocated_filename}, generated={img_generated}")
         if img_remote:
-            image_map[img_filepath] = "REMOTE IMAGE"
+            image_map[img_url] = "REMOTE IMAGE"
+        elif img_generated:
+            # For code-generated images, copy using relocated filename
+            src_img_path = os.path.join(build_dir, img_filename)
+            dest_img_path = os.path.join(build_dir, img_relocated_filename)
+            if os.path.exists(src_img_path):
+                if src_img_path != dest_img_path:
+                    copy_file(src_img_path, dest_img_path)
+                image_map[img_filename] = img_relocated_filename
+                update_image_relocated_filename(img_id, img_relocated_filename, conn)
+            else:
+                print(f"[WARNING] Missing code-generated image file: {src_img_path}")
+                image_map[img_filename] = "MISSING IMAGE"
         else:
+            # For static/markdown images, copy using original filename
             src_img_path = os.path.join(CONTENT_ROOT, img_filepath)
             dest_img_path = os.path.join(build_dir, img_filename)
             if os.path.exists(src_img_path):
@@ -288,14 +304,15 @@ def ipynb_to_md(ipynb_path, output_path):
 
     # Step 3: Configure nbconvert for image extraction
     c = Config()
-    c.ExtractOutputPreprocessor.output_filename_template = '{cell_index}_{index}_{unique_key}{extension}'
+    # Use page_id, cell_index, output_index for unique, DB-matching filenames
+    c.ExtractOutputPreprocessor.output_filename_template = f'codeimg_{page_id}_{{cell_index}}_{{index}}{{extension}}'
     exporter = MarkdownExporter(config=c)
     exporter.register_preprocessor(ExtractOutputPreprocessor(), enabled=True)
 
     print(f"[DEBUG] Exporting notebook to Markdown: {executed_ipynb_path}")
     body, resources = exporter.from_filename(executed_ipynb_path)
     print(f"[DEBUG] resources keys: {list(resources.keys())}")
-    print(f"[DEBUG] resources['outputs']: {resources.get('outputs', {})}")
+    print(f"[DEBUG] resources['outputs'] keys: {list(resources.get('outputs', {}).keys())}")
 
     # Step 4: Save extracted images
     outputs = resources.get('outputs', {})
