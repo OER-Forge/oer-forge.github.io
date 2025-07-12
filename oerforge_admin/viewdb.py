@@ -76,43 +76,45 @@ def write_table_html(table_name, html, output_dir):
 
     print(f"[INFO] Wrote {out_path}")
 
-def copy_css(src_css_list, dest_css_dir):
-    """Always copy all CSS files in src_css_list to build/css, overwriting if needed."""
-    if not os.path.exists(dest_css_dir):
-        os.makedirs(dest_css_dir, exist_ok=True)
-    for src_css in src_css_list:
-        dest_css = os.path.join(dest_css_dir, os.path.basename(src_css))
-        shutil.copy2(src_css, dest_css)
-        print(f"[INFO] Copied CSS to {dest_css}")
-
-def generate_all_table_webpages(db_path, output_dir):
-    """Generate a webpage for each table in the database and a consistent index page."""
-    # Ensure all required CSS files are copied
-    src_css_list = [
-        os.path.join("static", "css", "theme-light.css"),
-        os.path.join("static", "css", "theme-dark.css"),
-    ]
-    dest_css_dir = os.path.join("build", "css")
-    copy_css(src_css_list, dest_css_dir)
-
-    tables = get_table_names(db_path)
-    # Generate table pages
-    for table_name in tables:
-        html = render_table_html(db_path, table_name, tables)
-        write_table_html(table_name, html, output_dir)
-    # Generate index page using template
+def copy_all_files(src_dir, dest_dir):
+    """Copy all files from src_dir to dest_dir."""
+    if not os.path.exists(dest_dir):
+        os.makedirs(dest_dir, exist_ok=True)
+    for fname in os.listdir(src_dir):
+        src_file = os.path.join(src_dir, fname)
+        if os.path.isfile(src_file):
+            shutil.copy2(src_file, os.path.join(dest_dir, fname))
+            print(f"[INFO] Copied {src_file} to {dest_dir}")
+            
+def render_index_html(db_path, all_tables):
     template_path = os.path.join("static", "templates", "admin_index.html")
     with open(template_path, "r", encoding="utf-8") as f:
         template = f.read()
     table_links = "\n".join(
-        f"<li><a href='{table_name}.html'>{table_name}</a></li>" for table_name in tables
+        f"<li><a href='{tbl}.html'>{tbl}</a></li>" for tbl in all_tables
     )
     html = template.replace("{{ table_links }}", table_links)
-    out_path = os.path.join(output_dir, "index.html")
-    with open(out_path, "w", encoding="utf-8") as f:
-        f.write(html)
-    print(f"[INFO] Wrote {out_path}")
-    print(f"[INFO] Generated admin pages for tables: {tables}")
+    return html
+
+def generate_all_table_webpages(db_path, output_dir):
+    """Generate a webpage for each table in the database and a consistent index page."""
+    # Ensure output_dir exists
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir, exist_ok=True)
+
+    # Copy ALL CSS files to build/admin/css
+    copy_all_files(os.path.join("static", "css"), os.path.join(output_dir, "css"))
+    # Copy ALL JS files to build/admin/js
+    copy_all_files(os.path.join("static", "js"), os.path.join(output_dir, "js"))
+
+    tables = get_table_names(db_path)
+    # Write index.html
+    index_html = render_index_html(db_path, tables)
+    write_table_html("index", index_html, output_dir)
+    # Write table pages
+    for table_name in tables:
+        html = render_table_html(db_path, table_name, tables)
+        write_table_html(table_name, html, output_dir)
 
 if __name__ == "__main__":
     import sys

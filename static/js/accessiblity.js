@@ -1,0 +1,34 @@
+document.addEventListener('DOMContentLoaded', function() {
+  // --- Theme Toggle ---
+  const themeBtn = document.getElementById('theme-toggle');
+  const themeLink = document.getElementById('theme-css');
+
+  function updateThemeButton() {
+    const isLight = themeLink.getAttribute('href').includes('light');
+    themeBtn.textContent = isLight ? '🌙' : '☀️';
+    themeBtn.setAttribute('aria-label', isLight ? 'Switch to Dark Mode' : 'Switch to Light Mode');
+  }
+
+  themeBtn.addEventListener('click', function() {
+    const isLight = themeLink.getAttribute('href').includes('light');
+    themeLink.setAttribute('href', isLight ? '../css/theme-dark.css' : '../css/theme-light.css');
+    updateThemeButton();
+  });
+
+  updateThemeButton();
+
+  // --- Font Appearance Controls ---
+  document.querySelectorAll('.font-controls input[type=radio]').forEach(function(radio) {
+    radio.addEventListener('change', function(e) {
+      if (e.target.name === 'font-family') {
+        document.body.style.fontFamily = e.target.value;
+        const container = document.querySelector('.container');
+        if (container) container.style.fontFamily = e.target.value;
+        const markdownBody = document.querySelector('.markdown-body');
+        if (markdownBody) markdownBody.style.fontFamily = e.target.value;
+      } else {
+        document.documentElement.style.setProperty('--' + e.target.name, e.target.value);
+      }
+    });
+  });
+});

@@ -4,39 +4,7 @@
   <meta charset="UTF-8">
   <title>Admin</title>
   <link id="theme-css" rel="stylesheet" href="../css/theme-light.css">
-  <script>
-  // Wait for DOM to be fully loaded
-  document.addEventListener('DOMContentLoaded', function() {
-    // --- Theme Toggle ---
-    const themeBtn = document.getElementById('theme-toggle');
-    const themeLink = document.getElementById('theme-css');
-
-    // Updates button icon and label based on current theme
-    function updateThemeButton() {
-      const isLight = themeLink.getAttribute('href').includes('light');
-      themeBtn.textContent = isLight ? '🌙' : '☀️';
-      themeBtn.setAttribute('aria-label', isLight ? 'Switch to Dark Mode' : 'Switch to Light Mode');
-    }
-
-    // Toggle theme stylesheet and update button
-    themeBtn.addEventListener('click', function() {
-      const isLight = themeLink.getAttribute('href').includes('light');
-      themeLink.setAttribute('href', isLight ? '../css/theme-dark.css' : '../css/theme-light.css');
-      updateThemeButton();
-    });
-
-    updateThemeButton();
-
-    // --- Font Appearance Controls ---
-    // Listen for changes on all radio inputs for font size, letter spacing, and line height
-    document.querySelectorAll('input[type=radio]').forEach(function(radio) {
-      radio.addEventListener('change', function(e) {
-        // Set CSS variable based on input name and value
-        document.documentElement.style.setProperty('--' + e.target.name, e.target.value);
-      });
-    });
-  });
-  </script>
+  <script src="../js/admin.js"></script>
 </head>
 <body>
   <header class="site-header">
@@ -48,16 +16,13 @@
       </ul>
   </nav>
   <div class="container">
-    <div class="theme-switcher" style="text-align:right; margin-bottom:0em;">
-    <button id="theme-toggle" aria-label="Switch theme" class="theme-btn">🌙</button>
-  </div>
-    <h1>Administrative</h1>
-      <p>Welcome to the OER Forge administrative interface. Use the links above to manage database tables.</p>
-      <ul class="admin-table-list">
-        {{ table_links }}
-      </ul>
-  </div>
-  <div class="font-controls" aria-label="Text appearance controls">
+    <div class="font-controls" aria-label="Text appearance controls">
+       <fieldset>
+        <legend>Font family</legend>
+        <label><input type="radio" name="font-family" value="system-ui, sans-serif" checked>Default</label>
+        <label><input type="radio" name="font-family" value="serif">Serif</label>
+        <label><input type="radio" name="font-family" value="monospace">Monospace</label>
+      </fieldset>
       <fieldset>
         <legend>Font size</legend>
         <label><input type="radio" name="font-size" value="1em" checked>Normal</label>
@@ -77,5 +42,14 @@
         <label><input type="radio" name="line-height" value="2.5">Extra Wide</label>
       </fieldset>
     </div>
+    <div class="theme-switcher" style="text-align:right; margin-bottom:0em;">
+    <button id="theme-toggle" aria-label="Switch theme" class="theme-btn">🌙</button>
+  </div>
+    <h1>Administrative</h1>
+      <p>Welcome to the OER Forge administrative interface. Use the links above to manage database tables.</p>
+      <ul class="admin-table-list">
+        {{ table_links }}
+      </ul>
+  </div>
 </body>
 </html>
