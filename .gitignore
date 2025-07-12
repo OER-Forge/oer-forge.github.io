@@ -130,11 +130,11 @@ tags                        # Tag files
 #------------------------------------------------------------------------------
 
 #------------------------------------------------------------------------------
-# Exceptions: Do NOT ignore these tracked files/folders
+# Ignore these files/folders
 #------------------------------------------------------------------------------
-!build/
-!db/
-!log/
-!documentation/oerdocs/__pycache__/
-!oerforge/__pycache__/convert.cpython-313.pyc
-!oerforge_admin/__pycache__/
+build/
+db/
+log/
+documentation/oerdocs/__pycache__/
+oerforge/__pycache__/
+oerforge_admin/__pycache__/
