@@ -29,6 +29,7 @@ def main():
     print("[OK] Database initialized and populated.")
 
     try:
+        print("[DEBUG] About to call ipynb_to_md")
         md_path = ipynb_to_md(ipynb_path, output_path)
         print(f"[OK] Markdown file created at: {md_path}")
     except Exception as e:
