@@ -1,3 +1,18 @@
+"""
+convert.py
+
+Module for converting Jupyter notebooks (.ipynb) and Markdown files to various formats,
+managing associated images, and updating a SQLite database with conversion status.
+
+Main features:
+- Executes notebooks and exports to Markdown.
+- Handles image extraction, copying, and reference updates.
+- Logs conversion actions and updates database flags.
+- Provides stub functions for other conversions (docx, tex, pdf).
+
+Author: [Your Name]
+"""
+
 import sys
 import os
 import shutil
@@ -6,12 +21,19 @@ from nbconvert import MarkdownExporter
 from nbconvert.preprocessors import ExecutePreprocessor, ExtractOutputPreprocessor
 from traitlets.config import Config
 
+# --- Constants ---
 DB_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "db", "sqlite.db")
 CONTENT_ROOT = "content"
 BUILD_ROOT = "build/files"
 LOG_DIR = "log"
 
+# --- Environment and Dependency Checks ---
+
 def check_venv_and_packages():
+    """
+    Ensure the script is running inside the correct virtual environment and
+    required Python packages are installed.
+    """
     venv_path = os.path.join(os.path.dirname(__file__), '..', '.venv')
     in_venv = (
         hasattr(sys, 'real_prefix') or
@@ -42,30 +64,19 @@ def check_venv_and_packages():
 
 check_venv_and_packages()
 
-def execute_notebook(ipynb_path, executed_path, timeout=600):
-    import nbformat
-    import sys
-    print(f"[DEBUG] Entered execute_notebook for {ipynb_path}")
-    print(f"[DEBUG] Using Python executable: {sys.executable}")
-    with open(ipynb_path, "r", encoding="utf-8") as f:
-        nb = nbformat.read(f, as_version=4)
-    ep = ExecutePreprocessor(timeout=timeout, kernel_name="open-physics-ed-venv")
-    try:
-        ep.preprocess(nb, {'metadata': {'path': os.path.dirname(ipynb_path)}})
-        print(f"[DEBUG] Notebook executed successfully: {ipynb_path}")
-    except Exception as e:
-        print(f"[ERROR] Failed to execute notebook {ipynb_path}: {e}")
-        raise
-    with open(executed_path, "w", encoding="utf-8") as f:
-        nbformat.write(nb, f)
-    print(f"[DEBUG] Executed notebook saved at: {executed_path}")
-    return executed_path
+# --- Database Helpers ---
 
 def get_db_connection(db_path=DB_PATH):
+    """
+    Connect to the SQLite database.
+    """
     print(f"[DEBUG] Connecting to DB at {db_path}")
     return sqlite3.connect(db_path)
 
 def get_page_info(full_path, conn):
+    """
+    Retrieve page information from the database for a given file path.
+    """
     dir_path, filename = os.path.split(full_path)
     print(f"[DEBUG] get_page_info: dir_path={dir_path}, filename={filename}")
     cursor = conn.cursor()
@@ -78,6 +89,9 @@ def get_page_info(full_path, conn):
     return result
 
 def get_images_for_page(page_id, conn):
+    """
+    Get all images associated with a page from the database.
+    """
     print(f"[DEBUG] get_images_for_page: page_id={page_id}")
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM page_images WHERE image_page_id=?", (page_id,))
@@ -85,10 +99,69 @@ def get_images_for_page(page_id, conn):
     print(f"[DEBUG] Found {len(images)} images for page_id {page_id}")
     return images
 
+def update_image_relocated_filename(img_id, new_path, conn):
+    """
+    Update the relocated filename for an image in the database.
+    """
+    print(f"[DEBUG] Updating image relocated filename for img_id={img_id} to {new_path}")
+    cursor = conn.cursor()
+    cursor.execute("UPDATE page_images SET image_relocated_filename=? WHERE id=?", (new_path, img_id))
+    conn.commit()
+
+def update_page_conversion_flag(page_id, flag, conn):
+    """
+    Set a conversion flag (e.g., page_built_ok_md) for a page in the database.
+    """
+    print(f"[DEBUG] Updating page conversion flag '{flag}' for page_id={page_id}")
+    cursor = conn.cursor()
+    cursor.execute(f"UPDATE page SET {flag}=1 WHERE page_id=?", (page_id,))
+    conn.commit()
+    cursor.execute(f"SELECT {flag} FROM page WHERE page_id=?", (page_id,))
+    print(f"[DEBUG] {flag} for page_id {page_id} is now:", cursor.fetchone())
+
+# --- File and Directory Utilities ---
+
+def ensure_dir(path):
+    """
+    Ensure that a directory exists; create it if necessary.
+    """
+    print(f"[DEBUG] Ensuring directory exists: {path}")
+    os.makedirs(path, exist_ok=True)
+
+def copy_file(src, dest):
+    """
+    Copy a file from src to dest, creating destination directories as needed.
+    """
+    print(f"[DEBUG] Copying file from {src} to {dest}")
+    ensure_dir(os.path.dirname(dest))
+    shutil.copy2(src, dest)
+
+def get_build_dir_for_file(src_path):
+    """
+    Get the build directory for a given source file path.
+    """
+    rel_dir = os.path.relpath(os.path.dirname(src_path), CONTENT_ROOT)
+    build_dir = os.path.join(BUILD_ROOT, rel_dir)
+    print(f"[DEBUG] Build dir for {src_path}: {build_dir}")
+    ensure_dir(build_dir)
+    return build_dir
+
+def log_action(message):
+    """
+    Append a log message to the conversion log file.
+    """
+    ensure_dir(LOG_DIR)
+    log_path = os.path.join(LOG_DIR, "convert.log")
+    print(f"[DEBUG] Logging action: {message}")
+    with open(log_path, "a") as logf:
+        logf.write(message + "\n")
+
+# --- Image Handling ---
+
 def build_image_map(page_id, conn):
     """
-    Returns a dict mapping original image references (filenames or URLs)
-    to relocated filenames for both markdown/static and code-generated images.
+    Build a mapping from original image references to relocated filenames
+    for both markdown/static and code-generated images.
     """
     images = get_images_for_page(page_id, conn)
     image_map = {}
@@ -112,44 +185,11 @@ def build_image_map(page_id, conn):
             image_map[key] = img_relocated_filename if img_relocated_filename else img_filename
     return image_map
 
-def ensure_dir(path):
-    print(f"[DEBUG] Ensuring directory exists: {path}")
-    os.makedirs(path, exist_ok=True)
-
-def copy_file(src, dest):
-    print(f"[DEBUG] Copying file from {src} to {dest}")
-    ensure_dir(os.path.dirname(dest))
-    shutil.copy2(src, dest)
-
-def log_action(message):
-    ensure_dir(LOG_DIR)
-    log_path = os.path.join(LOG_DIR, "convert.log")
-    print(f"[DEBUG] Logging action: {message}")
-    with open(log_path, "a") as logf:
-        logf.write(message + "\n")
-
-def get_build_dir_for_file(src_path):
-    rel_dir = os.path.relpath(os.path.dirname(src_path), CONTENT_ROOT)
-    build_dir = os.path.join(BUILD_ROOT, rel_dir)
-    print(f"[DEBUG] Build dir for {src_path}: {build_dir}")
-    ensure_dir(build_dir)
-    return build_dir
-
-def update_image_relocated_filename(img_id, new_path, conn):
-    print(f"[DEBUG] Updating image relocated filename for img_id={img_id} to {new_path}")
-    cursor = conn.cursor()
-    cursor.execute("UPDATE page_images SET image_relocated_filename=? WHERE id=?", (new_path, img_id))
-    conn.commit()
-
-def update_page_conversion_flag(page_id, flag, conn):
-    print(f"[DEBUG] Updating page conversion flag '{flag}' for page_id={page_id}")
-    cursor = conn.cursor()
-    cursor.execute(f"UPDATE page SET {flag}=1 WHERE page_id=?", (page_id,))
-    conn.commit()
-    cursor.execute(f"SELECT {flag} FROM page WHERE page_id=?", (page_id,))
-    print(f"[DEBUG] {flag} for page_id {page_id} is now:", cursor.fetchone())
-
 def copy_images_for_ipynb(ipynb_path, conn=None):
+    """
+    Copy all images associated with a notebook to the build directory,
+    updating the database and returning an image map.
+    """
     print(f"[DEBUG] Copying images for notebook: {ipynb_path}")
     if conn is None:
         conn = get_db_connection()
@@ -184,6 +224,9 @@ def copy_images_for_ipynb(ipynb_path, conn=None):
     return image_map
 
 def update_image_refs_in_markdown(md_text, image_map):
+    """
+    Update image references in Markdown text using the provided image map.
+    """
     print(f"[DEBUG] Updating image references in markdown")
     for old, new in image_map.items():
         if new == "REMOTE IMAGE":
@@ -194,7 +237,35 @@ def update_image_refs_in_markdown(md_text, image_map):
             md_text = md_text.replace(f"![]({old})", f"![]({new})")
     return md_text
 
+# --- Notebook Execution and Conversion ---
+
+def execute_notebook(ipynb_path, executed_path, timeout=600):
+    """
+    Execute a Jupyter notebook and save the executed notebook to a new file.
+    """
+    import nbformat
+    import sys
+    print(f"[DEBUG] Entered execute_notebook for {ipynb_path}")
+    print(f"[DEBUG] Using Python executable: {sys.executable}")
+    with open(ipynb_path, "r", encoding="utf-8") as f:
+        nb = nbformat.read(f, as_version=4)
+    ep = ExecutePreprocessor(timeout=timeout, kernel_name="open-physics-ed-venv")
+    try:
+        ep.preprocess(nb, {'metadata': {'path': os.path.dirname(ipynb_path)}})
+        print(f"[DEBUG] Notebook executed successfully: {ipynb_path}")
+    except Exception as e:
+        print(f"[ERROR] Failed to execute notebook {ipynb_path}: {e}")
+        raise
+    with open(executed_path, "w", encoding="utf-8") as f:
+        nbformat.write(nb, f)
+    print(f"[DEBUG] Executed notebook saved at: {executed_path}")
+    return executed_path
+
 def ipynb_to_md(ipynb_path, output_path):
+    """
+    Convert a Jupyter notebook to Markdown, extracting images and updating references.
+    Returns the path to the generated Markdown file.
+    """
     print(f"[DEBUG] ipynb_to_md called for {ipynb_path} -> {output_path}")
     build_dir = get_build_dir_for_file(ipynb_path)
     executed_ipynb_path = os.path.join(build_dir, os.path.basename(ipynb_path))
@@ -255,47 +326,72 @@ def ipynb_to_md(ipynb_path, output_path):
     print(f"[DEBUG] Markdown conversion complete for {ipynb_path}")
     return md_out_path
 
-# Other converters can use these helpers:
-# - get_db_connection
-# - get_page_info
-# - get_images_for_page
-# - get_build_dir_for_file
-# - copy_file
-# - log_action
-# - update_image_refs_in_markdown
-# - update_page_conversion_flag
-# - copy_images_for_ipynb
+# --- Conversion Stubs ---
 
 def ipynb_to_docx(ipynb_path, output_path):
+    """
+    Convert a Jupyter notebook to a DOCX file.
+    (Currently not implemented; uses Markdown as intermediate.)
+    """
     print(f"[DEBUG] ipynb_to_docx called for {ipynb_path} -> {output_path}")
     md_path = ipynb_to_md(ipynb_path, output_path.replace(".docx", ".md"))
     # Use Pandoc here (not implemented)
     pass
 
 def ipynb_to_tex(ipynb_path, output_path):
+    """
+    Convert a Jupyter notebook to a LaTeX file.
+    (Stub; not implemented.)
+    """
     print(f"[DEBUG] ipynb_to_tex called for {ipynb_path} -> {output_path}")
     pass
 
 def ipynb_to_pdf(ipynb_path, output_path):
+    """
+    Convert a Jupyter notebook to a PDF file.
+    (Stub; not implemented.)
+    """
     print(f"[DEBUG] ipynb_to_pdf called for {ipynb_path} -> {output_path}")
     pass
 
 def md_to_docx(md_path, output_path):
+    """
+    Convert a Markdown file to a DOCX file.
+    (Stub; not implemented.)
+    """
     print(f"[DEBUG] md_to_docx called for {md_path} -> {output_path}")
     pass
 
 def md_to_tex(md_path, output_path):
+    """
+    Convert a Markdown file to a LaTeX file.
+    (Stub; not implemented.)
+    """
     print(f"[DEBUG] md_to_tex called for {md_path} -> {output_path}")
     pass
 
 def md_to_pdf(md_path, output_path):
+    """
+    Convert a Markdown file to a PDF file.
+    (Stub; not implemented.)
+    """
     print(f"[DEBUG] md_to_pdf called for {md_path} -> {output_path}")
     pass
 
 def docx_to_md(docx_path, output_path):
+    """
+    Convert a DOCX file to Markdown.
+    (Stub; not implemented.)
+    """
     print(f"[DEBUG] docx_to_md called for {docx_path} -> {output_path}")
     pass
 
 def docx_to_pdf(docx_path, output_path):
+    """
+    Convert a DOCX file to PDF.
+    (Stub; not implemented.)
+    """
     print(f"[DEBUG] docx_to_pdf called for {docx_path} -> {output_path}")
     pass
+
+# End of module
