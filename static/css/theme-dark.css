@@ -7,19 +7,29 @@ Description: Accessible palette for low-light viewing.
   Color Variables
 ========================= */
 :root {
-  --color-bg: #181a20;
-  --color-fg: #e3f2fd;
-  --color-card: #23263a;
-  --color-border: #2a7fff;
-  --color-menu: #6c3fc5;
-  --color-menu-hover: #1565c0;
-  --color-link: #2a7fff;
-  --color-link-hover: #90caf9;
-  --color-title: #90caf9;
-  --color-btn: #ffb300;
-  --color-btn-hover: #2a7fff;
-  --color-btn-text: #fff;
-  --color-btn-hover-text: #fff;
+  --color-bg: #0a0c10;              /* Background: very dark, high contrast */
+  --color-fg: #ffffff;              /* Foreground: pure white, max contrast */
+  --color-card: #181a20;            /* Card: slightly lighter than bg */
+  --color-border: #bfc7d5;          /* Border: light blue-gray, AAA contrast */
+  --color-menu: #23263a;            /* Menu: deep blue-gray, strong contrast */
+  --color-menu-hover: #f5f7fa;      /* Menu hover: very light gray, max contrast */
+  --color-link: #2a7fff;            /* Link: vivid blue, AAA contrast */
+  --color-link-hover: #ffea00;      /* Link hover: bright yellow, AAA contrast */
+  --color-title: #ffea00;           /* Title: bright yellow, AAA contrast */
+  --color-btn: #2a7fff;             /* Button: vivid blue, AAA contrast */
+  --color-btn-hover: #ffea00;       /* Button hover: bright yellow, AAA contrast */
+  --color-btn-text: #ffffff;        /* Button text: pure white */
+  --color-btn-hover-text: #181a20;  /* Button hover text: dark for yellow bg */
+  --font-size: 1.1em;
+  --letter-spacing: 0.03em;
+  --line-height: 1.7;
+}
+
+/* Add here: global typography controls */
+body, .container, .markdown-body {
+  font-size: var(--font-size);
+  letter-spacing: var(--letter-spacing);
+  line-height: var(--line-height);
 }
 
 /* =========================
@@ -413,6 +423,11 @@ body.dark .wip-banner {
 /* =========================
   Download Buttons
 ========================= */
+
+.download-btn,
+.theme-btn {
+  color: #222 !important; /* dark text for light backgrounds */
+}
 .chapter-downloads {
   margin-bottom: 2em;
   padding: 1em 0 0.5em 0;
@@ -429,7 +444,6 @@ body.dark .wip-banner {
   padding: 0.6em 1.5em;
   font-size: 1.1em;
   font-weight: 700;
-  color: var(--color-btn-text);
   background: var(--color-btn);
   border: 2px solid var(--color-btn);
   border-radius: 0.6em;

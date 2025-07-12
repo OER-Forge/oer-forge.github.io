@@ -6,26 +6,35 @@
   <link id="theme-css" rel="stylesheet" href="../css/theme-light.css">
   <script>
   document.addEventListener('DOMContentLoaded', function() {
+    // Theme toggle
     const btn = document.getElementById('theme-toggle');
     const link = document.getElementById('theme-css');
     function updateButton() {
-      if (link.getAttribute('href').includes('light')) {
-        btn.textContent = '🌙';
-        btn.setAttribute('aria-label', 'Switch to Dark Mode');
-      } else {
-        btn.textContent = '☀️';
-        btn.setAttribute('aria-label', 'Switch to Light Mode');
-      }
+      const isLight = link.getAttribute('href').includes('light');
+      btn.textContent = isLight ? '🌙' : '☀️';
+      btn.setAttribute('aria-label', isLight ? 'Switch to Dark Mode' : 'Switch to Light Mode');
     }
     btn.addEventListener('click', function() {
-      if (link.getAttribute('href').includes('light')) {
-        link.setAttribute('href', '../css/theme-dark.css');
-      } else {
-        link.setAttribute('href', '../css/theme-light.css');
-      }
+      const isLight = link.getAttribute('href').includes('light');
+      link.setAttribute('href', isLight ? '../css/theme-dark.css' : '../css/theme-light.css');
       updateButton();
     });
-    updateButton(); // Ensure emoji is set on page load
+    updateButton();
+
+    // Font controls
+    const controls = [
+      { id: 'font-size', var: '--font-size' },
+      { id: 'letter-spacing', var: '--letter-spacing' },
+      { id: 'line-height', var: '--line-height' }
+    ];
+    controls.forEach(({id, var: cssVar}) => {
+      const select = document.getElementById(id);
+      if (select) {
+        select.addEventListener('change', e => {
+          document.documentElement.style.setProperty(cssVar, e.target.value);
+        });
+      }
+    });
   });
   </script>
 </head>
@@ -39,6 +48,26 @@
       </ul>
   </nav>
   <div class="container">
+    <div class="font-controls" aria-label="Text appearance controls">
+      <label for="font-size" style="margin-right:0.5em;">Font size:</label>
+      <select id="font-size">
+        <option value="1em">Normal</option>
+        <option value="1.2em">Large</option>
+        <option value="1.5em">Extra Large</option>
+      </select>
+      <label for="letter-spacing" style="margin-left:1em; margin-right:0.5em;">Letter spacing:</label>
+      <select id="letter-spacing">
+        <option value="0.03em">Normal</option>
+        <option value="0.08em">Wide</option>
+        <option value="0.15em">Extra Wide</option>
+      </select>
+      <label for="line-height" style="margin-left:1em; margin-right:0.5em;">Line spacing:</label>
+      <select id="line-height">
+        <option value="1.7">Normal</option>
+        <option value="2">Wide</option>
+        <option value="2.5">Extra Wide</option>
+      </select>
+    </div>
     <div class="theme-switcher" style="text-align:right; margin-bottom:0em;">
     <button id="theme-toggle" aria-label="Switch theme" class="theme-btn">🌙</button>
   </div>

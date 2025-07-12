@@ -7,18 +7,18 @@ Description: Bright, accessible palette for daylight viewing.
   1. Color Variables
   =========================== */
 :root {
-  --color-bg: #e3f2fd;
-  --color-fg: #0d3c47;
-  --color-card: #e3f2fd;
-  --color-border: #2a7fff;
-  --color-menu: #6c3fc5;
-  --color-menu-hover: #1565c0;
-  --color-link: #2a7fff;
-  --color-link-hover: #1565c0;
-  --color-title: #2a7fff;
-  --color-btn: #ffb300;
-  --color-btn-hover: #2a7fff;
-  --color-btn-text: #fff;
+  --color-bg: #ffffff;
+  --color-fg: #1a1a1a;
+  --color-card: #f5f7fa;
+  --color-border: #1a1a1a;
+  --color-menu: #005a9e;
+  --color-menu-hover: #003366;
+  --color-link: #005a9e;
+  --color-link-hover: #003366;
+  --color-title: #005a9e;
+  --color-btn: #005a9e;
+  --color-btn-hover: #003366;
+  --color-btn-text: #ffffff;
   --jp-cell-editor-background: var(--color-card) !important;
   --jp-cell-editor-active-background: var(--color-card) !important;
   --jp-layout-color0: var(--color-card) !important;
@@ -30,6 +30,16 @@ Description: Bright, accessible palette for daylight viewing.
   --jp-toolbar-background: var(--color-card) !important;
   --jp-notebook-select-background: var(--color-card) !important;
   --jp-output-area-background: var(--color-card) !important;
+  --font-size: 1.1em;
+  --letter-spacing: 0.03em;
+  --line-height: 1.7;
+}
+
+/* Add here: global typography controls */
+body, .container, .markdown-body {
+  font-size: var(--font-size);
+  letter-spacing: var(--letter-spacing);
+  line-height: var(--line-height);
 }
 
 /* ===========================
@@ -405,6 +415,12 @@ body.dark .wip-banner {
 /* ===========================
   10. Download Buttons
   =========================== */
+
+.download-btn,
+.theme-btn {
+  color: #fff !important; /* dark text for light backgrounds */
+}
+
 .chapter-downloads {
   margin-bottom: 2em;
   padding: 1em 0 0.5em 0;
@@ -421,7 +437,6 @@ body.dark .wip-banner {
   padding: 0.6em 1.5em;
   font-size: 1.1em;
   font-weight: 700;
-  color: var(--color-btn-text);
   background: var(--color-btn);
   border: 2px solid var(--color-btn);
   border-radius: 0.6em;
@@ -436,7 +451,7 @@ body.dark .wip-banner {
 .download-btn:focus {
   outline: 3px solid var(--color-btn-hover);
   outline-offset: 2px;
-  box-shadow: 0 0 0 4px rgba(255,183,77,0.18);
+  box-shadow: 0 0 0 4px rgba(0,90,158,0.18); /* Use --color-btn-hover for shadow */
 }
 .download-btn:hover, .download-btn:focus {
   background: var(--color-btn-hover) !important;
@@ -444,9 +459,6 @@ body.dark .wip-banner {
   color: var(--color-btn-text) !important;
   text-decoration: none;
   box-shadow: 0 4px 16px rgba(0,0,0,0.16);
-}
-body.dark .download-btn:hover, body.dark .download-btn:focus {
-  color: var(--color-btn-hover-text) !important;
 }
 
 .theme-btn {
