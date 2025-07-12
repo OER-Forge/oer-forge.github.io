@@ -1,14 +1,56 @@
+import sys
 import os
 import shutil
 import sqlite3
 from nbconvert import MarkdownExporter
-from nbconvert.preprocessors import ExtractOutputPreprocessor
+from nbconvert.preprocessors import ExecutePreprocessor, ExtractOutputPreprocessor
 from traitlets.config import Config
 
 DB_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "db", "sqlite.db")
 CONTENT_ROOT = "content"
 BUILD_ROOT = "build/files"
 LOG_DIR = "log"
+
+def check_venv_and_packages():
+    # Check if running inside .venv
+    venv_path = os.path.join(os.path.dirname(__file__), '..', '.venv')
+    in_venv = (
+        hasattr(sys, 'real_prefix') or
+        (hasattr(sys, 'base_prefix') and sys.base_prefix != sys.prefix) or
+        os.path.abspath(sys.prefix).startswith(os.path.abspath(venv_path))
+    )
+    if not in_venv:
+        print("[ERROR] You are not running inside the .venv environment.")
+        print(f"Activate it with: source {venv_path}/bin/activate")
+        sys.exit(1)
+
+    # Check for required packages
+    required = ["matplotlib", "numpy", "scipy"]
+    missing = []
+    for pkg in required:
+        try:
+            __import__(pkg)
+        except ImportError:
+            missing.append(pkg)
+    if missing:
+        print(f"[ERROR] Missing required packages: {', '.join(missing)}")
+        print(f"Install them with: pip install {' '.join(missing)}")
+        sys.exit(1)
+
+check_venv_and_packages()
+
+def execute_notebook(ipynb_path, executed_path, timeout=600):
+    import nbformat
+    import sys
+    with open(ipynb_path, "r", encoding="utf-8") as f:
+        nb = nbformat.read(f, as_version=4)
+    # Use your .venv kernel name here!
+    ep = ExecutePreprocessor(timeout=timeout, kernel_name="open-physics-ed-venv")
+    print(f"[DEBUG] Using Python executable: {sys.executable}")
+    ep.preprocess(nb, {'metadata': {'path': os.path.dirname(ipynb_path)}})
+    with open(executed_path, "w", encoding="utf-8") as f:
+        nbformat.write(nb, f)
+    return executed_path
 
 def get_db_connection(db_path=DB_PATH):
     return sqlite3.connect(db_path)
@@ -109,33 +151,56 @@ def update_image_refs_in_markdown(md_text, image_map):
     return md_text
 
 def ipynb_to_md(ipynb_path, output_path):
+    build_dir = get_build_dir_for_file(ipynb_path)
+    executed_ipynb_path = os.path.join(build_dir, os.path.basename(ipynb_path))
+
+    # Step 1: Execute notebook if not already present
+    if not os.path.exists(executed_ipynb_path):
+        print(f"[DEBUG] Executing notebook: {ipynb_path}")
+        execute_notebook(ipynb_path, executed_ipynb_path)
+        print(f"[DEBUG] Executed notebook saved at: {executed_ipynb_path}")
+    else:
+        print(f"[DEBUG] Using existing executed notebook: {executed_ipynb_path}")
+
+    # Step 2: Get DB info
     conn = get_db_connection()
     page = get_page_info(ipynb_path, conn)
     if not page:
         raise ValueError(f"No DB entry for notebook: {ipynb_path}")
     page_id = page[0]
-    build_dir = get_build_dir_for_file(ipynb_path)
 
-    # Configure nbconvert to extract images
+    # Step 3: Configure nbconvert for image extraction
     c = Config()
-    c.ExtractOutputPreprocessor.output_filename_template = os.path.join(build_dir, '{unique_key}_{cell_index}_{index}{extension}')
+    c.ExtractOutputPreprocessor.output_filename_template = '{unique_key}_{cell_index}_{index}{extension}'
     exporter = MarkdownExporter(config=c)
     exporter.register_preprocessor(ExtractOutputPreprocessor(), enabled=True)
 
-    body, resources = exporter.from_filename(ipynb_path)
+    print(f"[DEBUG] Exporting notebook to Markdown: {executed_ipynb_path}")
+    body, resources = exporter.from_filename(executed_ipynb_path)
+    print(f"[DEBUG] resources keys: {list(resources.keys())}")
+    print(f"[DEBUG] resources['outputs']: {resources.get('outputs', {})}")
 
-    # Optionally, update image references in markdown if needed
-    # (nbconvert should handle this, but you can post-process if you want custom paths)
-    # body = update_image_refs_in_markdown(body, image_map)
+    # Step 4: Save extracted images
+    outputs = resources.get('outputs', {})
+    for fname, data in outputs.items():
+        out_path = os.path.join(build_dir, fname)
+        print(f"[DEBUG] Saving image: {out_path} ({len(data)} bytes)")
+        # Optionally, print the first few bytes for confirmation
+        #print(f"[DEBUG] First 8 bytes: {data[:8]}")
+        with open(out_path, "wb") as imgf:
+            imgf.write(data)
 
+    # Step 5: Write Markdown file
     if output_path is None:
         output_filename = os.path.splitext(os.path.basename(ipynb_path))[0] + ".md"
     else:
         output_filename = os.path.basename(output_path)
     md_out_path = os.path.join(build_dir, output_filename)
+    print(f"[DEBUG] Writing Markdown file to: {md_out_path}")
     with open(md_out_path, "w", encoding="utf-8") as f:
         f.write(body)
-    copy_file(ipynb_path, os.path.join(build_dir, os.path.basename(ipynb_path)))
+
+    # Step 6: Update DB and log
     update_page_conversion_flag(page_id, "page_built_ok_md", conn)
     log_action(f"Converted {ipynb_path} to {md_out_path}")
     conn.close()
