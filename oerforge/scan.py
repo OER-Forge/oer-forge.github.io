@@ -60,6 +60,7 @@ def initialize_database():
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS page (
             page_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            page_filepath TEXT,
             page_filename TEXT,
             page_title TEXT,
             page_filetype TEXT,
@@ -81,12 +82,6 @@ def initialize_database():
             page_wcag_ok_tex BOOLEAN,
             page_wcag_ok_pdf BOOLEAN,
             page_wcag_ok_jupyter BOOLEAN,
-            page_filename_md TEXT,
-            page_filename_ipynb TEXT,
-            page_filename_docx TEXT,
-            page_filename_tex TEXT,
-            page_filename_pdf TEXT,
-            page_filename_jupyter TEXT,
             page_level INTEGER,  
             page_toc_id INTEGER,
             FOREIGN KEY(page_toc_id) REFERENCES toc(toc_id)
@@ -261,9 +256,10 @@ def populate_page_info_from_config():
         pages = []
         for item in items:
             if 'file' in item:
-                filename = item['file']
+                full_path = item['file']
                 title = item.get('title', '')
-                filetype = os.path.splitext(filename)[1][1:] if filename else ''
+                filetype = os.path.splitext(full_path)[1][1:] if full_path else ''
+                filepath, filename = os.path.split(full_path)
                 # Set convert flags based on filetype
                 convert_map = {
                     "ipynb": dict(md=1, ipynb=1, docx=1, tex=1, pdf=1, jupyter=1),
@@ -279,6 +275,7 @@ def populate_page_info_from_config():
                 convert_pdf = flags.get("pdf", 0)
                 convert_jupyter = flags.get("jupyter", 0)
                 page = {
+                    "filepath": filepath,
                     "filename": filename,
                     "title": title,
                     "filetype": filetype,
@@ -299,29 +296,27 @@ def populate_page_info_from_config():
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
     for page in page_entries:
-        # Look up toc_id for this filename
-        cursor.execute("SELECT toc_id FROM toc WHERE toc_filename = ?", (page['filename'],))
+        cursor.execute("SELECT toc_id FROM toc WHERE toc_filename = ?", (os.path.join(page['filepath'], page['filename']),))
         toc_row = cursor.fetchone()
         page_toc_id = toc_row[0] if toc_row else None
 
         cursor.execute(
             """
             INSERT INTO page (
-                page_filename, page_title, page_filetype,
+                page_filepath, page_filename, page_title, page_filetype,
                 page_convert_md, page_convert_ipynb, page_convert_docx,
                 page_convert_tex, page_convert_pdf, page_convert_jupyter,
                 page_toc_id
             )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """,
             (
-                page['filename'], page['title'], page['filetype'],
+                page['filepath'], page['filename'], page['title'], page['filetype'],
                 page['convert_md'], page['convert_ipynb'], page['convert_docx'],
                 page['convert_tex'], page['convert_pdf'], page['convert_jupyter'],
                 page_toc_id
             )
         )
-    
     conn.commit()
     conn.close()
 

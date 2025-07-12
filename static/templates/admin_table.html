@@ -1,4 +1,3 @@
-
 <!-- static/templates/admin_table.html: Enhanced WCAG-compliant HTML table template for admin pages -->
 <!DOCTYPE html>
 <html lang="en">
@@ -6,11 +5,35 @@
   <meta charset="UTF-8">
   <title>{{ table_name }}</title>
   <link id="theme-css" rel="stylesheet" href="../css/theme-light.css">
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const btn = document.getElementById('theme-toggle');
+    const link = document.getElementById('theme-css');
+    function updateButton() {
+      if (link.getAttribute('href').includes('light')) {
+        btn.textContent = '🌙';
+        btn.setAttribute('aria-label', 'Switch to Dark Mode');
+      } else {
+        btn.textContent = '☀️';
+        btn.setAttribute('aria-label', 'Switch to Light Mode');
+      }
+    }
+    btn.addEventListener('click', function() {
+      if (link.getAttribute('href').includes('light')) {
+        link.setAttribute('href', '../css/theme-dark.css');
+      } else {
+        link.setAttribute('href', '../css/theme-light.css');
+      }
+      updateButton();
+    });
+    updateButton(); // Ensure emoji is set on page load
+  });
+  </script>
 </head>
 <body>
   <div class="container">
     <div class="theme-switcher" style="text-align:right; margin-bottom:1em;">
-      <button id="theme-toggle" aria-label="Switch theme" style="padding:0.5em 1em; font-weight:700; border-radius:6px; border:2px solid #1a237e; background:#e0e7ef; color:#1a237e; cursor:pointer;">Switch to Dark Mode</button>
+      <button id="theme-toggle" aria-label="Switch theme" class="theme-btn">🌙</button>
     </div>
     <h1>Table: {{ table_name }}</h1>
     <a href="index.html" class="back-btn" aria-label="Back to table index">&larr; Back to Table Index</a>

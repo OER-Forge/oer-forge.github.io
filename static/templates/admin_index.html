@@ -5,25 +5,33 @@
   <title>Database Tables</title>
   <link id="theme-css" rel="stylesheet" href="../css/theme-light.css">
   <script>
-    // Theme switcher JS (same as table pages)
-    document.addEventListener('DOMContentLoaded', function() {
-      const btn = document.getElementById('theme-toggle');
-      const link = document.getElementById('theme-css');
-      btn.addEventListener('click', function() {
-        if (link.getAttribute('href').includes('light')) {
-          link.setAttribute('href', '../css/theme-dark.css');
-          btn.textContent = 'Switch to Light Mode';
-        } else {
-          link.setAttribute('href', '../css/theme-light.css');
-          btn.textContent = 'Switch to Dark Mode';
-        }
-      });
+  document.addEventListener('DOMContentLoaded', function() {
+    const btn = document.getElementById('theme-toggle');
+    const link = document.getElementById('theme-css');
+    function updateButton() {
+      if (link.getAttribute('href').includes('light')) {
+        btn.textContent = '🌙';
+        btn.setAttribute('aria-label', 'Switch to Dark Mode');
+      } else {
+        btn.textContent = '☀️';
+        btn.setAttribute('aria-label', 'Switch to Light Mode');
+      }
+    }
+    btn.addEventListener('click', function() {
+      if (link.getAttribute('href').includes('light')) {
+        link.setAttribute('href', '../css/theme-dark.css');
+      } else {
+        link.setAttribute('href', '../css/theme-light.css');
+      }
+      updateButton();
     });
+    updateButton(); // Ensure emoji is set on page load
+  });
   </script>
 </head>
 <body>
   <div class="theme-switcher" style="text-align:right; margin-bottom:1em;">
-    <button id="theme-toggle" aria-label="Switch theme" class="theme-btn">Switch to Dark Mode</button>
+    <button id="theme-toggle" aria-label="Switch theme" class="theme-btn">🌙</button>
   </div>
   <div class="container">
     <h1>Database Tables</h1>

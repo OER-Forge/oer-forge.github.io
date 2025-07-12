@@ -32,6 +32,11 @@ Description: Bright, accessible palette for daylight viewing.
   width: 100%;
 }
 
+.table-wrapper table th,
+.table-wrapper table td {
+  padding: 0.8em 1.2em; /* Increase these values for more space */
+}
+
 .table-wrapper table tr:nth-child(even) {
   background-color: #f5f7fa;
 }
@@ -293,6 +298,26 @@ body.dark .site-header {
 .site-nav li ul a:focus {
   background: var(--color-link);
   color: #fff;
+}
+
+.theme-btn {
+  position: fixed;
+  top: 1.5em;
+  right: 2em;
+  z-index: 9999;
+  width: 3.2em;
+  height: 3.2em;
+  font-size: 2em;
+  border-radius: 50%;
+  border: 2px solid #1a237e;
+  background: #e0e7ef;
+  color: #1a237e;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, color 0.2s, border 0.2s;
 }
 
 /* Card grid and cards */
