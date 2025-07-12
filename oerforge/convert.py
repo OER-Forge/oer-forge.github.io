@@ -17,6 +17,7 @@ import sys
 import os
 import shutil
 import sqlite3
+import subprocess
 from nbconvert import MarkdownExporter
 from nbconvert.preprocessors import ExecutePreprocessor, ExtractOutputPreprocessor
 from traitlets.config import Config
@@ -393,22 +394,25 @@ def ipynb_to_md(ipynb_path, output_path):
     print(f"[DEBUG] Markdown conversion complete for {ipynb_path}")
     return md_out_path
 
-import subprocess
-
 def md_to_docx(md_path, output_path):
     """
     Convert a Markdown file to a DOCX file using Pandoc.
     Updates the database to mark DOCX as built for the page.
     """
     print(f"[DEBUG] md_to_docx called for {md_path} -> {output_path}")
+    md_dir = os.path.dirname(md_path)
+    out_dir = os.path.dirname(output_path)
+    if out_dir and not os.path.exists(out_dir):
+        os.makedirs(out_dir, exist_ok=True)
+    abs_output_path = os.path.abspath(output_path)
     try:
         subprocess.run([
             "pandoc",
-            md_path,
+            os.path.basename(md_path),
             "-o",
-            output_path
-        ], check=True)
-        print(f"[OK] DOCX file created at: {output_path}")
+            abs_output_path
+        ], check=True, cwd=md_dir)
+        print(f"[OK] DOCX file created at: {abs_output_path}")
     except Exception as e:
         print(f"[ERROR] Pandoc conversion failed: {e}")
         return
