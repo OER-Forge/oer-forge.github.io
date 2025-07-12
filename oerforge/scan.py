@@ -328,18 +328,18 @@ def scan_all_images():
     db_path = os.path.join(project_root, 'db', 'sqlite.db')
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
-    cursor.execute("SELECT page_id, page_filename, page_filetype FROM page")
+    cursor.execute("SELECT page_id, page_filepath, page_filename, page_filetype FROM page")
     pages = cursor.fetchall()
     conn.close()
 
-    for page_id, filename, filetype in pages:
+    for page_id, filepath, filename, filetype in pages:
         if not filename or not filetype:
             continue
+        full_path = os.path.join(filepath, filename) if filepath else filename
         if filetype == "ipynb":
-            extract_image_info_from_ipynb(filename, page_id)
+            extract_image_info_from_ipynb(full_path, page_id)
         # elif filetype == "md":
-        #     extract_image_info_from_md(filename, page_id)
-        # Add more filetype handlers as needed   
+        #     extract_image_info_from_md(full_path, page_id)  
 
 def read_page_item_from_db(page_id):
     """

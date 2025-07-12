@@ -26,15 +26,29 @@ def fetch_table_data(db_path, table_name):
     return columns, rows
 
 def render_table_html(db_path, table_name):
-    """Render HTML for a table using the static template and WCAG-compliant CSS."""
     columns, rows = fetch_table_data(db_path, table_name)
     template_path = os.path.join("static", "templates", "admin_table.html")
     with open(template_path, "r", encoding="utf-8") as f:
         template = f.read()
-    # Simple template rendering: replace {{ table_name }}, {{ columns }}, {{ rows }}
     col_html = "".join(f"<th>{col}</th>" for col in columns)
+
+    # Detect binary columns: all values are 0 or 1
+    binary_cols = set()
+    for col_idx in range(len(columns)):
+        col_vals = [row[col_idx] for row in rows]
+        if all(val in (0, 1) for val in col_vals):
+            binary_cols.add(col_idx)
+
+    def render_cell(val, col_idx):
+        if col_idx in binary_cols:
+            if val == 1:
+                return "✔️"
+            elif val == 0:
+                return "❌"
+        return str(val)
+
     row_html = "".join(
-        f"<tr>{''.join(f'<td>{val}</td>' for val in row)}</tr>" for row in rows
+        f"<tr>{''.join(f'<td>{render_cell(row[i], i)}</td>' for i in range(len(columns)))}</tr>" for row in rows
     )
     html = template.replace("{{ table_name }}", table_name).replace("{{ columns }}", col_html).replace("{{ rows }}", row_html)
     return html
