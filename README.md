@@ -2,7 +2,7 @@
 
 ## Build System
 
-OERForge is a package with four modules (`oerforge/`):
+OERForge is a package with five modules (`oerforge/`):
 - `scan.py` - uses `_config.yml` and the files present in `content/` to populate an sqlite database with site and file info.
 - `convert.py` - draws from `sqlite.db` to convert files in `content/` and places them in `build/files` preserving the user's file structure
 - `make.py` - draws from `sqlite.db` to builds a temporary WCAG compliant site in `build`.

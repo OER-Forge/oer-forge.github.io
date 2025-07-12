@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Project Documentation</title>
+  <link id="theme-css" rel="stylesheet" href="css/theme-light.css">
+<link rel="stylesheet" href="css/theme-dark.css">
+<script src="js/accessiblity.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <h2 class="site-title">OER Forge Documentation</h2>
+  </header>
+  <div class="container">
+    <div class="font-controls" aria-label="Text appearance controls">
+  <fieldset>
+    <legend>Font family</legend>
+    <label><input type="radio" name="font-family" value="system-ui, sans-serif" checked>Default</label>
+    <label><input type="radio" name="font-family" value="serif">Serif</label>
+    <label><input type="radio" name="font-family" value="monospace">Monospace</label>
+  </fieldset>
+  <fieldset>
+    <legend>Font size</legend>
+    <label><input type="radio" name="font-size" value="1em" checked>Normal</label>
+    <label><input type="radio" name="font-size" value="1.2em">Large</label>
+    <label><input type="radio" name="font-size" value="1.5em">Extra Large</label>
+  </fieldset>
+  <fieldset>
+    <legend>Letter spacing</legend>
+    <label><input type="radio" name="letter-spacing" value="0.03em" checked>Normal</label>
+    <label><input type="radio" name="letter-spacing" value="0.08em">Wide</label>
+    <label><input type="radio" name="letter-spacing" value="0.15em">Extra Wide</label>
+  </fieldset>
+  <fieldset>
+    <legend>Line spacing</legend>
+    <label><input type="radio" name="line-height" value="1.7" checked>Normal</label>
+    <label><input type="radio" name="line-height" value="2">Wide</label>
+    <label><input type="radio" name="line-height" value="2.5">Extra Wide</label>
+  </fieldset>
+</div>
+    <div class="theme-switcher" style="text-align:right; margin-bottom:0em;">
+  <button id="theme-toggle" aria-label="Switch theme" class="theme-btn">🌙</button>
+</div>
+    <div class="readme-content">
+      <h1>OERForge</h1>
+<br>
+<h2>Build System</h2>
+<br>
+<p>OERForge is a package with five modules (`oerforge/`):</p>
+<ul><li>`scan.py` - uses `_config.yml` and the files present in `content/` to populate an sqlite database with site and file info.</li></ul>
+<ul><li>`convert.py` - draws from `sqlite.db` to convert files in `content/` and places them in `build/files` preserving the user&#x27;s file structure</li></ul>
+<ul><li>`make.py` - draws from `sqlite.db` to builds a temporary WCAG compliant site in `build`.</li></ul>
+<ul><li>`verify.py` - reviews `build` in the context of WCAG Guidelines to generate a report and update pages on the site indicating level of compliance.</li></ul>
+<ul><li>`confirm.py` - integrates the WCAG reporting information into the site and rebuilds as a public site in `docs/`</li></ul>
+<br>
+<h3>Orchestration</h3>
+<br>
+<p>OERForge uses `build.py` to orchestrate the build process.</p>
+<ul><li>`build.py` - uses functions from each module to construct the build in `docs/`</li></ul>
+<br>
+<p>&lt;img src=&quot;documentation/img/overview.png&quot; alt=&quot;Overview of the OERForge Build Process&quot; width=&quot;600&quot;&gt;</p>
+<br>
+<h3>Build System Punchlist</h3>
+<br>
+<ul><li>[X] `scan.py` can read `content/` and `_config.yml` to populate `sqlite.db`</li></ul>
+<ul><li>[ ] `convert.py` can convert files in `content/` to their appropriate forms</li></ul>
+<p>    - [X] `convert.py` can convert `.ipynb` to `.md` with images</p>
+<p>    - [X] `convert.py` can convert `.ipynb` to `.docx` with images</p>
+<p>    - [ ] `convert.py` can convert `.ipynb` to `.tex` with images</p>
+<p>    - [ ] `convert.py` can convert `.ipynb` to `.pdf` with images</p>
+<p>    - [ ] `convert.py` can convert `.docx` to `.md` with images</p>
+<p>    - [ ] `convert.py` can convert `.docx` to `.tex` with images</p>
+<p>    - [ ] `convert.py` can convert `.docx` to `.pdf` with images</p>
+<p>    - [ ] `convert.py` can convert `.md` to `.docx` with images</p>
+<p>    - [ ] `convert.py` can convert `.md` to `.tex` with images</p>
+<p>    - [ ] `convert.py` can convert `.md` to `.pdf` with images</p>
+<ul><li>[ ] `convert.py` can write location of converted files to `sqlite.db`</li></ul>
+<ul><li>[ ] `make.py` can build the initial WCAG compliant site to `build/`</li></ul>
+<ul><li>[ ] `verify.py` can traverse `build/` to indicate which page builds are ok</li></ul>
+<ul><li>[ ] `verify.py` can write build results to `sqlite.db` for each page</li></ul>
+<ul><li>[ ] `verify.py` can read WCAG guidelines in a parse-able way</li></ul>
+<ul><li>[ ] `verify.py` can traverse `build/` to evaluate level of WCAG compliance</li></ul>
+<ul><li>[ ] `verify.py` can write ECAG compliance levels to `sqlite.db` for each page</li></ul>
+<ul><li>[ ] `confirm.py` can read compliance levels and modify page to indicate current level</li></ul>
+<ul><li>[ ] `confirm.py` can generate a WCAG report on site and individual pages</li></ul>
+<ul><li>[ ] `confirm.py` can build public site to `docs/`</li></ul>
+    </div>
+  </div>
+</body>
+</html>
