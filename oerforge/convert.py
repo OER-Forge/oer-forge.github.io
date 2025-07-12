@@ -393,17 +393,55 @@ def ipynb_to_md(ipynb_path, output_path):
     print(f"[DEBUG] Markdown conversion complete for {ipynb_path}")
     return md_out_path
 
-# --- Conversion Stubs ---
+import subprocess
+
+def md_to_docx(md_path, output_path):
+    """
+    Convert a Markdown file to a DOCX file using Pandoc.
+    Updates the database to mark DOCX as built for the page.
+    """
+    print(f"[DEBUG] md_to_docx called for {md_path} -> {output_path}")
+    try:
+        subprocess.run([
+            "pandoc",
+            md_path,
+            "-o",
+            output_path
+        ], check=True)
+        print(f"[OK] DOCX file created at: {output_path}")
+    except Exception as e:
+        print(f"[ERROR] Pandoc conversion failed: {e}")
+        return
+
+    # Update DB: mark DOCX as built for this page
+    conn = get_db_connection()
+    dir_path, filename = os.path.split(md_path)
+    cursor = conn.cursor()
+    cursor.execute(
+        "SELECT page_id FROM page WHERE page_filepath=? AND page_filename=?",
+        (dir_path, filename)
+    )
+    result = cursor.fetchone()
+    if result:
+        page_id = result[0]
+        update_page_conversion_flag(page_id, "page_built_ok_docx", conn)
+        log_action(f"Converted {md_path} to {output_path}")
+    else:
+        print(f"[WARNING] No DB entry found for markdown file: {md_path}")
+    conn.close()
 
 def ipynb_to_docx(ipynb_path, output_path):
     """
     Convert a Jupyter notebook to a DOCX file.
-    (Currently not implemented; uses Markdown as intermediate.)
+    Uses Markdown as intermediate.
     """
     print(f"[DEBUG] ipynb_to_docx called for {ipynb_path} -> {output_path}")
+    # Step 1: Convert notebook to Markdown
     md_path = ipynb_to_md(ipynb_path, output_path.replace(".docx", ".md"))
-    # Use Pandoc here (not implemented)
-    pass
+    # Step 2: Convert Markdown to DOCX
+    md_to_docx(md_path, output_path)
+
+# --- Conversion Stubs ---
 
 def ipynb_to_tex(ipynb_path, output_path):
     """
@@ -419,14 +457,6 @@ def ipynb_to_pdf(ipynb_path, output_path):
     (Stub; not implemented.)
     """
     print(f"[DEBUG] ipynb_to_pdf called for {ipynb_path} -> {output_path}")
-    pass
-
-def md_to_docx(md_path, output_path):
-    """
-    Convert a Markdown file to a DOCX file.
-    (Stub; not implemented.)
-    """
-    print(f"[DEBUG] md_to_docx called for {md_path} -> {output_path}")
     pass
 
 def md_to_tex(md_path, output_path):

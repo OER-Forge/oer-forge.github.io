@@ -8,7 +8,7 @@ Purpose: Handles command-line flags and calls modules to build the site. This sc
 - Log all actions and errors.
 - Use type hints and clear docstrings for all functions.
 """
-from oerforge.convert import ipynb_to_md
+from oerforge.convert import ipynb_to_md, ipynb_to_docx
 from oerforge import scan
 from oerforge_admin import viewdb
 
@@ -18,6 +18,7 @@ def main():
     ipynb_path = "content/notebooks/1_mechanics/lagrangian/activity-lagrange_2.ipynb"
     output_path = None  # Not used in current ipynb_to_md signature
     output_dir = "build/admin"
+    docx_path = "build/files/notebooks/1_mechanics/lagrangian/activity-lagrange_2.docx"
     
     print("[INFO] Initializing and populating database...")
     scan.initialize_database()
@@ -31,6 +32,10 @@ def main():
         print("[DEBUG] About to call ipynb_to_md")
         md_path = ipynb_to_md(ipynb_path, output_path)
         print(f"[OK] Markdown file created at: {md_path}")
+
+        print("[DEBUG] About to call ipynb_to_docx")
+        ipynb_to_docx(ipynb_path, docx_path)
+        print(f"[OK] DOCX file created at: {docx_path}")
     except Exception as e:
         print(f"[ERROR] {e}")
         
