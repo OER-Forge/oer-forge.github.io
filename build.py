@@ -19,7 +19,6 @@ def main():
     output_path = None  # Not used in current ipynb_to_md signature
     output_dir = "build/admin"
     
-    """Main entry point for build orchestration."""
     print("[INFO] Initializing and populating database...")
     scan.initialize_database()
     scan.populate_site_info()
