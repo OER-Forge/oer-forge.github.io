@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Database Tables</title>
+  <title>Admin</title>
   <link id="theme-css" rel="stylesheet" href="../css/theme-light.css">
   <script>
   document.addEventListener('DOMContentLoaded', function() {
@@ -30,16 +30,23 @@
   </script>
 </head>
 <body>
-  <div class="theme-switcher" style="text-align:right; margin-bottom:1em;">
-    <button id="theme-toggle" aria-label="Switch theme" class="theme-btn">🌙</button>
-  </div>
-  <div class="container">
-    <h1>Database Tables</h1>
-    <nav aria-label="Admin Table Navigation">
+  <header class="site-header">
+    <h2 class="site-title">OER Forge Admin</h2>
+  </header>
+  <nav class="site-nav" aria-label="Admin Table Navigation">
       <ul class="site-menu">
         {{ table_links }}
       </ul>
-    </nav>
+  </nav>
+  <div class="container">
+    <div class="theme-switcher" style="text-align:right; margin-bottom:0em;">
+    <button id="theme-toggle" aria-label="Switch theme" class="theme-btn">🌙</button>
+  </div>
+    <h1>Administrative</h1>
+      <p>Welcome to the OER Forge administrative interface. Use the links above to manage database tables.</p>
+      <ul class="admin-table-list">
+        {{ table_links }}
+      </ul>
   </div>
 </body>
 </html>

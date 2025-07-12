@@ -31,12 +31,20 @@
   </script>
 </head>
 <body>
+  <header class="site-header">
+    <h2 class="site-title">OER Forge Admin - {{ table_name }}</h2>
+  </header>
+  <nav class="site-nav" aria-label="Admin Table Navigation">
+      <ul class="site-menu">
+        {{ table_links }}
+      </ul>
+  </nav>
   <div class="container">
     <div class="theme-switcher" style="text-align:right; margin-bottom:1em;">
       <button id="theme-toggle" aria-label="Switch theme" class="theme-btn">🌙</button>
     </div>
+    <a href="index.html" class="download-btn" aria-label="Back to table index">&larr; Back to Table Index</a>
     <h1>Table: {{ table_name }}</h1>
-    <a href="index.html" class="back-btn" aria-label="Back to table index">&larr; Back to Table Index</a>
     <div class="table-wrapper">
       <table>
         <thead>

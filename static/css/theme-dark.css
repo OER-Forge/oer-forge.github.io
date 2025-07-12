@@ -239,6 +239,7 @@ body.dark .site-header {
   transition: background 0.2s, color 0.2s;
   display: block;
 }
+}
 .site-nav a:hover,
 .site-nav a:focus {
   background: var(--color-menu-hover);
@@ -280,17 +281,17 @@ body.dark .site-header {
 }
 
 .theme-btn {
-  position: fixed;
+  position: sticky;
   top: 1.5em;
   right: 2em;
   z-index: 9999;
-  width: 3.2em;
-  height: 3.2em;
+  width: 2.2em;
+  height: 2.2em;
   font-size: 2em;
   border-radius: 50%;
-  border: 2px solid #1a237e;
-  background: #e0e7ef;
-  color: #1a237e;
+  border: 2px solid var(--color-link);
+  background: var(--color-card);
+  color: var(--color-link);
   box-shadow: 0 2px 12px rgba(0,0,0,0.12);
   cursor: pointer;
   display: flex;
@@ -520,6 +521,12 @@ nav {
   line-height: 1.2;
   letter-spacing: 0.01em;
 }
+body.dark .download-btn,
+html.dark .download-btn {
+  background: var(--color-btn);
+  border-color: var(--color-btn);
+  color: var(--color-btn-text);
+}
 .download-btn:focus {
   outline: 3px solid var(--color-btn-hover);
   outline-offset: 2px;
@@ -532,10 +539,6 @@ nav {
   color: var(--color-btn-hover-text) !important;
   text-decoration: none;
   box-shadow: 0 4px 16px rgba(0,0,0,0.28);
-}
-
-body.dark .download-btn:hover, body.dark .download-btn:focus {
-  color: var(--color-btn-hover-text) !important;
 }
 
 /* Ensure images with transparency and black text remain visible in dark mode */
