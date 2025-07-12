@@ -1,5 +1,6 @@
 import os
-import html
+import re
+import markdown
 import shutil
 
 # Paths configuration
@@ -42,35 +43,27 @@ def build_index_from_readme(readme_path, output_path, template_path):
     with open(readme_path, "r", encoding="utf-8") as f:
         md_content = f.read()
 
-    def simple_md_to_html(md):
-        """
-        Convert a subset of Markdown to HTML.
-        Supports headers (#, ##, ###), unordered lists (-), code blocks (```), and paragraphs.
-        """
-        lines = md.splitlines()
-        html_lines = []
-        for line in lines:
-            line = html.escape(line)
-            if line.startswith("# "):
-                html_lines.append(f"<h1>{line[2:].strip()}</h1>")
-            elif line.startswith("## "):
-                html_lines.append(f"<h2>{line[3:].strip()}</h2>")
-            elif line.startswith("### "):
-                html_lines.append(f"<h3>{line[4:].strip()}</h3>")
-            elif line.startswith("- "):
-                html_lines.append(f"<li>{line[2:].strip()}</li>")
-            elif line.startswith("```"):
-                html_lines.append("<pre>")
-            elif line == "":
-                html_lines.append("<br>")
-            else:
-                html_lines.append(f"<p>{line}</p>")
-        html_str = "\n".join(html_lines)
-        html_str = html_str.replace("<li>", "<ul><li>").replace("</li>", "</li></ul>")
-        html_str = html_str.replace("</ul><ul>", "")
-        return html_str
 
-    html_content = simple_md_to_html(md_content)
+    def copy_image_assets(md_content, docs_dir):
+        # Find all <img src="..."> and ![alt](url) patterns
+        img_srcs = re.findall(r'<img[^>]+src="([^"]+)"', md_content)
+        img_md_srcs = re.findall(r'!\[[^\]]*\]\(([^)]+)\)', md_content)
+        all_imgs = set(img_srcs + img_md_srcs)
+        for img_path in all_imgs:
+            src_path = img_path
+            dest_path = os.path.join(docs_dir, img_path)
+            dest_dir = os.path.dirname(dest_path)
+            if os.path.exists(src_path):
+                os.makedirs(dest_dir, exist_ok=True)
+                shutil.copy2(src_path, dest_path)
+            else:
+                print(f"[WARN] Image not found: {src_path}")
+
+    # Copy image assets referenced in README
+    copy_image_assets(md_content, "docs")
+
+    # Use markdown package for full markdown support
+    html_content = markdown.markdown(md_content, extensions=['fenced_code', 'codehilite'])
 
     with open(template_path, "r", encoding="utf-8") as f:
         template = f.read()

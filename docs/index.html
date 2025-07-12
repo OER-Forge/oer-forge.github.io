@@ -5,7 +5,7 @@
   <title>Project Documentation</title>
   <link id="theme-css" rel="stylesheet" href="css/theme-light.css">
 <link rel="stylesheet" href="css/theme-dark.css">
-<script src="js/accessiblity.js"></script>
+<script src="js/main.js"></script>
 </head>
 <body>
   <header class="site-header">
@@ -42,48 +42,58 @@
   <button id="theme-toggle" aria-label="Switch theme" class="theme-btn">🌙</button>
 </div>
     <div class="readme-content">
-      <h1>OERForge</h1>
-<br>
-<h2>Build System</h2>
-<br>
-<p>OERForge is a package with five modules (`oerforge/`):</p>
-<ul><li>`scan.py` - uses `_config.yml` and the files present in `content/` to populate an sqlite database with site and file info.</li></ul>
-<ul><li>`convert.py` - draws from `sqlite.db` to convert files in `content/` and places them in `build/files` preserving the user&#x27;s file structure</li></ul>
-<ul><li>`make.py` - draws from `sqlite.db` to builds a temporary WCAG compliant site in `build`.</li></ul>
-<ul><li>`verify.py` - reviews `build` in the context of WCAG Guidelines to generate a report and update pages on the site indicating level of compliance.</li></ul>
-<ul><li>`confirm.py` - integrates the WCAG reporting information into the site and rebuilds as a public site in `docs/`</li></ul>
-<br>
+      <h1>OER-Forge</h1>
+<p>OER-Forge is a suite of tools to help authors create WCAG-compliant Open Educational Resources (OERs). The project is currently under development.</p>
+<p>Below we describe the build system and its components; note that only <code>scan.py</code> and parts of <code>convert.py</code> are currently functional. And <code>convert.py</code> currently only supports conversion of Jupyter Notebooks (<code>.ipynb</code>) to Markdown (<code>.md</code>) and Word (<code>.docx</code>).</p>
+<h2>OER-Forge Build System</h2>
+<p>OER-Forge is a Python package with five modules (<code>oerforge/</code>):</p>
+<ul>
+<li><code>scan.py</code> - uses <code>_config.yml</code> and the files present in <code>content/</code> to populate an sqlite database with site and file info.</li>
+<li><code>convert.py</code> - draws from <code>sqlite.db</code> to convert files in <code>content/</code> and places them in <code>build/files/</code> preserving the user's file structure</li>
+<li><code>make.py</code> - draws from <code>sqlite.db</code> to builds a temporary WCAG compliant site in <code>build/</code>.</li>
+<li><code>verify.py</code> - reviews <code>build/</code> in the context of WCAG Guidelines to generate a report and update pages on the site indicating level of compliance.</li>
+<li><code>confirm.py</code> - integrates the WCAG reporting information into the site and rebuilds as a public site in <code>docs/</code></li>
+</ul>
 <h3>Orchestration</h3>
-<br>
-<p>OERForge uses `build.py` to orchestrate the build process.</p>
-<ul><li>`build.py` - uses functions from each module to construct the build in `docs/`</li></ul>
-<br>
-<p>&lt;img src=&quot;documentation/img/overview.png&quot; alt=&quot;Overview of the OERForge Build Process&quot; width=&quot;600&quot;&gt;</p>
-<br>
+<p>OER-Forge uses <code>build.py</code> to orchestrate the build process.
+- <code>build.py</code> - uses functions from each module to construct the build in <code>build/</code></p>
+<h3>Overview of the Build Process</h3>
+<p>The following diagram illustrates the envisioned build process:</p>
+<ol>
+<li>Starting with the <code>content/</code> directory and <code>_config.yml</code>, <code>scan.py</code> populates <code>sqlite.db</code>. This includes metadata about the site and the files to be processed as well as their locations. Figures and images are also identified and catalogued. <strong>This is functional.</strong></li>
+<li><code>convert.py</code> reads from <code>sqlite.db</code> to convert files in <code>content/</code> to their appropriate formats, placing them in <code>build/files/</code> while preserving the user's file structure. The tools in <code>convert.py</code> currently support conversion of Jupyter Notebooks (<code>.ipynb</code>) to Markdown (<code>.md</code>) and Word (<code>.docx</code>), and will be extended to support additional formats. The module <code>convert.py</code> uses the file extensions to determine the appropriate conversion tools and which formats to convert to (i.e., it will not attempt to convert a <code>.md</code> file to <code>.md</code> or a <code>.docx</code> file to <code>.ipynb</code>). <strong>This is partially functional.</strong></li>
+<li><code>make.py</code> reads from <code>sqlite.db</code> to build a temporary WCAG compliant site in <code>build/</code>. <strong>This is not yet functional.</strong></li>
+<li><code>verify.py</code> reviews <code>build/</code> in the context of WCAG Guidelines to generate a report and update pages on the site indicating level of compliance. <strong>This is not yet functional.</strong></li>
+<li><code>confirm.py</code> integrates the WCAG reporting information into the site and rebuilds as a public site in <code>docs/</code>. <strong>This is not yet functional.</strong></li>
+</ol>
+<p><img src="documentation/img/overview.png" alt="Overview of the OERForge Build Process showing the flow of information through the modules to produce a WCAG compliant site" width="600"></p>
 <h3>Build System Punchlist</h3>
-<br>
-<ul><li>[X] `scan.py` can read `content/` and `_config.yml` to populate `sqlite.db`</li></ul>
-<ul><li>[ ] `convert.py` can convert files in `content/` to their appropriate forms</li></ul>
-<p>    - [X] `convert.py` can convert `.ipynb` to `.md` with images</p>
-<p>    - [X] `convert.py` can convert `.ipynb` to `.docx` with images</p>
-<p>    - [ ] `convert.py` can convert `.ipynb` to `.tex` with images</p>
-<p>    - [ ] `convert.py` can convert `.ipynb` to `.pdf` with images</p>
-<p>    - [ ] `convert.py` can convert `.docx` to `.md` with images</p>
-<p>    - [ ] `convert.py` can convert `.docx` to `.tex` with images</p>
-<p>    - [ ] `convert.py` can convert `.docx` to `.pdf` with images</p>
-<p>    - [ ] `convert.py` can convert `.md` to `.docx` with images</p>
-<p>    - [ ] `convert.py` can convert `.md` to `.tex` with images</p>
-<p>    - [ ] `convert.py` can convert `.md` to `.pdf` with images</p>
-<ul><li>[ ] `convert.py` can write location of converted files to `sqlite.db`</li></ul>
-<ul><li>[ ] `make.py` can build the initial WCAG compliant site to `build/`</li></ul>
-<ul><li>[ ] `verify.py` can traverse `build/` to indicate which page builds are ok</li></ul>
-<ul><li>[ ] `verify.py` can write build results to `sqlite.db` for each page</li></ul>
-<ul><li>[ ] `verify.py` can read WCAG guidelines in a parse-able way</li></ul>
-<ul><li>[ ] `verify.py` can traverse `build/` to evaluate level of WCAG compliance</li></ul>
-<ul><li>[ ] `verify.py` can write ECAG compliance levels to `sqlite.db` for each page</li></ul>
-<ul><li>[ ] `confirm.py` can read compliance levels and modify page to indicate current level</li></ul>
-<ul><li>[ ] `confirm.py` can generate a WCAG report on site and individual pages</li></ul>
-<ul><li>[ ] `confirm.py` can build public site to `docs/`</li></ul>
+<ul>
+<li>[X] <code>scan.py</code> can read <code>content/</code> and <code>_config.yml</code> to populate <code>sqlite.db</code></li>
+<li>[ ] <code>convert.py</code> can convert files in <code>content/</code> to their appropriate forms<ul>
+<li>[X] <code>convert.py</code> can convert <code>.ipynb</code> to <code>.md</code> with images</li>
+<li>[X] <code>convert.py</code> can convert <code>.ipynb</code> to <code>.docx</code> with images</li>
+<li>[ ] <code>convert.py</code> can convert <code>.ipynb</code> to <code>.tex</code> with images</li>
+<li>[ ] <code>convert.py</code> can convert <code>.ipynb</code> to <code>.pdf</code> with images</li>
+<li>[ ] <code>convert.py</code> can convert <code>.docx</code> to <code>.md</code> with images</li>
+<li>[ ] <code>convert.py</code> can convert <code>.docx</code> to <code>.tex</code> with images</li>
+<li>[ ] <code>convert.py</code> can convert <code>.docx</code> to <code>.pdf</code> with images</li>
+<li>[ ] <code>convert.py</code> can convert <code>.md</code> to <code>.docx</code> with images</li>
+<li>[ ] <code>convert.py</code> can convert <code>.md</code> to <code>.tex</code> with images</li>
+<li>[ ] <code>convert.py</code> can convert <code>.md</code> to <code>.pdf</code> with images</li>
+</ul>
+</li>
+<li>[ ] <code>convert.py</code> can write location of converted files to <code>sqlite.db</code></li>
+<li>[ ] <code>make.py</code> can build the initial WCAG compliant site to <code>build/</code></li>
+<li>[ ] <code>verify.py</code> can traverse <code>build/</code> to indicate which page builds are ok</li>
+<li>[ ] <code>verify.py</code> can write build results to <code>sqlite.db</code> for each page</li>
+<li>[ ] <code>verify.py</code> can read WCAG guidelines in a parse-able way</li>
+<li>[ ] <code>verify.py</code> can traverse <code>build/</code> to evaluate level of WCAG compliance</li>
+<li>[ ] <code>verify.py</code> can write ECAG compliance levels to <code>sqlite.db</code> for each page</li>
+<li>[ ] <code>confirm.py</code> can read compliance levels and modify page to indicate current level</li>
+<li>[ ] <code>confirm.py</code> can generate a WCAG report on site and individual pages</li>
+<li>[ ] <code>confirm.py</code> can build public site to <code>docs/</code></li>
+</ul>
     </div>
   </div>
 </body>
