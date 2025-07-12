@@ -32,6 +32,13 @@ Description: Bright, accessible palette for daylight viewing.
   width: 100%;
 }
 
+.table-wrapper table tr:nth-child(even) {
+  background-color: #f5f7fa;
+}
+.table-wrapper table tr:nth-child(odd) {
+  background-color: #ffffff;
+}
+
 
 /*
   =============================

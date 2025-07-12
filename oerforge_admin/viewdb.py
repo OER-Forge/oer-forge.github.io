@@ -1,5 +1,6 @@
 import os
 import sqlite3
+import shutil
 
 def get_table_names(db_path):
     """Return a list of table names in the sqlite database."""
@@ -49,8 +50,25 @@ def write_table_html(table_name, html, output_dir):
 
     print(f"[INFO] Wrote {out_path}")
 
+def copy_css(src_css_list, dest_css_dir):
+    """Always copy all CSS files in src_css_list to build/css, overwriting if needed."""
+    if not os.path.exists(dest_css_dir):
+        os.makedirs(dest_css_dir, exist_ok=True)
+    for src_css in src_css_list:
+        dest_css = os.path.join(dest_css_dir, os.path.basename(src_css))
+        shutil.copy2(src_css, dest_css)
+        print(f"[INFO] Copied CSS to {dest_css}")
+
 def generate_all_table_webpages(db_path, output_dir):
     """Generate a webpage for each table in the database and a consistent index page."""
+    # Ensure all required CSS files are copied
+    src_css_list = [
+        os.path.join("static", "css", "theme-light.css"),
+        os.path.join("static", "css", "theme-dark.css"),
+    ]
+    dest_css_dir = os.path.join("build", "css")
+    copy_css(src_css_list, dest_css_dir)
+
     tables = get_table_names(db_path)
     # Generate table pages
     for table_name in tables:
@@ -73,9 +91,10 @@ def generate_all_table_webpages(db_path, output_dir):
 if __name__ == "__main__":
     import sys
     db_path = "db/sqlite.db"
-    if len(sys.argv) == 2 and sys.argv[1] == "--all":
+    if len(sys.argv) == 1:
+        # No arguments: build all tables and index
         generate_all_table_webpages(db_path, "build/admin")
-    elif len(sys.argv) >= 2:
+    elif len(sys.argv) == 2:
         table_name = sys.argv[1]
         tables = get_table_names(db_path)
         if table_name not in tables:
@@ -85,5 +104,5 @@ if __name__ == "__main__":
         print(html)
         write_table_html(table_name, html, "build/admin")
     else:
-        print("Usage: python oerforge_admin/viewdb.py <table_name> | --all")
+        print("Usage: python oerforge_admin/viewdb.py [<table_name>]")
         sys.exit(1)

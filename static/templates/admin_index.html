@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Database Tables</title>
-  <link id="theme-css" rel="stylesheet" href="../css/admin-light.css">
+  <link id="theme-css" rel="stylesheet" href="../css/theme-light.css">
   <script>
     // Theme switcher JS (same as table pages)
     document.addEventListener('DOMContentLoaded', function() {
@@ -11,10 +11,10 @@
       const link = document.getElementById('theme-css');
       btn.addEventListener('click', function() {
         if (link.getAttribute('href').includes('light')) {
-          link.setAttribute('href', '../css/admin-dark.css');
+          link.setAttribute('href', '../css/theme-dark.css');
           btn.textContent = 'Switch to Light Mode';
         } else {
-          link.setAttribute('href', '../css/admin-light.css');
+          link.setAttribute('href', '../css/theme-light.css');
           btn.textContent = 'Switch to Dark Mode';
         }
       });
