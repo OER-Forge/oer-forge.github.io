@@ -79,6 +79,13 @@ def populate_site_info_from_config(config_path):
     site = config.get('site', {})
     footer = config.get('footer', {})
     theme = site.get('theme', {})
+    # Read header.html contents
+    header_html_path = os.path.join(project_root, 'static', 'templates', 'header.html')
+    try:
+        with open(header_html_path, 'r', encoding='utf-8') as hf:
+            header_html = hf.read()
+    except Exception:
+        header_html = ''
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
     cursor.execute("DELETE FROM site_info")
@@ -99,7 +106,7 @@ def populate_site_info_from_config(config_path):
             site.get('language', ''),
             site.get('github_url', ''),
             footer.get('text', ''),
-            site.get('header', '')
+            header_html
         )
     )
     conn.commit()
