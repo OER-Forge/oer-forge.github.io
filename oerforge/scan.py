@@ -86,6 +86,7 @@ def populate_site_info_from_config(config_path):
             header_html = hf.read()
     except Exception:
         header_html = ''
+    print('[DEBUG] header_html read from file (first 500 chars):', repr(header_html)[:500])
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
     cursor.execute("DELETE FROM site_info")

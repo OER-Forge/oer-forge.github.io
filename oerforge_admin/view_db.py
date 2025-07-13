@@ -1,3 +1,11 @@
+"""
+view_db.py: CLI/utility for viewing asset database contents (files/pages_files only).
+Intended for future web admin interface.
+"""
+import os
+import sqlite3
+from tabulate import tabulate
+
 # --- Site info DB access ---
 def get_site_info():
     """
@@ -7,20 +15,13 @@ def get_site_info():
     db_path = get_db_path()
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
-    cursor.execute("SELECT title, author, description, logo, favicon, theme_default, theme_light, theme_dark, language, github_url, footer_text FROM site_info LIMIT 1")
+    cursor.execute("SELECT title, author, description, logo, favicon, theme_default, theme_light, theme_dark, language, github_url, footer_text, header FROM site_info LIMIT 1")
     row = cursor.fetchone()
     conn.close()
     if row:
-        keys = ["title", "author", "description", "logo", "favicon", "theme_default", "theme_light", "theme_dark", "language", "github_url", "footer_text"]
+        keys = ["title", "author", "description", "logo", "favicon", "theme_default", "theme_light", "theme_dark", "language", "github_url", "footer_text", "header"]
         return dict(zip(keys, row))
     return {}
-"""
-view_db.py: CLI/utility for viewing asset database contents (files/pages_files only).
-Intended for future web admin interface.
-"""
-import os
-import sqlite3
-from tabulate import tabulate
 
 def get_db_path():
     project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
