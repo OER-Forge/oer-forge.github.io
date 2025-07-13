@@ -109,12 +109,12 @@ def render_page(title: str, content: str, header: str, footer: str) -> str:
         '<meta name="keywords" content="math, physics, open, oer">\n'
         '<meta name="robots" content="noindex,nofollow">\n'
     )
-    # Add CSS and JS links (only once, correct relative path)
+    # Add CSS and JS links (use /css/ and /js/ to match build output)
     css_links = (
-        '<link rel="stylesheet" href="static/css/theme-light.css" id="theme-light">\n'
-        '<link rel="stylesheet" href="static/css/theme-dark.css" id="theme-dark" disabled>\n'
+        '<link rel="stylesheet" href="./css/theme-light.css" id="theme-light">\n'
+        '<link rel="stylesheet" href="./css/theme-dark.css" id="theme-dark" disabled>\n'
     )
-    js_links = '<script src="static/js/main.js" defer></script>\n'
+    js_links = '<script src="./js/main.js" defer></script>\n'
     # Insert CSS/JS into template only if not already present
     html = template.replace('{{ title }}', title)
     html = html.replace('{{ content }}', content)
@@ -124,7 +124,7 @@ def render_page(title: str, content: str, header: str, footer: str) -> str:
     # Remove any existing theme CSS/JS links to avoid duplicates
     html = re.sub(r'<link[^>]+id="theme-light"[^>]*>', '', html)
     html = re.sub(r'<link[^>]+id="theme-dark"[^>]*>', '', html)
-    html = re.sub(r'<script[^>]+src="static/js/main.js"[^>]*></script>', '', html)
+    html = re.sub(r'<script[^>]+src="/js/main.js"[^>]*></script>', '', html)
     # Insert CSS/JS before closing </head>
     html = html.replace('</head>', f'{css_links}{js_links}</head>')
     return html
