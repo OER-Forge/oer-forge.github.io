@@ -48,12 +48,30 @@ __all__ = [
     "slugify"
 ]
 
+def fix_image_paths(html_body):
+    # Replace any src="...assets/..." with src="files/assets/..."
+    def replacer(match):
+        before = match.group(1)
+        path = match.group(2)
+        # Remove any leading ./ or ../ from the path
+        path = re.sub(r'^(\.\./|\./)+', '', path)
+        # Always prefix with files/
+        new_path = f'files/{path}'
+        return f'<img{before}src="{new_path}"'
+    html_body = re.sub(
+        r'<img([^>]+)src=["\']((?:\.\./|\./)?assets/[^"\']+)["\']',
+        replacer,
+        html_body
+    )
+    return html_body
+
 # --- Markdown to HTML Conversion ---
 def convert_markdown_to_html(md_path, html_path):
     """
     Convert a markdown file to HTML and write to html_path using templates and accessibility features.
     """
     import markdown
+    import re
     with open(md_path, 'r', encoding='utf-8') as f:
         md_text = f.read()
     # Convert markdown to HTML
@@ -68,6 +86,9 @@ def convert_markdown_to_html(md_path, html_path):
     html_body = html_body.replace('<nav>', '<nav role=\"navigation\">')
     html_body = html_body.replace('<header>', '<header role=\"banner\">')
     html_body = html_body.replace('<footer>', '<footer role=\"contentinfo\">')
+    
+    html_body = fix_image_paths(html_body)
+    
     # MathJax
     mathjax_script = '<script src=\"https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js\"></script>'
     html_body += mathjax_script

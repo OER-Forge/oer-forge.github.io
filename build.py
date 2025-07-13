@@ -30,6 +30,14 @@ def main():
     toc = config.get("toc", [])
     files_dir = os.path.join(PROJECT_ROOT, "build", "files")
     build_dir = os.path.join(PROJECT_ROOT, "build")
+
+    # Initialize and build images database
+    print("[INFO] Initializing database and scanning build/files/assets for images...")
+    from oerforge.scan import initialize_database, populate_build_images
+    initialize_database()
+    populate_build_images()
+    print("[OK] Database initialized and build_images table populated.")
+
     print("[INFO] Creating index.html pages for folders as per toc...")
     from oerforge.make import ensure_build_structure
     ensure_build_structure(toc)
