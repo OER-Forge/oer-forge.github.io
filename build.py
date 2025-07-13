@@ -8,9 +8,9 @@ import os
 import yaml
 
 from oerforge.copyfile import copy_project_files
-from oerforge.make import build_all_markdown_files, ensure_build_structure
+from oerforge.make import build_all_markdown_files, ensure_build_structure, clean_and_copy_html_to_docs, copy_wcag_reports_to_docs, convert_wcag_reports_to_html
 from oerforge.scan import initialize_database, populate_build_images
-from oerforge.verify import run_wcag_zoo_on_page, generate_one_markdown_report, save_report_to_build_folder
+from oerforge.verify import run_wcag_zoo_on_page, run_wcag_zoo_on_all_pages, generate_markdown_report, save_report_to_build_folder
 
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 CONFIG_PATH = os.path.join(PROJECT_ROOT, "_config.yml")
@@ -44,14 +44,26 @@ def build_site(toc):
     build_all_markdown_files(FILES_DIR, BUILD_DIR)
     print("[OK] All markdown files converted.")
 
-def test_wcag_on_index():
-    page_path = os.path.join(BUILD_DIR, "index.html")
-    browser = "chrome"
-    print(f"[TEST] Running WCAG test on {page_path} with {browser}")
-    result = run_wcag_zoo_on_page(page_path, browser)
-    md_report = generate_one_markdown_report(result)
+def run_accessibility_checks_and_report():
+    """
+    Run axe-selenium-python accessibility checks on all HTML files in build/ and generate a single markdown report.
+    """
+    print("[WCAG] Running accessibility checks on all HTML files in build/...")
+    # Find all HTML files in build/
+    html_files = []
+    for dirpath, dirnames, filenames in os.walk(BUILD_DIR):
+        for filename in filenames:
+            if filename.lower().endswith('.html'):
+                html_files.append(os.path.join(dirpath, filename))
+    # Define browsers to test
+    browsers = ["chrome"]
+    # Run accessibility checks
+    results = run_wcag_zoo_on_all_pages(html_files, browsers)
+    # Generate markdown report
+    md_report = generate_markdown_report(results)
     report_path = save_report_to_build_folder(md_report)
-    print(f"[TEST] WCAG Markdown Report saved to: {report_path}")
+    print(f"[WCAG] Accessibility Markdown Report saved to: {report_path}")
+    # Optionally print summary
     print(md_report)
 
 def main():
@@ -61,7 +73,9 @@ def main():
     copy_files()
     initialize_images_db()
     build_site(toc)
+    run_accessibility_checks_and_report()
+    convert_wcag_reports_to_html()
+    clean_and_copy_html_to_docs()
 
 if __name__ == "__main__":
     main()
-    test_wcag_on_index()

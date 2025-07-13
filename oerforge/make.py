@@ -1,3 +1,90 @@
+def convert_wcag_reports_to_html():
+    """
+    Convert all markdown accessibility reports in build/files/wcag-reports to HTML using site templates, saving to build/docs/wcag-reports.
+    """
+    import markdown
+    src_dir = os.path.join(PROJECT_ROOT, 'build', 'files', 'wcag-reports')
+    dest_dir = os.path.join(PROJECT_ROOT, 'build', 'docs', 'wcag-reports')
+    if not os.path.exists(src_dir):
+        logging.info(f"No accessibility reports found in {src_dir}")
+        return
+    if os.path.exists(dest_dir):
+        shutil.rmtree(dest_dir)
+    os.makedirs(dest_dir, exist_ok=True)
+    template_path = os.path.join(PROJECT_ROOT, 'static', 'templates', 'page.html')
+    template = load_template(template_path)
+    for dirpath, dirnames, filenames in os.walk(src_dir):
+        for filename in filenames:
+            if filename.lower().endswith('.md'):
+                src_path = os.path.join(dirpath, filename)
+                # Always flatten to dest_dir, no subfolders (unless you want to preserve them)
+                rel_path = os.path.relpath(src_path, src_dir)
+                dest_path = os.path.join(dest_dir, os.path.splitext(rel_path)[0] + '.html')
+                dest_subdir = os.path.dirname(dest_path)
+                if not os.path.exists(dest_subdir):
+                    os.makedirs(dest_subdir, exist_ok=True)
+                with open(src_path, 'r', encoding='utf-8') as f:
+                    md_text = f.read()
+                html_body = markdown.markdown(md_text, extensions=['fenced_code', 'tables', 'toc', 'meta'])
+                # Use first heading as title if present
+                import re
+                match = re.search(r'^#\s+(.+)', md_text, re.MULTILINE)
+                if match:
+                    title = match.group(1).strip()
+                else:
+                    title = filename.replace('.md', '').replace('_', ' ').title()
+                header = create_header(title, '')
+                footer = create_footer()
+                html_output = render_page(title, html_body, header, footer, dest_path)
+                with open(dest_path, 'w', encoding='utf-8') as f:
+                    f.write(html_output)
+                logging.info(f"Converted report {src_path} to {dest_path}")
+def copy_wcag_reports_to_docs():
+    """
+    Copy all markdown accessibility reports from build/files/wcag-reports to build/docs/wcag-reports, preserving structure.
+    """
+    src_dir = os.path.join(PROJECT_ROOT, 'build', 'files', 'wcag-reports')
+    dest_dir = os.path.join(PROJECT_ROOT, 'build', 'docs', 'wcag-reports')
+    if not os.path.exists(src_dir):
+        logging.info(f"No accessibility reports found in {src_dir}")
+        return
+    if os.path.exists(dest_dir):
+        shutil.rmtree(dest_dir)
+    os.makedirs(dest_dir, exist_ok=True)
+    for dirpath, dirnames, filenames in os.walk(src_dir):
+        for filename in filenames:
+            if filename.lower().endswith('.md'):
+                src_path = os.path.join(dirpath, filename)
+                rel_path = os.path.relpath(src_path, src_dir)
+                dest_path = os.path.join(dest_dir, rel_path)
+                dest_subdir = os.path.dirname(dest_path)
+                if not os.path.exists(dest_subdir):
+                    os.makedirs(dest_subdir, exist_ok=True)
+                shutil.copy2(src_path, dest_path)
+                logging.info(f"Copied report {src_path} to {dest_path}")
+import shutil
+def clean_and_copy_html_to_docs():
+    """Clean (remove) build/docs if exists, create it, and copy all HTML files from build/ into build/docs."""
+    docs_dir = os.path.join(PROJECT_ROOT, 'build', 'docs')
+    # Remove docs_dir if exists
+    if os.path.exists(docs_dir):
+        shutil.rmtree(docs_dir)
+    os.makedirs(docs_dir, exist_ok=True)
+    # Walk through build/ and copy all .html files to docs_dir, preserving relative structure
+    for dirpath, dirnames, filenames in os.walk(os.path.join(PROJECT_ROOT, 'build')):
+        # Skip docs itself
+        if os.path.abspath(dirpath) == os.path.abspath(docs_dir):
+            continue
+        for filename in filenames:
+            if filename.lower().endswith('.html'):
+                src_path = os.path.join(dirpath, filename)
+                rel_path = os.path.relpath(src_path, os.path.join(PROJECT_ROOT, 'build'))
+                dest_path = os.path.join(docs_dir, rel_path)
+                dest_dir = os.path.dirname(dest_path)
+                if not os.path.exists(dest_dir):
+                    os.makedirs(dest_dir, exist_ok=True)
+                shutil.copy2(src_path, dest_path)
+                logging.info(f"Copied {src_path} to {dest_path}")
 """
 Prototype script to convert Markdown files in build/files to accessible standalone HTML pages in build/.
 
@@ -377,6 +464,7 @@ def run_make(debug: bool = False):
     """Converts all markdown files to HTML, logs events, prints errors to console."""
     setup_logging()
     build_all_markdown_files(BUILD_FILES_DIR, BUILD_HTML_DIR)
+    clean_and_copy_html_to_docs()
 
 if __name__ == "__main__":
     setup_logging()
