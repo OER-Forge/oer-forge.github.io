@@ -61,9 +61,11 @@ def initialize_database():
             theme_dark TEXT,
             language TEXT,
             github_url TEXT,
-            footer_text TEXT
-        )
+            footer_text TEXT,
+            header TEXT
+        );
     """)
+    
 def populate_site_info_from_config(config_path):
     """
     Reads _config.yml and populates the site_info table with site and footer info.
@@ -82,8 +84,8 @@ def populate_site_info_from_config(config_path):
     cursor.execute("DELETE FROM site_info")
     cursor.execute(
         """
-        INSERT INTO site_info (title, author, description, logo, favicon, theme_default, theme_light, theme_dark, language, github_url, footer_text)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        INSERT INTO site_info (title, author, description, logo, favicon, theme_default, theme_light, theme_dark, language, github_url, footer_text, header)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """,
         (
             site.get('title', ''),
@@ -96,7 +98,8 @@ def populate_site_info_from_config(config_path):
             theme.get('dark', ''),
             site.get('language', ''),
             site.get('github_url', ''),
-            footer.get('text', '')
+            footer.get('text', ''),
+            site.get('header', '')
         )
     )
     conn.commit()

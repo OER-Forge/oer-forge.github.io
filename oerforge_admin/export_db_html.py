@@ -20,8 +20,9 @@ def inject_table_into_template(table_html, template_path, output_path):
     # Inject site info from DB
     from oerforge_admin.view_db import get_site_info
     site_info = get_site_info()
-    # Replace title and footer placeholders
+    # Replace title, header, and footer placeholders
     template = template.replace("{{ title }}", site_info.get("title", "Admin Table"))
+    template = template.replace("{{ header }}", site_info.get("header", ""))
     template = template.replace("{{ footer }}", site_info.get("footer_text", ""))
     # Replace CSS/JS references to point to local admin assets
     template = template.replace("/build/css/", "css/")
