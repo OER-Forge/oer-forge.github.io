@@ -49,6 +49,19 @@ toc:
           - title: "Report 2"
             file: wcag/reports/report2.md
             menu: false
+  - title: "Sample Materials"
+    menu: true
+    children:
+      - title: "Sample Course Description"
+        file: sample/course_description.md
+        menu: false
+    children:
+      - title: "Overture: What is Classical Physics?"
+        file: sample/notebooks/01_start.ipynb
+        menu: false
+      - title: "Introduction to Classical Mechanics"
+        file: sample/notebooks/01_notes.ipynb
+        menu: false
   - title: "About"
     menu: true
     file: about.md
