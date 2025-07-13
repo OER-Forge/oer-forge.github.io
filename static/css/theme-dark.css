@@ -291,6 +291,12 @@ footer a:hover, footer a:focus {
   text-decoration: none;
   outline: none;
 }
+.footer-text {
+  font-size: 1em;
+  color: var(--color-fg);
+  margin-top: 2em;
+  text-align: center;
+}
 
 /* =========================
   Card Grid & Cards
@@ -717,4 +723,16 @@ nav {
 .font-controls input[type="radio"]:checked + label {
   background: var(--color-link);
   color: #fff;
+}
+
+nav[role="navigation"] a,
+nav[role="navigation"] button {
+  outline: none;
+  transition: box-shadow 0.2s;
+}
+nav[role="navigation"] a:focus,
+nav[role="navigation"] button:focus {
+  box-shadow: 0 0 0 3px var(--color-link);
+  background: var(--color-menu-hover);
+  color: var(--color-link);
 }
