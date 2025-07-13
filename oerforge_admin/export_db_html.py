@@ -3,7 +3,7 @@ export_db_html.py: Export asset DB tables to static HTML using site templates (e
 """
 import os
 from tabulate import tabulate
-from view_db import get_db_path, get_table_names, get_table_columns, fetch_table
+from oerforge_admin.view_db import get_db_path, get_table_names, get_table_columns, fetch_table
 
 def render_table_html(table_name, columns=None, where=None, limit=None):
     cols = columns if columns else get_table_columns(table_name)
@@ -39,9 +39,17 @@ def export_all_tables_to_html(output_dir, template_path=None):
     for table in get_table_names():
         output_path = os.path.join(output_dir, f"{table}_table.html")
         export_table_to_html(table, output_path, template_path)
+    # Stub: Copy CSS/JS to output_dir after export
+    # See copy_static_assets_to_admin below
 
+def copy_static_assets_to_admin(output_dir):
+    """
+    Stub: Copy required CSS and JS files to build/admin for correct styling and interactivity.
+    """
+    # TODO: Copy static/css/* and static/js/* to output_dir
+    pass
 if __name__ == "__main__":
     # Example usage stub
-    # export_table_to_html("files", "static/admin_index.html")
-    # export_all_tables_to_html("static/admin_tables/")
-    print("Run as a module or import for use in build/make workflow.")
+    # export_all_tables_to_html("build/admin/")
+    # copy_static_assets_to_admin("build/admin/")
+    print("Run as a module or import for use in build/make workflow. Output: build/admin/")
