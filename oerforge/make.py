@@ -305,14 +305,12 @@ def fix_image_paths(html_body, html_path=None):
         rel_path = canonical_path
         if html_path and canonical_path:
             html_dir = os.path.dirname(html_path)
-            # Determine output root (docs or build)
+            # Determine output root (build or docs)
             if '/docs/' in html_path:
-                output_files_dir = os.path.join(PROJECT_ROOT, 'docs', 'files')
+                output_root = os.path.join(PROJECT_ROOT, 'docs')
             else:
-                output_files_dir = os.path.join(PROJECT_ROOT, 'build', 'files')
-            # Compute absolute image path in output
-            abs_img_path = os.path.join(output_files_dir, os.path.relpath(canonical_path, 'files'))
-            # Compute relative path from HTML file to image
+                output_root = os.path.join(PROJECT_ROOT, 'build')
+            abs_img_path = os.path.join(output_root, canonical_path)
             rel_path = os.path.relpath(abs_img_path, start=html_dir)
         print(f"[DEBUG] fix_image_paths: src={src}, filename={filename}, canonical_path={canonical_path}, html_path={html_path}, rel_path={rel_path}")
         logging.info(f"fix_image_paths: src={src}, filename={filename}, canonical_path={canonical_path}, html_path={html_path}, rel_path={rel_path}")
