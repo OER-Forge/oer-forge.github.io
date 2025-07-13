@@ -95,6 +95,24 @@ def integrate_with_make():
         print("Specify --table files, --table pages_files, or --all to display asset database contents.")
 
 if __name__ == "__main__":
+    def main():
+        import argparse
+        parser = argparse.ArgumentParser(description="View asset database contents (files/pages_files only).")
+        parser.add_argument('--table', type=str, choices=get_table_names(), help='Table name to display (files or pages_files)')
+        parser.add_argument('--columns', type=str, nargs='+', help='Columns to display')
+        parser.add_argument('--where', type=str, help='SQL WHERE clause')
+        parser.add_argument('--limit', type=int, help='Limit number of rows')
+        parser.add_argument('--all', action='store_true', help='Display both files and pages_files tables')
+        # Future: parser.add_argument('--export-html', action='store_true', help='Export table(s) to static HTML')
+        args = parser.parse_args()
+
+        if args.all:
+            display_all_tables()
+        elif args.table:
+            display_table(args.table, columns=args.columns, where=args.where, limit=args.limit)
+        else:
+            print("Specify --table files, --table pages_files, or --all to display asset database contents.")
+
     main()
 
 """
