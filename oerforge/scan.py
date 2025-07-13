@@ -116,7 +116,6 @@ def initialize_database():
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             image_filename TEXT,
             image_rel_path TEXT,
-            image_abs_path TEXT,
             image_ext TEXT,
             image_size INTEGER,
             image_found BOOLEAN
@@ -141,12 +140,13 @@ def populate_build_images():
     cursor = conn.cursor()
     # Clear table first
     cursor.execute("DELETE FROM build_images")
+    build_dir = os.path.join(project_root, 'build')
     for dirpath, dirnames, filenames in os.walk(assets_dir):
         for filename in filenames:
             if filename.startswith('.'):
                 continue
             abs_path = os.path.join(dirpath, filename)
-            rel_path = os.path.relpath(abs_path, project_root)
+            rel_path = os.path.relpath(abs_path, build_dir)
             ext = os.path.splitext(filename)[1][1:].lower()
             try:
                 size = os.path.getsize(abs_path)
@@ -156,10 +156,10 @@ def populate_build_images():
                 found = 0
             cursor.execute(
                 """
-                INSERT INTO build_images (image_filename, image_rel_path, image_abs_path, image_ext, image_size, image_found)
-                VALUES (?, ?, ?, ?, ?, ?)
+                INSERT INTO build_images (image_filename, image_rel_path, image_ext, image_size, image_found)
+                VALUES (?, ?, ?, ?, ?)
                 """,
-                (filename, rel_path, abs_path, ext, size, found)
+                (filename, rel_path, ext, size, found)
             )
     conn.commit()
     conn.close()  
