@@ -13,16 +13,33 @@ def render_table_html(table_name, columns=None, where=None, limit=None):
 def inject_table_into_template(table_html, template_path, output_path):
     """
     Read template, inject table_html at <!-- ASSET_TABLE -->, write to output_path.
+    Also inject header/footer and update CSS/JS references to /build.
     """
     with open(template_path, "r") as f:
         template = f.read()
-    # Try <!-- ASSET_TABLE -->
+    # Inject header/footer from static/templates
+    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    header_path = os.path.join(project_root, "static", "templates", "header.html")
+    footer_path = os.path.join(project_root, "static", "templates", "footer.html")
+    header = ""
+    footer = ""
+    if os.path.exists(header_path):
+        with open(header_path, "r") as hf:
+            header = hf.read()
+    if os.path.exists(footer_path):
+        with open(footer_path, "r") as ff:
+            footer = ff.read()
+    # Replace header/footer placeholders
+    template = template.replace("{{ header }}", header)
+    template = template.replace("{{ footer }}", footer)
+    # Replace CSS/JS references to point to /build/css and /build/js
+    template = template.replace("static/css/", "/build/css/")
+    template = template.replace("static/js/", "/build/js/")
+    # Inject table HTML
     if "<!-- ASSET_TABLE -->" in template:
         html = template.replace("<!-- ASSET_TABLE -->", table_html)
-    # Else try {{ content }}
     elif "{{ content }}" in template:
         html = template.replace("{{ content }}", table_html)
-    # Else insert before </main> or </body>
     elif "</main>" in template:
         html = template.replace("</main>", f"{table_html}\n</main>")
     elif "</body>" in template:
@@ -56,20 +73,9 @@ def export_all_tables_to_html(output_dir, template_path=None):
 
 def copy_static_assets_to_admin(output_dir):
     """
-    Copy required CSS and JS files to build/admin for correct styling and interactivity.
+    No asset copying needed; admin pages reference /build/css and /build/js
     """
-    import shutil
-    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    static_css = os.path.join(project_root, "static", "css")
-    static_js = os.path.join(project_root, "static", "js")
-    admin_css = os.path.join(output_dir, "css")
-    admin_js = os.path.join(output_dir, "js")
-    # Copy CSS
-    if os.path.exists(static_css):
-        shutil.copytree(static_css, admin_css, dirs_exist_ok=True)
-    # Copy JS
-    if os.path.exists(static_js):
-        shutil.copytree(static_js, admin_js, dirs_exist_ok=True)
+    pass
 if __name__ == "__main__":
     # Example usage stub
     # export_all_tables_to_html("build/admin/")
