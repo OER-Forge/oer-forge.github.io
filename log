@@ -1444,3 +1444,829 @@
 2025-07-13 01:08:38,038 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html
 2025-07-13 01:08:38,038 DEBUG [DEBUG] Computed link for 'About': about.html
 2025-07-13 01:08:38,038 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/dev/punchlist.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/dev/punchlist.html
+2025-07-13 01:18:01,828 INFO Starting copy_project_files
+2025-07-13 01:18:01,828 DEBUG Removing entire build directory: /Users/caballero/repos/oerforge/oer-forge.github.io/build
+2025-07-13 01:18:01,830 DEBUG Creating directory: /Users/caballero/repos/oerforge/oer-forge.github.io/build
+2025-07-13 01:18:01,830 DEBUG Copying from /Users/caballero/repos/oerforge/oer-forge.github.io/content to /Users/caballero/repos/oerforge/oer-forge.github.io/build/files
+2025-07-13 01:18:01,835 INFO Copied /Users/caballero/repos/oerforge/oer-forge.github.io/content to /Users/caballero/repos/oerforge/oer-forge.github.io/build/files
+2025-07-13 01:18:01,835 DEBUG Copying from /Users/caballero/repos/oerforge/oer-forge.github.io/static/css to /Users/caballero/repos/oerforge/oer-forge.github.io/build/css
+2025-07-13 01:18:01,835 INFO Copied /Users/caballero/repos/oerforge/oer-forge.github.io/static/css to /Users/caballero/repos/oerforge/oer-forge.github.io/build/css
+2025-07-13 01:18:01,835 DEBUG Copying from /Users/caballero/repos/oerforge/oer-forge.github.io/static/js to /Users/caballero/repos/oerforge/oer-forge.github.io/build/js
+2025-07-13 01:18:01,836 INFO Copied /Users/caballero/repos/oerforge/oer-forge.github.io/static/js to /Users/caballero/repos/oerforge/oer-forge.github.io/build/js
+2025-07-13 01:18:01,836 INFO Created .nojekyll at /Users/caballero/repos/oerforge/oer-forge.github.io/build/.nojekyll
+2025-07-13 01:18:01,836 INFO Finished copy_project_files
+2025-07-13 01:18:01,838 INFO Created directory for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs
+2025-07-13 01:18:01,838 DEBUG [DEBUG] generate_nav_menu: current_html_path=, current_dir=
+2025-07-13 01:18:01,838 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html
+2025-07-13 01:18:01,838 DEBUG [DEBUG] Computed link for 'Home': index.html
+2025-07-13 01:18:01,838 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html
+2025-07-13 01:18:01,838 DEBUG [DEBUG] Computed link for 'Docs': docs/index.html
+2025-07-13 01:18:01,838 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html
+2025-07-13 01:18:01,838 DEBUG [DEBUG] Computed link for 'Dev': dev/index.html
+2025-07-13 01:18:01,838 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html
+2025-07-13 01:18:01,838 DEBUG [DEBUG] Computed link for 'WCAG': wcag/index.html
+2025-07-13 01:18:01,838 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html
+2025-07-13 01:18:01,838 DEBUG [DEBUG] Computed link for 'About': about.html
+2025-07-13 01:18:01,838 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/index.html
+2025-07-13 01:18:01,838 INFO Created directory for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/dev
+2025-07-13 01:18:01,838 DEBUG [DEBUG] generate_nav_menu: current_html_path=, current_dir=
+2025-07-13 01:18:01,838 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html
+2025-07-13 01:18:01,838 DEBUG [DEBUG] Computed link for 'Home': index.html
+2025-07-13 01:18:01,838 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html
+2025-07-13 01:18:01,838 DEBUG [DEBUG] Computed link for 'Docs': docs/index.html
+2025-07-13 01:18:01,838 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html
+2025-07-13 01:18:01,838 DEBUG [DEBUG] Computed link for 'Dev': dev/index.html
+2025-07-13 01:18:01,838 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html
+2025-07-13 01:18:01,838 DEBUG [DEBUG] Computed link for 'WCAG': wcag/index.html
+2025-07-13 01:18:01,838 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html
+2025-07-13 01:18:01,838 DEBUG [DEBUG] Computed link for 'About': about.html
+2025-07-13 01:18:01,838 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/dev/index.html
+2025-07-13 01:18:01,838 DEBUG [DEBUG] generate_nav_menu: current_html_path=, current_dir=
+2025-07-13 01:18:01,838 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html
+2025-07-13 01:18:01,838 DEBUG [DEBUG] Computed link for 'Home': index.html
+2025-07-13 01:18:01,838 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html
+2025-07-13 01:18:01,838 DEBUG [DEBUG] Computed link for 'Docs': docs/index.html
+2025-07-13 01:18:01,838 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html
+2025-07-13 01:18:01,838 DEBUG [DEBUG] Computed link for 'Dev': dev/index.html
+2025-07-13 01:18:01,838 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html
+2025-07-13 01:18:01,839 DEBUG [DEBUG] Computed link for 'WCAG': wcag/index.html
+2025-07-13 01:18:01,839 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html
+2025-07-13 01:18:01,839 DEBUG [DEBUG] Computed link for 'About': about.html
+2025-07-13 01:18:01,839 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/index.html
+2025-07-13 01:18:01,839 INFO Created directory for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag
+2025-07-13 01:18:01,839 DEBUG [DEBUG] generate_nav_menu: current_html_path=, current_dir=
+2025-07-13 01:18:01,839 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html
+2025-07-13 01:18:01,839 DEBUG [DEBUG] Computed link for 'Home': index.html
+2025-07-13 01:18:01,839 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html
+2025-07-13 01:18:01,839 DEBUG [DEBUG] Computed link for 'Docs': docs/index.html
+2025-07-13 01:18:01,839 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html
+2025-07-13 01:18:01,839 DEBUG [DEBUG] Computed link for 'Dev': dev/index.html
+2025-07-13 01:18:01,839 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html
+2025-07-13 01:18:01,839 DEBUG [DEBUG] Computed link for 'WCAG': wcag/index.html
+2025-07-13 01:18:01,839 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html
+2025-07-13 01:18:01,839 DEBUG [DEBUG] Computed link for 'About': about.html
+2025-07-13 01:18:01,839 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/index.html
+2025-07-13 01:18:01,839 INFO Created directory for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports
+2025-07-13 01:18:01,839 DEBUG [DEBUG] generate_nav_menu: current_html_path=, current_dir=
+2025-07-13 01:18:01,839 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html
+2025-07-13 01:18:01,839 DEBUG [DEBUG] Computed link for 'Home': index.html
+2025-07-13 01:18:01,839 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html
+2025-07-13 01:18:01,839 DEBUG [DEBUG] Computed link for 'Docs': docs/index.html
+2025-07-13 01:18:01,839 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html
+2025-07-13 01:18:01,839 DEBUG [DEBUG] Computed link for 'Dev': dev/index.html
+2025-07-13 01:18:01,839 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html
+2025-07-13 01:18:01,839 DEBUG [DEBUG] Computed link for 'WCAG': wcag/index.html
+2025-07-13 01:18:01,839 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html
+2025-07-13 01:18:01,839 DEBUG [DEBUG] Computed link for 'About': about.html
+2025-07-13 01:18:01,839 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/index.html
+2025-07-13 01:18:01,859 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:18:01,859 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:18:01,859 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:18:01,860 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:18:01,860 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:18:01,863 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:18:01,863 DEBUG [DEBUG] generate_nav_menu: current_html_path=/Users/caballero/repos/oerforge/oer-forge.github.io/build/index.html, current_dir=/Users/caballero/repos/oerforge/oer-forge.github.io/build
+2025-07-13 01:18:01,863 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html
+2025-07-13 01:18:01,863 DEBUG [DEBUG] Computed link for 'Home': ../index.html
+2025-07-13 01:18:01,863 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html
+2025-07-13 01:18:01,863 DEBUG [DEBUG] Computed link for 'Docs': ../docs/index.html
+2025-07-13 01:18:01,863 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html
+2025-07-13 01:18:01,863 DEBUG [DEBUG] Computed link for 'Dev': ../dev/index.html
+2025-07-13 01:18:01,863 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html
+2025-07-13 01:18:01,863 DEBUG [DEBUG] Computed link for 'WCAG': ../wcag/index.html
+2025-07-13 01:18:01,863 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html
+2025-07-13 01:18:01,863 DEBUG [DEBUG] Computed link for 'About': ../about.html
+2025-07-13 01:18:01,863 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/index.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/index.html
+2025-07-13 01:18:01,863 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:18:01,863 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:18:01,863 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:18:01,863 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:18:01,863 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:18:01,866 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:18:01,866 DEBUG [DEBUG] generate_nav_menu: current_html_path=/Users/caballero/repos/oerforge/oer-forge.github.io/build/about.html, current_dir=/Users/caballero/repos/oerforge/oer-forge.github.io/build
+2025-07-13 01:18:01,866 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html
+2025-07-13 01:18:01,866 DEBUG [DEBUG] Computed link for 'Home': ../index.html
+2025-07-13 01:18:01,866 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html
+2025-07-13 01:18:01,866 DEBUG [DEBUG] Computed link for 'Docs': ../docs/index.html
+2025-07-13 01:18:01,866 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html
+2025-07-13 01:18:01,866 DEBUG [DEBUG] Computed link for 'Dev': ../dev/index.html
+2025-07-13 01:18:01,866 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html
+2025-07-13 01:18:01,866 DEBUG [DEBUG] Computed link for 'WCAG': ../wcag/index.html
+2025-07-13 01:18:01,866 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html
+2025-07-13 01:18:01,866 DEBUG [DEBUG] Computed link for 'About': ../about.html
+2025-07-13 01:18:01,866 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/about.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/about.html
+2025-07-13 01:18:01,866 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:18:01,866 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:18:01,866 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:18:01,866 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:18:01,866 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:18:01,869 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:18:01,869 DEBUG [DEBUG] generate_nav_menu: current_html_path=/Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/main_js.html, current_dir=/Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag
+2025-07-13 01:18:01,869 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html
+2025-07-13 01:18:01,869 DEBUG [DEBUG] Computed link for 'Home': ../../index.html
+2025-07-13 01:18:01,869 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html
+2025-07-13 01:18:01,869 DEBUG [DEBUG] Computed link for 'Docs': ../../docs/index.html
+2025-07-13 01:18:01,869 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html
+2025-07-13 01:18:01,869 DEBUG [DEBUG] Computed link for 'Dev': ../../dev/index.html
+2025-07-13 01:18:01,869 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html
+2025-07-13 01:18:01,869 DEBUG [DEBUG] Computed link for 'WCAG': ../../wcag/index.html
+2025-07-13 01:18:01,869 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html
+2025-07-13 01:18:01,869 DEBUG [DEBUG] Computed link for 'About': ../../about.html
+2025-07-13 01:18:01,869 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/wcag/main_js.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/main_js.html
+2025-07-13 01:18:01,870 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:18:01,870 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:18:01,870 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:18:01,870 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:18:01,870 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:18:01,872 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:18:01,872 DEBUG [DEBUG] generate_nav_menu: current_html_path=/Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/report2.html, current_dir=/Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports
+2025-07-13 01:18:01,872 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html
+2025-07-13 01:18:01,872 DEBUG [DEBUG] Computed link for 'Home': ../../../index.html
+2025-07-13 01:18:01,872 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html
+2025-07-13 01:18:01,872 DEBUG [DEBUG] Computed link for 'Docs': ../../../docs/index.html
+2025-07-13 01:18:01,872 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html
+2025-07-13 01:18:01,872 DEBUG [DEBUG] Computed link for 'Dev': ../../../dev/index.html
+2025-07-13 01:18:01,872 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html
+2025-07-13 01:18:01,872 DEBUG [DEBUG] Computed link for 'WCAG': ../../../wcag/index.html
+2025-07-13 01:18:01,872 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html
+2025-07-13 01:18:01,872 DEBUG [DEBUG] Computed link for 'About': ../../../about.html
+2025-07-13 01:18:01,872 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/wcag/reports/report2.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/report2.html
+2025-07-13 01:18:01,872 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:18:01,872 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:18:01,872 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:18:01,872 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:18:01,872 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:18:01,875 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:18:01,875 DEBUG [DEBUG] generate_nav_menu: current_html_path=/Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/report1.html, current_dir=/Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports
+2025-07-13 01:18:01,875 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html
+2025-07-13 01:18:01,875 DEBUG [DEBUG] Computed link for 'Home': ../../../index.html
+2025-07-13 01:18:01,875 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html
+2025-07-13 01:18:01,875 DEBUG [DEBUG] Computed link for 'Docs': ../../../docs/index.html
+2025-07-13 01:18:01,875 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html
+2025-07-13 01:18:01,875 DEBUG [DEBUG] Computed link for 'Dev': ../../../dev/index.html
+2025-07-13 01:18:01,875 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html
+2025-07-13 01:18:01,875 DEBUG [DEBUG] Computed link for 'WCAG': ../../../wcag/index.html
+2025-07-13 01:18:01,875 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html
+2025-07-13 01:18:01,875 DEBUG [DEBUG] Computed link for 'About': ../../../about.html
+2025-07-13 01:18:01,875 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/wcag/reports/report1.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/report1.html
+2025-07-13 01:18:01,875 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:18:01,875 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:18:01,875 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:18:01,875 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:18:01,875 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:18:01,878 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:18:01,878 DEBUG [DEBUG] generate_nav_menu: current_html_path=/Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/build_system.html, current_dir=/Users/caballero/repos/oerforge/oer-forge.github.io/build/docs
+2025-07-13 01:18:01,878 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html
+2025-07-13 01:18:01,878 DEBUG [DEBUG] Computed link for 'Home': ../../index.html
+2025-07-13 01:18:01,878 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html
+2025-07-13 01:18:01,878 DEBUG [DEBUG] Computed link for 'Docs': ../../docs/index.html
+2025-07-13 01:18:01,878 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html
+2025-07-13 01:18:01,878 DEBUG [DEBUG] Computed link for 'Dev': ../../dev/index.html
+2025-07-13 01:18:01,878 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html
+2025-07-13 01:18:01,878 DEBUG [DEBUG] Computed link for 'WCAG': ../../wcag/index.html
+2025-07-13 01:18:01,878 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html
+2025-07-13 01:18:01,878 DEBUG [DEBUG] Computed link for 'About': ../../about.html
+2025-07-13 01:18:01,879 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/docs/build_system.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/build_system.html
+2025-07-13 01:18:01,879 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:18:01,879 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:18:01,879 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:18:01,879 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:18:01,879 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:18:01,881 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:18:01,881 DEBUG [DEBUG] generate_nav_menu: current_html_path=/Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/installation.html, current_dir=/Users/caballero/repos/oerforge/oer-forge.github.io/build/docs
+2025-07-13 01:18:01,881 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html
+2025-07-13 01:18:01,881 DEBUG [DEBUG] Computed link for 'Home': ../../index.html
+2025-07-13 01:18:01,881 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html
+2025-07-13 01:18:01,881 DEBUG [DEBUG] Computed link for 'Docs': ../../docs/index.html
+2025-07-13 01:18:01,881 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html
+2025-07-13 01:18:01,881 DEBUG [DEBUG] Computed link for 'Dev': ../../dev/index.html
+2025-07-13 01:18:01,881 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html
+2025-07-13 01:18:01,881 DEBUG [DEBUG] Computed link for 'WCAG': ../../wcag/index.html
+2025-07-13 01:18:01,881 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html
+2025-07-13 01:18:01,881 DEBUG [DEBUG] Computed link for 'About': ../../about.html
+2025-07-13 01:18:01,881 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/docs/installation.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/installation.html
+2025-07-13 01:18:01,882 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:18:01,882 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:18:01,882 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:18:01,882 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:18:01,882 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:18:01,885 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:18:01,885 DEBUG [DEBUG] generate_nav_menu: current_html_path=/Users/caballero/repos/oerforge/oer-forge.github.io/build/dev/punchlist.html, current_dir=/Users/caballero/repos/oerforge/oer-forge.github.io/build/dev
+2025-07-13 01:18:01,885 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html
+2025-07-13 01:18:01,885 DEBUG [DEBUG] Computed link for 'Home': ../../index.html
+2025-07-13 01:18:01,885 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html
+2025-07-13 01:18:01,885 DEBUG [DEBUG] Computed link for 'Docs': ../../docs/index.html
+2025-07-13 01:18:01,885 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html
+2025-07-13 01:18:01,885 DEBUG [DEBUG] Computed link for 'Dev': ../../dev/index.html
+2025-07-13 01:18:01,885 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html
+2025-07-13 01:18:01,885 DEBUG [DEBUG] Computed link for 'WCAG': ../../wcag/index.html
+2025-07-13 01:18:01,885 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html
+2025-07-13 01:18:01,885 DEBUG [DEBUG] Computed link for 'About': ../../about.html
+2025-07-13 01:18:01,885 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/dev/punchlist.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/dev/punchlist.html
+2025-07-13 01:20:09,603 INFO Starting copy_project_files
+2025-07-13 01:20:09,603 DEBUG Removing entire build directory: /Users/caballero/repos/oerforge/oer-forge.github.io/build
+2025-07-13 01:20:09,605 DEBUG Creating directory: /Users/caballero/repos/oerforge/oer-forge.github.io/build
+2025-07-13 01:20:09,605 DEBUG Copying from /Users/caballero/repos/oerforge/oer-forge.github.io/content to /Users/caballero/repos/oerforge/oer-forge.github.io/build/files
+2025-07-13 01:20:09,614 INFO Copied /Users/caballero/repos/oerforge/oer-forge.github.io/content to /Users/caballero/repos/oerforge/oer-forge.github.io/build/files
+2025-07-13 01:20:09,614 DEBUG Copying from /Users/caballero/repos/oerforge/oer-forge.github.io/static/css to /Users/caballero/repos/oerforge/oer-forge.github.io/build/css
+2025-07-13 01:20:09,614 INFO Copied /Users/caballero/repos/oerforge/oer-forge.github.io/static/css to /Users/caballero/repos/oerforge/oer-forge.github.io/build/css
+2025-07-13 01:20:09,614 DEBUG Copying from /Users/caballero/repos/oerforge/oer-forge.github.io/static/js to /Users/caballero/repos/oerforge/oer-forge.github.io/build/js
+2025-07-13 01:20:09,615 INFO Copied /Users/caballero/repos/oerforge/oer-forge.github.io/static/js to /Users/caballero/repos/oerforge/oer-forge.github.io/build/js
+2025-07-13 01:20:09,615 INFO Created .nojekyll at /Users/caballero/repos/oerforge/oer-forge.github.io/build/.nojekyll
+2025-07-13 01:20:09,615 INFO Finished copy_project_files
+2025-07-13 01:20:09,618 INFO Created directory for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs
+2025-07-13 01:20:09,618 DEBUG [DEBUG] generate_nav_menu: current_html_path=, current_dir=
+2025-07-13 01:20:09,618 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html
+2025-07-13 01:20:09,618 DEBUG [DEBUG] Computed link for 'Home': index.html
+2025-07-13 01:20:09,618 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html
+2025-07-13 01:20:09,618 DEBUG [DEBUG] Computed link for 'Docs': docs/index.html
+2025-07-13 01:20:09,618 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html
+2025-07-13 01:20:09,618 DEBUG [DEBUG] Computed link for 'Dev': dev/index.html
+2025-07-13 01:20:09,618 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html
+2025-07-13 01:20:09,618 DEBUG [DEBUG] Computed link for 'WCAG': wcag/index.html
+2025-07-13 01:20:09,618 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html
+2025-07-13 01:20:09,618 DEBUG [DEBUG] Computed link for 'About': about.html
+2025-07-13 01:20:09,618 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/index.html
+2025-07-13 01:20:09,619 INFO Created directory for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/dev
+2025-07-13 01:20:09,619 DEBUG [DEBUG] generate_nav_menu: current_html_path=, current_dir=
+2025-07-13 01:20:09,619 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html
+2025-07-13 01:20:09,619 DEBUG [DEBUG] Computed link for 'Home': index.html
+2025-07-13 01:20:09,619 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html
+2025-07-13 01:20:09,619 DEBUG [DEBUG] Computed link for 'Docs': docs/index.html
+2025-07-13 01:20:09,619 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html
+2025-07-13 01:20:09,619 DEBUG [DEBUG] Computed link for 'Dev': dev/index.html
+2025-07-13 01:20:09,619 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html
+2025-07-13 01:20:09,619 DEBUG [DEBUG] Computed link for 'WCAG': wcag/index.html
+2025-07-13 01:20:09,619 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html
+2025-07-13 01:20:09,619 DEBUG [DEBUG] Computed link for 'About': about.html
+2025-07-13 01:20:09,619 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/dev/index.html
+2025-07-13 01:20:09,619 DEBUG [DEBUG] generate_nav_menu: current_html_path=, current_dir=
+2025-07-13 01:20:09,619 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html
+2025-07-13 01:20:09,619 DEBUG [DEBUG] Computed link for 'Home': index.html
+2025-07-13 01:20:09,619 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html
+2025-07-13 01:20:09,619 DEBUG [DEBUG] Computed link for 'Docs': docs/index.html
+2025-07-13 01:20:09,619 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html
+2025-07-13 01:20:09,619 DEBUG [DEBUG] Computed link for 'Dev': dev/index.html
+2025-07-13 01:20:09,619 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html
+2025-07-13 01:20:09,619 DEBUG [DEBUG] Computed link for 'WCAG': wcag/index.html
+2025-07-13 01:20:09,619 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html
+2025-07-13 01:20:09,619 DEBUG [DEBUG] Computed link for 'About': about.html
+2025-07-13 01:20:09,619 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/index.html
+2025-07-13 01:20:09,619 INFO Created directory for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag
+2025-07-13 01:20:09,619 DEBUG [DEBUG] generate_nav_menu: current_html_path=, current_dir=
+2025-07-13 01:20:09,619 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html
+2025-07-13 01:20:09,619 DEBUG [DEBUG] Computed link for 'Home': index.html
+2025-07-13 01:20:09,619 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html
+2025-07-13 01:20:09,619 DEBUG [DEBUG] Computed link for 'Docs': docs/index.html
+2025-07-13 01:20:09,619 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html
+2025-07-13 01:20:09,619 DEBUG [DEBUG] Computed link for 'Dev': dev/index.html
+2025-07-13 01:20:09,619 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html
+2025-07-13 01:20:09,619 DEBUG [DEBUG] Computed link for 'WCAG': wcag/index.html
+2025-07-13 01:20:09,619 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html
+2025-07-13 01:20:09,619 DEBUG [DEBUG] Computed link for 'About': about.html
+2025-07-13 01:20:09,619 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/index.html
+2025-07-13 01:20:09,619 INFO Created directory for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports
+2025-07-13 01:20:09,619 DEBUG [DEBUG] generate_nav_menu: current_html_path=, current_dir=
+2025-07-13 01:20:09,619 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html
+2025-07-13 01:20:09,619 DEBUG [DEBUG] Computed link for 'Home': index.html
+2025-07-13 01:20:09,619 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html
+2025-07-13 01:20:09,619 DEBUG [DEBUG] Computed link for 'Docs': docs/index.html
+2025-07-13 01:20:09,620 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html
+2025-07-13 01:20:09,620 DEBUG [DEBUG] Computed link for 'Dev': dev/index.html
+2025-07-13 01:20:09,620 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html
+2025-07-13 01:20:09,620 DEBUG [DEBUG] Computed link for 'WCAG': wcag/index.html
+2025-07-13 01:20:09,620 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html
+2025-07-13 01:20:09,620 DEBUG [DEBUG] Computed link for 'About': about.html
+2025-07-13 01:20:09,620 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/index.html
+2025-07-13 01:20:09,653 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:20:09,653 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:20:09,654 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:20:09,655 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:20:09,656 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:20:09,658 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:20:09,658 DEBUG [DEBUG] generate_nav_menu: current_html_path=/Users/caballero/repos/oerforge/oer-forge.github.io/build/index.html, current_dir=/Users/caballero/repos/oerforge/oer-forge.github.io/build
+2025-07-13 01:20:09,658 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html
+2025-07-13 01:20:09,659 DEBUG [DEBUG] Computed link for 'Home': ../index.html
+2025-07-13 01:20:09,659 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html
+2025-07-13 01:20:09,659 DEBUG [DEBUG] Computed link for 'Docs': ../docs/index.html
+2025-07-13 01:20:09,659 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html
+2025-07-13 01:20:09,659 DEBUG [DEBUG] Computed link for 'Dev': ../dev/index.html
+2025-07-13 01:20:09,659 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html
+2025-07-13 01:20:09,659 DEBUG [DEBUG] Computed link for 'WCAG': ../wcag/index.html
+2025-07-13 01:20:09,659 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html
+2025-07-13 01:20:09,659 DEBUG [DEBUG] Computed link for 'About': ../about.html
+2025-07-13 01:20:09,659 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/index.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/index.html
+2025-07-13 01:20:09,659 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:20:09,659 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:20:09,659 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:20:09,659 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:20:09,659 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:20:09,662 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:20:09,662 DEBUG [DEBUG] generate_nav_menu: current_html_path=/Users/caballero/repos/oerforge/oer-forge.github.io/build/about.html, current_dir=/Users/caballero/repos/oerforge/oer-forge.github.io/build
+2025-07-13 01:20:09,662 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html
+2025-07-13 01:20:09,662 DEBUG [DEBUG] Computed link for 'Home': ../index.html
+2025-07-13 01:20:09,662 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html
+2025-07-13 01:20:09,662 DEBUG [DEBUG] Computed link for 'Docs': ../docs/index.html
+2025-07-13 01:20:09,662 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html
+2025-07-13 01:20:09,662 DEBUG [DEBUG] Computed link for 'Dev': ../dev/index.html
+2025-07-13 01:20:09,662 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html
+2025-07-13 01:20:09,662 DEBUG [DEBUG] Computed link for 'WCAG': ../wcag/index.html
+2025-07-13 01:20:09,662 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html
+2025-07-13 01:20:09,662 DEBUG [DEBUG] Computed link for 'About': ../about.html
+2025-07-13 01:20:09,662 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/about.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/about.html
+2025-07-13 01:20:09,662 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:20:09,662 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:20:09,662 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:20:09,662 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:20:09,662 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:20:09,665 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:20:09,665 DEBUG [DEBUG] generate_nav_menu: current_html_path=/Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/main_js.html, current_dir=/Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag
+2025-07-13 01:20:09,665 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html
+2025-07-13 01:20:09,665 DEBUG [DEBUG] Computed link for 'Home': ../../index.html
+2025-07-13 01:20:09,665 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html
+2025-07-13 01:20:09,665 DEBUG [DEBUG] Computed link for 'Docs': ../../docs/index.html
+2025-07-13 01:20:09,665 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html
+2025-07-13 01:20:09,665 DEBUG [DEBUG] Computed link for 'Dev': ../../dev/index.html
+2025-07-13 01:20:09,665 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html
+2025-07-13 01:20:09,665 DEBUG [DEBUG] Computed link for 'WCAG': ../../wcag/index.html
+2025-07-13 01:20:09,665 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html
+2025-07-13 01:20:09,665 DEBUG [DEBUG] Computed link for 'About': ../../about.html
+2025-07-13 01:20:09,665 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/wcag/main_js.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/main_js.html
+2025-07-13 01:20:09,665 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:20:09,665 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:20:09,665 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:20:09,665 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:20:09,665 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:20:09,668 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:20:09,668 DEBUG [DEBUG] generate_nav_menu: current_html_path=/Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/report2.html, current_dir=/Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports
+2025-07-13 01:20:09,668 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html
+2025-07-13 01:20:09,668 DEBUG [DEBUG] Computed link for 'Home': ../../../index.html
+2025-07-13 01:20:09,668 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html
+2025-07-13 01:20:09,668 DEBUG [DEBUG] Computed link for 'Docs': ../../../docs/index.html
+2025-07-13 01:20:09,668 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html
+2025-07-13 01:20:09,668 DEBUG [DEBUG] Computed link for 'Dev': ../../../dev/index.html
+2025-07-13 01:20:09,668 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html
+2025-07-13 01:20:09,668 DEBUG [DEBUG] Computed link for 'WCAG': ../../../wcag/index.html
+2025-07-13 01:20:09,668 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html
+2025-07-13 01:20:09,668 DEBUG [DEBUG] Computed link for 'About': ../../../about.html
+2025-07-13 01:20:09,668 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/wcag/reports/report2.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/report2.html
+2025-07-13 01:20:09,668 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:20:09,668 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:20:09,668 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:20:09,668 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:20:09,668 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:20:09,670 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:20:09,670 DEBUG [DEBUG] generate_nav_menu: current_html_path=/Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/report1.html, current_dir=/Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports
+2025-07-13 01:20:09,670 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html
+2025-07-13 01:20:09,670 DEBUG [DEBUG] Computed link for 'Home': ../../../index.html
+2025-07-13 01:20:09,670 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html
+2025-07-13 01:20:09,670 DEBUG [DEBUG] Computed link for 'Docs': ../../../docs/index.html
+2025-07-13 01:20:09,670 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html
+2025-07-13 01:20:09,670 DEBUG [DEBUG] Computed link for 'Dev': ../../../dev/index.html
+2025-07-13 01:20:09,671 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html
+2025-07-13 01:20:09,671 DEBUG [DEBUG] Computed link for 'WCAG': ../../../wcag/index.html
+2025-07-13 01:20:09,671 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html
+2025-07-13 01:20:09,671 DEBUG [DEBUG] Computed link for 'About': ../../../about.html
+2025-07-13 01:20:09,671 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/wcag/reports/report1.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/report1.html
+2025-07-13 01:20:09,671 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:20:09,671 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:20:09,671 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:20:09,671 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:20:09,671 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:20:09,674 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:20:09,674 DEBUG [DEBUG] generate_nav_menu: current_html_path=/Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/build_system.html, current_dir=/Users/caballero/repos/oerforge/oer-forge.github.io/build/docs
+2025-07-13 01:20:09,674 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html
+2025-07-13 01:20:09,674 DEBUG [DEBUG] Computed link for 'Home': ../../index.html
+2025-07-13 01:20:09,674 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html
+2025-07-13 01:20:09,674 DEBUG [DEBUG] Computed link for 'Docs': ../../docs/index.html
+2025-07-13 01:20:09,674 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html
+2025-07-13 01:20:09,674 DEBUG [DEBUG] Computed link for 'Dev': ../../dev/index.html
+2025-07-13 01:20:09,674 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html
+2025-07-13 01:20:09,674 DEBUG [DEBUG] Computed link for 'WCAG': ../../wcag/index.html
+2025-07-13 01:20:09,674 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html
+2025-07-13 01:20:09,674 DEBUG [DEBUG] Computed link for 'About': ../../about.html
+2025-07-13 01:20:09,674 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/docs/build_system.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/build_system.html
+2025-07-13 01:20:09,674 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:20:09,675 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:20:09,675 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:20:09,675 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:20:09,675 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:20:09,677 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:20:09,677 DEBUG [DEBUG] generate_nav_menu: current_html_path=/Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/installation.html, current_dir=/Users/caballero/repos/oerforge/oer-forge.github.io/build/docs
+2025-07-13 01:20:09,678 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html
+2025-07-13 01:20:09,678 DEBUG [DEBUG] Computed link for 'Home': ../../index.html
+2025-07-13 01:20:09,678 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html
+2025-07-13 01:20:09,678 DEBUG [DEBUG] Computed link for 'Docs': ../../docs/index.html
+2025-07-13 01:20:09,678 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html
+2025-07-13 01:20:09,678 DEBUG [DEBUG] Computed link for 'Dev': ../../dev/index.html
+2025-07-13 01:20:09,678 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html
+2025-07-13 01:20:09,678 DEBUG [DEBUG] Computed link for 'WCAG': ../../wcag/index.html
+2025-07-13 01:20:09,678 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html
+2025-07-13 01:20:09,678 DEBUG [DEBUG] Computed link for 'About': ../../about.html
+2025-07-13 01:20:09,678 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/docs/installation.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/installation.html
+2025-07-13 01:20:09,678 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:20:09,678 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:20:09,678 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:20:09,678 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:20:09,678 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:20:09,681 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:20:09,681 DEBUG [DEBUG] generate_nav_menu: current_html_path=/Users/caballero/repos/oerforge/oer-forge.github.io/build/dev/punchlist.html, current_dir=/Users/caballero/repos/oerforge/oer-forge.github.io/build/dev
+2025-07-13 01:20:09,681 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html
+2025-07-13 01:20:09,681 DEBUG [DEBUG] Computed link for 'Home': ../../index.html
+2025-07-13 01:20:09,681 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html
+2025-07-13 01:20:09,681 DEBUG [DEBUG] Computed link for 'Docs': ../../docs/index.html
+2025-07-13 01:20:09,681 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html
+2025-07-13 01:20:09,681 DEBUG [DEBUG] Computed link for 'Dev': ../../dev/index.html
+2025-07-13 01:20:09,681 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html
+2025-07-13 01:20:09,681 DEBUG [DEBUG] Computed link for 'WCAG': ../../wcag/index.html
+2025-07-13 01:20:09,681 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html
+2025-07-13 01:20:09,681 DEBUG [DEBUG] Computed link for 'About': ../../about.html
+2025-07-13 01:20:09,682 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/dev/punchlist.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/dev/punchlist.html
+2025-07-13 01:20:44,747 INFO Starting copy_project_files
+2025-07-13 01:20:44,747 DEBUG Removing entire build directory: /Users/caballero/repos/oerforge/oer-forge.github.io/build
+2025-07-13 01:20:44,750 DEBUG Creating directory: /Users/caballero/repos/oerforge/oer-forge.github.io/build
+2025-07-13 01:20:44,750 DEBUG Copying from /Users/caballero/repos/oerforge/oer-forge.github.io/content to /Users/caballero/repos/oerforge/oer-forge.github.io/build/files
+2025-07-13 01:20:44,755 INFO Copied /Users/caballero/repos/oerforge/oer-forge.github.io/content to /Users/caballero/repos/oerforge/oer-forge.github.io/build/files
+2025-07-13 01:20:44,755 DEBUG Copying from /Users/caballero/repos/oerforge/oer-forge.github.io/static/css to /Users/caballero/repos/oerforge/oer-forge.github.io/build/css
+2025-07-13 01:20:44,755 INFO Copied /Users/caballero/repos/oerforge/oer-forge.github.io/static/css to /Users/caballero/repos/oerforge/oer-forge.github.io/build/css
+2025-07-13 01:20:44,755 DEBUG Copying from /Users/caballero/repos/oerforge/oer-forge.github.io/static/js to /Users/caballero/repos/oerforge/oer-forge.github.io/build/js
+2025-07-13 01:20:44,755 INFO Copied /Users/caballero/repos/oerforge/oer-forge.github.io/static/js to /Users/caballero/repos/oerforge/oer-forge.github.io/build/js
+2025-07-13 01:20:44,755 INFO Created .nojekyll at /Users/caballero/repos/oerforge/oer-forge.github.io/build/.nojekyll
+2025-07-13 01:20:44,755 INFO Finished copy_project_files
+2025-07-13 01:20:44,758 INFO Created directory for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs
+2025-07-13 01:20:44,758 DEBUG [DEBUG] generate_nav_menu: current_html_path=, abs_current_html=, current_dir=
+2025-07-13 01:20:44,758 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/index.html
+2025-07-13 01:20:44,758 DEBUG [DEBUG] Computed link for 'Home': index.html
+2025-07-13 01:20:44,758 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/docs/index.html
+2025-07-13 01:20:44,758 DEBUG [DEBUG] Computed link for 'Docs': docs/index.html
+2025-07-13 01:20:44,758 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/dev/index.html
+2025-07-13 01:20:44,758 DEBUG [DEBUG] Computed link for 'Dev': dev/index.html
+2025-07-13 01:20:44,758 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/wcag/index.html
+2025-07-13 01:20:44,758 DEBUG [DEBUG] Computed link for 'WCAG': wcag/index.html
+2025-07-13 01:20:44,758 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/about.html
+2025-07-13 01:20:44,758 DEBUG [DEBUG] Computed link for 'About': about.html
+2025-07-13 01:20:44,758 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/index.html
+2025-07-13 01:20:44,758 INFO Created directory for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/dev
+2025-07-13 01:20:44,758 DEBUG [DEBUG] generate_nav_menu: current_html_path=, abs_current_html=, current_dir=
+2025-07-13 01:20:44,758 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/index.html
+2025-07-13 01:20:44,758 DEBUG [DEBUG] Computed link for 'Home': index.html
+2025-07-13 01:20:44,758 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/docs/index.html
+2025-07-13 01:20:44,758 DEBUG [DEBUG] Computed link for 'Docs': docs/index.html
+2025-07-13 01:20:44,758 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/dev/index.html
+2025-07-13 01:20:44,758 DEBUG [DEBUG] Computed link for 'Dev': dev/index.html
+2025-07-13 01:20:44,758 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/wcag/index.html
+2025-07-13 01:20:44,758 DEBUG [DEBUG] Computed link for 'WCAG': wcag/index.html
+2025-07-13 01:20:44,758 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/about.html
+2025-07-13 01:20:44,758 DEBUG [DEBUG] Computed link for 'About': about.html
+2025-07-13 01:20:44,758 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/dev/index.html
+2025-07-13 01:20:44,758 DEBUG [DEBUG] generate_nav_menu: current_html_path=, abs_current_html=, current_dir=
+2025-07-13 01:20:44,758 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/index.html
+2025-07-13 01:20:44,758 DEBUG [DEBUG] Computed link for 'Home': index.html
+2025-07-13 01:20:44,758 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/docs/index.html
+2025-07-13 01:20:44,758 DEBUG [DEBUG] Computed link for 'Docs': docs/index.html
+2025-07-13 01:20:44,759 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/dev/index.html
+2025-07-13 01:20:44,759 DEBUG [DEBUG] Computed link for 'Dev': dev/index.html
+2025-07-13 01:20:44,759 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/wcag/index.html
+2025-07-13 01:20:44,759 DEBUG [DEBUG] Computed link for 'WCAG': wcag/index.html
+2025-07-13 01:20:44,759 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/about.html
+2025-07-13 01:20:44,759 DEBUG [DEBUG] Computed link for 'About': about.html
+2025-07-13 01:20:44,759 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/index.html
+2025-07-13 01:20:44,759 INFO Created directory for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag
+2025-07-13 01:20:44,759 DEBUG [DEBUG] generate_nav_menu: current_html_path=, abs_current_html=, current_dir=
+2025-07-13 01:20:44,759 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/index.html
+2025-07-13 01:20:44,759 DEBUG [DEBUG] Computed link for 'Home': index.html
+2025-07-13 01:20:44,759 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/docs/index.html
+2025-07-13 01:20:44,759 DEBUG [DEBUG] Computed link for 'Docs': docs/index.html
+2025-07-13 01:20:44,759 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/dev/index.html
+2025-07-13 01:20:44,759 DEBUG [DEBUG] Computed link for 'Dev': dev/index.html
+2025-07-13 01:20:44,759 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/wcag/index.html
+2025-07-13 01:20:44,759 DEBUG [DEBUG] Computed link for 'WCAG': wcag/index.html
+2025-07-13 01:20:44,759 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/about.html
+2025-07-13 01:20:44,759 DEBUG [DEBUG] Computed link for 'About': about.html
+2025-07-13 01:20:44,759 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/index.html
+2025-07-13 01:20:44,759 INFO Created directory for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports
+2025-07-13 01:20:44,759 DEBUG [DEBUG] generate_nav_menu: current_html_path=, abs_current_html=, current_dir=
+2025-07-13 01:20:44,759 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/index.html
+2025-07-13 01:20:44,759 DEBUG [DEBUG] Computed link for 'Home': index.html
+2025-07-13 01:20:44,759 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/docs/index.html
+2025-07-13 01:20:44,759 DEBUG [DEBUG] Computed link for 'Docs': docs/index.html
+2025-07-13 01:20:44,759 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/dev/index.html
+2025-07-13 01:20:44,759 DEBUG [DEBUG] Computed link for 'Dev': dev/index.html
+2025-07-13 01:20:44,759 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/wcag/index.html
+2025-07-13 01:20:44,759 DEBUG [DEBUG] Computed link for 'WCAG': wcag/index.html
+2025-07-13 01:20:44,759 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/about.html
+2025-07-13 01:20:44,759 DEBUG [DEBUG] Computed link for 'About': about.html
+2025-07-13 01:20:44,759 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/index.html
+2025-07-13 01:20:44,780 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:20:44,780 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:20:44,780 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:20:44,781 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:20:44,781 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:20:44,784 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:20:44,784 DEBUG [DEBUG] generate_nav_menu: current_html_path=/Users/caballero/repos/oerforge/oer-forge.github.io/build/index.html, abs_current_html=/Users/caballero/repos/oerforge/oer-forge.github.io/build/index.html, current_dir=/Users/caballero/repos/oerforge/oer-forge.github.io/build
+2025-07-13 01:20:44,784 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/index.html
+2025-07-13 01:20:44,784 WARNING [WARN] Computed link does not exist: ../index.html (abs: /Users/caballero/repos/oerforge/oer-forge.github.io/index.html) from /Users/caballero/repos/oerforge/oer-forge.github.io/build/index.html
+2025-07-13 01:20:44,784 DEBUG [DEBUG] Computed link for 'Home': ../index.html
+2025-07-13 01:20:44,784 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/docs/index.html
+2025-07-13 01:20:44,784 WARNING [WARN] Computed link does not exist: ../docs/index.html (abs: /Users/caballero/repos/oerforge/oer-forge.github.io/docs/index.html) from /Users/caballero/repos/oerforge/oer-forge.github.io/build/index.html
+2025-07-13 01:20:44,784 DEBUG [DEBUG] Computed link for 'Docs': ../docs/index.html
+2025-07-13 01:20:44,784 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/dev/index.html
+2025-07-13 01:20:44,784 WARNING [WARN] Computed link does not exist: ../dev/index.html (abs: /Users/caballero/repos/oerforge/oer-forge.github.io/dev/index.html) from /Users/caballero/repos/oerforge/oer-forge.github.io/build/index.html
+2025-07-13 01:20:44,784 DEBUG [DEBUG] Computed link for 'Dev': ../dev/index.html
+2025-07-13 01:20:44,784 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/wcag/index.html
+2025-07-13 01:20:44,784 WARNING [WARN] Computed link does not exist: ../wcag/index.html (abs: /Users/caballero/repos/oerforge/oer-forge.github.io/wcag/index.html) from /Users/caballero/repos/oerforge/oer-forge.github.io/build/index.html
+2025-07-13 01:20:44,784 DEBUG [DEBUG] Computed link for 'WCAG': ../wcag/index.html
+2025-07-13 01:20:44,784 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/about.html
+2025-07-13 01:20:44,784 WARNING [WARN] Computed link does not exist: ../about.html (abs: /Users/caballero/repos/oerforge/oer-forge.github.io/about.html) from /Users/caballero/repos/oerforge/oer-forge.github.io/build/index.html
+2025-07-13 01:20:44,784 DEBUG [DEBUG] Computed link for 'About': ../about.html
+2025-07-13 01:20:44,784 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/index.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/index.html
+2025-07-13 01:20:44,784 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:20:44,784 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:20:44,784 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:20:44,784 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:20:44,784 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:20:44,787 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:20:44,787 DEBUG [DEBUG] generate_nav_menu: current_html_path=/Users/caballero/repos/oerforge/oer-forge.github.io/build/about.html, abs_current_html=/Users/caballero/repos/oerforge/oer-forge.github.io/build/about.html, current_dir=/Users/caballero/repos/oerforge/oer-forge.github.io/build
+2025-07-13 01:20:44,787 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/index.html
+2025-07-13 01:20:44,787 WARNING [WARN] Computed link does not exist: ../index.html (abs: /Users/caballero/repos/oerforge/oer-forge.github.io/index.html) from /Users/caballero/repos/oerforge/oer-forge.github.io/build/about.html
+2025-07-13 01:20:44,787 DEBUG [DEBUG] Computed link for 'Home': ../index.html
+2025-07-13 01:20:44,787 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/docs/index.html
+2025-07-13 01:20:44,787 WARNING [WARN] Computed link does not exist: ../docs/index.html (abs: /Users/caballero/repos/oerforge/oer-forge.github.io/docs/index.html) from /Users/caballero/repos/oerforge/oer-forge.github.io/build/about.html
+2025-07-13 01:20:44,787 DEBUG [DEBUG] Computed link for 'Docs': ../docs/index.html
+2025-07-13 01:20:44,787 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/dev/index.html
+2025-07-13 01:20:44,787 WARNING [WARN] Computed link does not exist: ../dev/index.html (abs: /Users/caballero/repos/oerforge/oer-forge.github.io/dev/index.html) from /Users/caballero/repos/oerforge/oer-forge.github.io/build/about.html
+2025-07-13 01:20:44,787 DEBUG [DEBUG] Computed link for 'Dev': ../dev/index.html
+2025-07-13 01:20:44,787 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/wcag/index.html
+2025-07-13 01:20:44,787 WARNING [WARN] Computed link does not exist: ../wcag/index.html (abs: /Users/caballero/repos/oerforge/oer-forge.github.io/wcag/index.html) from /Users/caballero/repos/oerforge/oer-forge.github.io/build/about.html
+2025-07-13 01:20:44,787 DEBUG [DEBUG] Computed link for 'WCAG': ../wcag/index.html
+2025-07-13 01:20:44,787 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/about.html
+2025-07-13 01:20:44,787 WARNING [WARN] Computed link does not exist: ../about.html (abs: /Users/caballero/repos/oerforge/oer-forge.github.io/about.html) from /Users/caballero/repos/oerforge/oer-forge.github.io/build/about.html
+2025-07-13 01:20:44,787 DEBUG [DEBUG] Computed link for 'About': ../about.html
+2025-07-13 01:20:44,787 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/about.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/about.html
+2025-07-13 01:20:44,787 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:20:44,787 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:20:44,787 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:20:44,787 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:20:44,787 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:20:44,791 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:20:44,791 DEBUG [DEBUG] generate_nav_menu: current_html_path=/Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/main_js.html, abs_current_html=/Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/main_js.html, current_dir=/Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag
+2025-07-13 01:20:44,791 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/index.html
+2025-07-13 01:20:44,791 WARNING [WARN] Computed link does not exist: ../../index.html (abs: /Users/caballero/repos/oerforge/oer-forge.github.io/index.html) from /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/main_js.html
+2025-07-13 01:20:44,791 DEBUG [DEBUG] Computed link for 'Home': ../../index.html
+2025-07-13 01:20:44,791 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/docs/index.html
+2025-07-13 01:20:44,791 WARNING [WARN] Computed link does not exist: ../../docs/index.html (abs: /Users/caballero/repos/oerforge/oer-forge.github.io/docs/index.html) from /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/main_js.html
+2025-07-13 01:20:44,791 DEBUG [DEBUG] Computed link for 'Docs': ../../docs/index.html
+2025-07-13 01:20:44,791 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/dev/index.html
+2025-07-13 01:20:44,791 WARNING [WARN] Computed link does not exist: ../../dev/index.html (abs: /Users/caballero/repos/oerforge/oer-forge.github.io/dev/index.html) from /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/main_js.html
+2025-07-13 01:20:44,791 DEBUG [DEBUG] Computed link for 'Dev': ../../dev/index.html
+2025-07-13 01:20:44,791 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/wcag/index.html
+2025-07-13 01:20:44,791 WARNING [WARN] Computed link does not exist: ../../wcag/index.html (abs: /Users/caballero/repos/oerforge/oer-forge.github.io/wcag/index.html) from /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/main_js.html
+2025-07-13 01:20:44,791 DEBUG [DEBUG] Computed link for 'WCAG': ../../wcag/index.html
+2025-07-13 01:20:44,791 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/about.html
+2025-07-13 01:20:44,791 WARNING [WARN] Computed link does not exist: ../../about.html (abs: /Users/caballero/repos/oerforge/oer-forge.github.io/about.html) from /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/main_js.html
+2025-07-13 01:20:44,791 DEBUG [DEBUG] Computed link for 'About': ../../about.html
+2025-07-13 01:20:44,791 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/wcag/main_js.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/main_js.html
+2025-07-13 01:20:44,791 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:20:44,791 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:20:44,791 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:20:44,791 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:20:44,791 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:20:44,793 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:20:44,794 DEBUG [DEBUG] generate_nav_menu: current_html_path=/Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/report2.html, abs_current_html=/Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/report2.html, current_dir=/Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports
+2025-07-13 01:20:44,794 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/index.html
+2025-07-13 01:20:44,794 WARNING [WARN] Computed link does not exist: ../../../index.html (abs: /Users/caballero/repos/oerforge/oer-forge.github.io/index.html) from /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/report2.html
+2025-07-13 01:20:44,794 DEBUG [DEBUG] Computed link for 'Home': ../../../index.html
+2025-07-13 01:20:44,794 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/docs/index.html
+2025-07-13 01:20:44,794 WARNING [WARN] Computed link does not exist: ../../../docs/index.html (abs: /Users/caballero/repos/oerforge/oer-forge.github.io/docs/index.html) from /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/report2.html
+2025-07-13 01:20:44,794 DEBUG [DEBUG] Computed link for 'Docs': ../../../docs/index.html
+2025-07-13 01:20:44,794 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/dev/index.html
+2025-07-13 01:20:44,794 WARNING [WARN] Computed link does not exist: ../../../dev/index.html (abs: /Users/caballero/repos/oerforge/oer-forge.github.io/dev/index.html) from /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/report2.html
+2025-07-13 01:20:44,794 DEBUG [DEBUG] Computed link for 'Dev': ../../../dev/index.html
+2025-07-13 01:20:44,794 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/wcag/index.html
+2025-07-13 01:20:44,794 WARNING [WARN] Computed link does not exist: ../../../wcag/index.html (abs: /Users/caballero/repos/oerforge/oer-forge.github.io/wcag/index.html) from /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/report2.html
+2025-07-13 01:20:44,794 DEBUG [DEBUG] Computed link for 'WCAG': ../../../wcag/index.html
+2025-07-13 01:20:44,794 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/about.html
+2025-07-13 01:20:44,794 WARNING [WARN] Computed link does not exist: ../../../about.html (abs: /Users/caballero/repos/oerforge/oer-forge.github.io/about.html) from /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/report2.html
+2025-07-13 01:20:44,794 DEBUG [DEBUG] Computed link for 'About': ../../../about.html
+2025-07-13 01:20:44,794 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/wcag/reports/report2.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/report2.html
+2025-07-13 01:20:44,794 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:20:44,794 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:20:44,794 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:20:44,794 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:20:44,794 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:20:44,796 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:20:44,796 DEBUG [DEBUG] generate_nav_menu: current_html_path=/Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/report1.html, abs_current_html=/Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/report1.html, current_dir=/Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports
+2025-07-13 01:20:44,796 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/index.html
+2025-07-13 01:20:44,796 WARNING [WARN] Computed link does not exist: ../../../index.html (abs: /Users/caballero/repos/oerforge/oer-forge.github.io/index.html) from /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/report1.html
+2025-07-13 01:20:44,796 DEBUG [DEBUG] Computed link for 'Home': ../../../index.html
+2025-07-13 01:20:44,796 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/docs/index.html
+2025-07-13 01:20:44,796 WARNING [WARN] Computed link does not exist: ../../../docs/index.html (abs: /Users/caballero/repos/oerforge/oer-forge.github.io/docs/index.html) from /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/report1.html
+2025-07-13 01:20:44,796 DEBUG [DEBUG] Computed link for 'Docs': ../../../docs/index.html
+2025-07-13 01:20:44,796 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/dev/index.html
+2025-07-13 01:20:44,796 WARNING [WARN] Computed link does not exist: ../../../dev/index.html (abs: /Users/caballero/repos/oerforge/oer-forge.github.io/dev/index.html) from /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/report1.html
+2025-07-13 01:20:44,796 DEBUG [DEBUG] Computed link for 'Dev': ../../../dev/index.html
+2025-07-13 01:20:44,796 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/wcag/index.html
+2025-07-13 01:20:44,796 WARNING [WARN] Computed link does not exist: ../../../wcag/index.html (abs: /Users/caballero/repos/oerforge/oer-forge.github.io/wcag/index.html) from /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/report1.html
+2025-07-13 01:20:44,796 DEBUG [DEBUG] Computed link for 'WCAG': ../../../wcag/index.html
+2025-07-13 01:20:44,796 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/about.html
+2025-07-13 01:20:44,796 WARNING [WARN] Computed link does not exist: ../../../about.html (abs: /Users/caballero/repos/oerforge/oer-forge.github.io/about.html) from /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/report1.html
+2025-07-13 01:20:44,796 DEBUG [DEBUG] Computed link for 'About': ../../../about.html
+2025-07-13 01:20:44,796 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/wcag/reports/report1.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/report1.html
+2025-07-13 01:20:44,796 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:20:44,797 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:20:44,797 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:20:44,797 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:20:44,797 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:20:44,800 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:20:44,800 DEBUG [DEBUG] generate_nav_menu: current_html_path=/Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/build_system.html, abs_current_html=/Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/build_system.html, current_dir=/Users/caballero/repos/oerforge/oer-forge.github.io/build/docs
+2025-07-13 01:20:44,800 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/index.html
+2025-07-13 01:20:44,800 WARNING [WARN] Computed link does not exist: ../../index.html (abs: /Users/caballero/repos/oerforge/oer-forge.github.io/index.html) from /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/build_system.html
+2025-07-13 01:20:44,800 DEBUG [DEBUG] Computed link for 'Home': ../../index.html
+2025-07-13 01:20:44,800 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/docs/index.html
+2025-07-13 01:20:44,800 WARNING [WARN] Computed link does not exist: ../../docs/index.html (abs: /Users/caballero/repos/oerforge/oer-forge.github.io/docs/index.html) from /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/build_system.html
+2025-07-13 01:20:44,800 DEBUG [DEBUG] Computed link for 'Docs': ../../docs/index.html
+2025-07-13 01:20:44,800 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/dev/index.html
+2025-07-13 01:20:44,800 WARNING [WARN] Computed link does not exist: ../../dev/index.html (abs: /Users/caballero/repos/oerforge/oer-forge.github.io/dev/index.html) from /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/build_system.html
+2025-07-13 01:20:44,800 DEBUG [DEBUG] Computed link for 'Dev': ../../dev/index.html
+2025-07-13 01:20:44,800 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/wcag/index.html
+2025-07-13 01:20:44,800 WARNING [WARN] Computed link does not exist: ../../wcag/index.html (abs: /Users/caballero/repos/oerforge/oer-forge.github.io/wcag/index.html) from /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/build_system.html
+2025-07-13 01:20:44,800 DEBUG [DEBUG] Computed link for 'WCAG': ../../wcag/index.html
+2025-07-13 01:20:44,800 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/about.html
+2025-07-13 01:20:44,800 WARNING [WARN] Computed link does not exist: ../../about.html (abs: /Users/caballero/repos/oerforge/oer-forge.github.io/about.html) from /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/build_system.html
+2025-07-13 01:20:44,800 DEBUG [DEBUG] Computed link for 'About': ../../about.html
+2025-07-13 01:20:44,800 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/docs/build_system.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/build_system.html
+2025-07-13 01:20:44,800 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:20:44,800 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:20:44,800 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:20:44,800 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:20:44,800 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:20:44,803 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:20:44,803 DEBUG [DEBUG] generate_nav_menu: current_html_path=/Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/installation.html, abs_current_html=/Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/installation.html, current_dir=/Users/caballero/repos/oerforge/oer-forge.github.io/build/docs
+2025-07-13 01:20:44,803 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/index.html
+2025-07-13 01:20:44,803 WARNING [WARN] Computed link does not exist: ../../index.html (abs: /Users/caballero/repos/oerforge/oer-forge.github.io/index.html) from /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/installation.html
+2025-07-13 01:20:44,803 DEBUG [DEBUG] Computed link for 'Home': ../../index.html
+2025-07-13 01:20:44,803 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/docs/index.html
+2025-07-13 01:20:44,804 WARNING [WARN] Computed link does not exist: ../../docs/index.html (abs: /Users/caballero/repos/oerforge/oer-forge.github.io/docs/index.html) from /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/installation.html
+2025-07-13 01:20:44,804 DEBUG [DEBUG] Computed link for 'Docs': ../../docs/index.html
+2025-07-13 01:20:44,804 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/dev/index.html
+2025-07-13 01:20:44,804 WARNING [WARN] Computed link does not exist: ../../dev/index.html (abs: /Users/caballero/repos/oerforge/oer-forge.github.io/dev/index.html) from /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/installation.html
+2025-07-13 01:20:44,804 DEBUG [DEBUG] Computed link for 'Dev': ../../dev/index.html
+2025-07-13 01:20:44,804 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/wcag/index.html
+2025-07-13 01:20:44,804 WARNING [WARN] Computed link does not exist: ../../wcag/index.html (abs: /Users/caballero/repos/oerforge/oer-forge.github.io/wcag/index.html) from /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/installation.html
+2025-07-13 01:20:44,804 DEBUG [DEBUG] Computed link for 'WCAG': ../../wcag/index.html
+2025-07-13 01:20:44,804 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/about.html
+2025-07-13 01:20:44,804 WARNING [WARN] Computed link does not exist: ../../about.html (abs: /Users/caballero/repos/oerforge/oer-forge.github.io/about.html) from /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/installation.html
+2025-07-13 01:20:44,804 DEBUG [DEBUG] Computed link for 'About': ../../about.html
+2025-07-13 01:20:44,804 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/docs/installation.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/installation.html
+2025-07-13 01:20:44,804 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:20:44,804 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:20:44,804 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:20:44,804 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:20:44,804 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:20:44,807 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:20:44,807 DEBUG [DEBUG] generate_nav_menu: current_html_path=/Users/caballero/repos/oerforge/oer-forge.github.io/build/dev/punchlist.html, abs_current_html=/Users/caballero/repos/oerforge/oer-forge.github.io/build/dev/punchlist.html, current_dir=/Users/caballero/repos/oerforge/oer-forge.github.io/build/dev
+2025-07-13 01:20:44,808 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/index.html
+2025-07-13 01:20:44,808 WARNING [WARN] Computed link does not exist: ../../index.html (abs: /Users/caballero/repos/oerforge/oer-forge.github.io/index.html) from /Users/caballero/repos/oerforge/oer-forge.github.io/build/dev/punchlist.html
+2025-07-13 01:20:44,808 DEBUG [DEBUG] Computed link for 'Home': ../../index.html
+2025-07-13 01:20:44,808 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/docs/index.html
+2025-07-13 01:20:44,808 WARNING [WARN] Computed link does not exist: ../../docs/index.html (abs: /Users/caballero/repos/oerforge/oer-forge.github.io/docs/index.html) from /Users/caballero/repos/oerforge/oer-forge.github.io/build/dev/punchlist.html
+2025-07-13 01:20:44,808 DEBUG [DEBUG] Computed link for 'Docs': ../../docs/index.html
+2025-07-13 01:20:44,808 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/dev/index.html
+2025-07-13 01:20:44,808 WARNING [WARN] Computed link does not exist: ../../dev/index.html (abs: /Users/caballero/repos/oerforge/oer-forge.github.io/dev/index.html) from /Users/caballero/repos/oerforge/oer-forge.github.io/build/dev/punchlist.html
+2025-07-13 01:20:44,808 DEBUG [DEBUG] Computed link for 'Dev': ../../dev/index.html
+2025-07-13 01:20:44,808 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/wcag/index.html
+2025-07-13 01:20:44,808 WARNING [WARN] Computed link does not exist: ../../wcag/index.html (abs: /Users/caballero/repos/oerforge/oer-forge.github.io/wcag/index.html) from /Users/caballero/repos/oerforge/oer-forge.github.io/build/dev/punchlist.html
+2025-07-13 01:20:44,808 DEBUG [DEBUG] Computed link for 'WCAG': ../../wcag/index.html
+2025-07-13 01:20:44,808 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html, abs_target_html=/Users/caballero/repos/oerforge/oer-forge.github.io/about.html
+2025-07-13 01:20:44,808 WARNING [WARN] Computed link does not exist: ../../about.html (abs: /Users/caballero/repos/oerforge/oer-forge.github.io/about.html) from /Users/caballero/repos/oerforge/oer-forge.github.io/build/dev/punchlist.html
+2025-07-13 01:20:44,808 DEBUG [DEBUG] Computed link for 'About': ../../about.html
+2025-07-13 01:20:44,808 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/dev/punchlist.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/dev/punchlist.html
+2025-07-13 01:29:13,751 INFO Starting copy_project_files
+2025-07-13 01:29:13,751 DEBUG Removing entire build directory: /Users/caballero/repos/oerforge/oer-forge.github.io/build
+2025-07-13 01:29:13,753 DEBUG Creating directory: /Users/caballero/repos/oerforge/oer-forge.github.io/build
+2025-07-13 01:29:13,754 DEBUG Copying from /Users/caballero/repos/oerforge/oer-forge.github.io/content to /Users/caballero/repos/oerforge/oer-forge.github.io/build/files
+2025-07-13 01:29:13,762 INFO Copied /Users/caballero/repos/oerforge/oer-forge.github.io/content to /Users/caballero/repos/oerforge/oer-forge.github.io/build/files
+2025-07-13 01:29:13,762 DEBUG Copying from /Users/caballero/repos/oerforge/oer-forge.github.io/static/css to /Users/caballero/repos/oerforge/oer-forge.github.io/build/css
+2025-07-13 01:29:13,763 INFO Copied /Users/caballero/repos/oerforge/oer-forge.github.io/static/css to /Users/caballero/repos/oerforge/oer-forge.github.io/build/css
+2025-07-13 01:29:13,763 DEBUG Copying from /Users/caballero/repos/oerforge/oer-forge.github.io/static/js to /Users/caballero/repos/oerforge/oer-forge.github.io/build/js
+2025-07-13 01:29:13,763 INFO Copied /Users/caballero/repos/oerforge/oer-forge.github.io/static/js to /Users/caballero/repos/oerforge/oer-forge.github.io/build/js
+2025-07-13 01:29:13,764 INFO Created .nojekyll at /Users/caballero/repos/oerforge/oer-forge.github.io/build/.nojekyll
+2025-07-13 01:29:13,764 INFO Finished copy_project_files
+2025-07-13 01:29:13,767 INFO Created directory for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs
+2025-07-13 01:29:13,767 DEBUG [DEBUG] generate_nav_menu: current_html_path=, abs_current_html=, current_dir=
+2025-07-13 01:29:13,767 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/index.html
+2025-07-13 01:29:13,767 INFO Created directory for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/dev
+2025-07-13 01:29:13,767 DEBUG [DEBUG] generate_nav_menu: current_html_path=, abs_current_html=, current_dir=
+2025-07-13 01:29:13,767 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/dev/index.html
+2025-07-13 01:29:13,767 DEBUG [DEBUG] generate_nav_menu: current_html_path=, abs_current_html=, current_dir=
+2025-07-13 01:29:13,767 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/index.html
+2025-07-13 01:29:13,767 INFO Created directory for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag
+2025-07-13 01:29:13,767 DEBUG [DEBUG] generate_nav_menu: current_html_path=, abs_current_html=, current_dir=
+2025-07-13 01:29:13,767 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/index.html
+2025-07-13 01:29:13,768 INFO Created directory for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports
+2025-07-13 01:29:13,768 DEBUG [DEBUG] generate_nav_menu: current_html_path=, abs_current_html=, current_dir=
+2025-07-13 01:29:13,768 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/index.html
+2025-07-13 01:29:13,799 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:29:13,799 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:29:13,800 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:29:13,801 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:29:13,802 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:29:13,804 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:29:13,804 DEBUG [DEBUG] generate_nav_menu: current_html_path=/Users/caballero/repos/oerforge/oer-forge.github.io/build/index.html, abs_current_html=/Users/caballero/repos/oerforge/oer-forge.github.io/build/index.html, current_dir=/Users/caballero/repos/oerforge/oer-forge.github.io/build
+2025-07-13 01:29:13,804 DEBUG [MENU] Home: index.html [✗] from /Users/caballero/repos/oerforge/oer-forge.github.io/build/index.html
+2025-07-13 01:29:13,804 DEBUG [MENU] Docs: docs/index.html [✓] from /Users/caballero/repos/oerforge/oer-forge.github.io/build/index.html
+2025-07-13 01:29:13,804 DEBUG [MENU] Dev: dev/index.html [✓] from /Users/caballero/repos/oerforge/oer-forge.github.io/build/index.html
+2025-07-13 01:29:13,804 DEBUG [MENU] WCAG: wcag/index.html [✓] from /Users/caballero/repos/oerforge/oer-forge.github.io/build/index.html
+2025-07-13 01:29:13,804 DEBUG [MENU] About: about.html [✗] from /Users/caballero/repos/oerforge/oer-forge.github.io/build/index.html
+2025-07-13 01:29:13,804 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/index.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/index.html
+2025-07-13 01:29:13,805 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:29:13,805 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:29:13,805 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:29:13,805 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:29:13,805 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:29:13,807 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:29:13,807 DEBUG [DEBUG] generate_nav_menu: current_html_path=/Users/caballero/repos/oerforge/oer-forge.github.io/build/about.html, abs_current_html=/Users/caballero/repos/oerforge/oer-forge.github.io/build/about.html, current_dir=/Users/caballero/repos/oerforge/oer-forge.github.io/build
+2025-07-13 01:29:13,807 DEBUG [MENU] Home: index.html [✓] from /Users/caballero/repos/oerforge/oer-forge.github.io/build/about.html
+2025-07-13 01:29:13,807 DEBUG [MENU] Docs: docs/index.html [✓] from /Users/caballero/repos/oerforge/oer-forge.github.io/build/about.html
+2025-07-13 01:29:13,807 DEBUG [MENU] Dev: dev/index.html [✓] from /Users/caballero/repos/oerforge/oer-forge.github.io/build/about.html
+2025-07-13 01:29:13,807 DEBUG [MENU] WCAG: wcag/index.html [✓] from /Users/caballero/repos/oerforge/oer-forge.github.io/build/about.html
+2025-07-13 01:29:13,807 DEBUG [MENU] About: about.html [✗] from /Users/caballero/repos/oerforge/oer-forge.github.io/build/about.html
+2025-07-13 01:29:13,807 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/about.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/about.html
+2025-07-13 01:29:13,807 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:29:13,807 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:29:13,807 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:29:13,807 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:29:13,807 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:29:13,810 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:29:13,810 DEBUG [DEBUG] generate_nav_menu: current_html_path=/Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/main_js.html, abs_current_html=/Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/main_js.html, current_dir=/Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag
+2025-07-13 01:29:13,811 DEBUG [MENU] Home: ../index.html [✓] from /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/main_js.html
+2025-07-13 01:29:13,811 DEBUG [MENU] Docs: ../docs/index.html [✓] from /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/main_js.html
+2025-07-13 01:29:13,811 DEBUG [MENU] Dev: ../dev/index.html [✓] from /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/main_js.html
+2025-07-13 01:29:13,811 DEBUG [MENU] WCAG: index.html [✓] from /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/main_js.html
+2025-07-13 01:29:13,811 DEBUG [MENU] About: ../about.html [✓] from /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/main_js.html
+2025-07-13 01:29:13,811 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/wcag/main_js.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/main_js.html
+2025-07-13 01:29:13,811 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:29:13,811 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:29:13,811 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:29:13,811 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:29:13,811 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:29:13,813 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:29:13,813 DEBUG [DEBUG] generate_nav_menu: current_html_path=/Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/report2.html, abs_current_html=/Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/report2.html, current_dir=/Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports
+2025-07-13 01:29:13,813 DEBUG [MENU] Home: ../../index.html [✓] from /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/report2.html
+2025-07-13 01:29:13,813 DEBUG [MENU] Docs: ../../docs/index.html [✓] from /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/report2.html
+2025-07-13 01:29:13,813 DEBUG [MENU] Dev: ../../dev/index.html [✓] from /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/report2.html
+2025-07-13 01:29:13,813 DEBUG [MENU] WCAG: ../index.html [✓] from /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/report2.html
+2025-07-13 01:29:13,813 DEBUG [MENU] About: ../../about.html [✓] from /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/report2.html
+2025-07-13 01:29:13,813 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/wcag/reports/report2.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/report2.html
+2025-07-13 01:29:13,813 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:29:13,813 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:29:13,813 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:29:13,813 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:29:13,813 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:29:13,815 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:29:13,815 DEBUG [DEBUG] generate_nav_menu: current_html_path=/Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/report1.html, abs_current_html=/Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/report1.html, current_dir=/Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports
+2025-07-13 01:29:13,815 DEBUG [MENU] Home: ../../index.html [✓] from /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/report1.html
+2025-07-13 01:29:13,816 DEBUG [MENU] Docs: ../../docs/index.html [✓] from /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/report1.html
+2025-07-13 01:29:13,816 DEBUG [MENU] Dev: ../../dev/index.html [✓] from /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/report1.html
+2025-07-13 01:29:13,816 DEBUG [MENU] WCAG: ../index.html [✓] from /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/report1.html
+2025-07-13 01:29:13,816 DEBUG [MENU] About: ../../about.html [✓] from /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/report1.html
+2025-07-13 01:29:13,816 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/wcag/reports/report1.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/report1.html
+2025-07-13 01:29:13,816 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:29:13,816 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:29:13,816 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:29:13,816 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:29:13,816 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:29:13,819 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:29:13,819 DEBUG [DEBUG] generate_nav_menu: current_html_path=/Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/build_system.html, abs_current_html=/Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/build_system.html, current_dir=/Users/caballero/repos/oerforge/oer-forge.github.io/build/docs
+2025-07-13 01:29:13,819 DEBUG [MENU] Home: ../index.html [✓] from /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/build_system.html
+2025-07-13 01:29:13,819 DEBUG [MENU] Docs: index.html [✓] from /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/build_system.html
+2025-07-13 01:29:13,819 DEBUG [MENU] Dev: ../dev/index.html [✓] from /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/build_system.html
+2025-07-13 01:29:13,819 DEBUG [MENU] WCAG: ../wcag/index.html [✓] from /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/build_system.html
+2025-07-13 01:29:13,819 DEBUG [MENU] About: ../about.html [✓] from /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/build_system.html
+2025-07-13 01:29:13,819 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/docs/build_system.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/build_system.html
+2025-07-13 01:29:13,820 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:29:13,820 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:29:13,820 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:29:13,820 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:29:13,820 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:29:13,822 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:29:13,823 DEBUG [DEBUG] generate_nav_menu: current_html_path=/Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/installation.html, abs_current_html=/Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/installation.html, current_dir=/Users/caballero/repos/oerforge/oer-forge.github.io/build/docs
+2025-07-13 01:29:13,823 DEBUG [MENU] Home: ../index.html [✓] from /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/installation.html
+2025-07-13 01:29:13,823 DEBUG [MENU] Docs: index.html [✓] from /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/installation.html
+2025-07-13 01:29:13,823 DEBUG [MENU] Dev: ../dev/index.html [✓] from /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/installation.html
+2025-07-13 01:29:13,823 DEBUG [MENU] WCAG: ../wcag/index.html [✓] from /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/installation.html
+2025-07-13 01:29:13,823 DEBUG [MENU] About: ../about.html [✓] from /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/installation.html
+2025-07-13 01:29:13,823 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/docs/installation.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/installation.html
+2025-07-13 01:29:13,823 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:29:13,823 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:29:13,823 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:29:13,823 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:29:13,823 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:29:13,826 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:29:13,826 DEBUG [DEBUG] generate_nav_menu: current_html_path=/Users/caballero/repos/oerforge/oer-forge.github.io/build/dev/punchlist.html, abs_current_html=/Users/caballero/repos/oerforge/oer-forge.github.io/build/dev/punchlist.html, current_dir=/Users/caballero/repos/oerforge/oer-forge.github.io/build/dev
+2025-07-13 01:29:13,826 DEBUG [MENU] Home: ../index.html [✓] from /Users/caballero/repos/oerforge/oer-forge.github.io/build/dev/punchlist.html
+2025-07-13 01:29:13,826 DEBUG [MENU] Docs: ../docs/index.html [✓] from /Users/caballero/repos/oerforge/oer-forge.github.io/build/dev/punchlist.html
+2025-07-13 01:29:13,826 DEBUG [MENU] Dev: index.html [✓] from /Users/caballero/repos/oerforge/oer-forge.github.io/build/dev/punchlist.html
+2025-07-13 01:29:13,826 DEBUG [MENU] WCAG: ../wcag/index.html [✓] from /Users/caballero/repos/oerforge/oer-forge.github.io/build/dev/punchlist.html
+2025-07-13 01:29:13,826 DEBUG [MENU] About: ../about.html [✓] from /Users/caballero/repos/oerforge/oer-forge.github.io/build/dev/punchlist.html
+2025-07-13 01:29:13,827 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/dev/punchlist.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/dev/punchlist.html

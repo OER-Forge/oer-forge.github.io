@@ -83,16 +83,8 @@ def convert_markdown_to_html(md_path, html_path):
     config_path = os.path.join(PROJECT_ROOT, "_config.yml")
     config = load_yaml_config(config_path)
     toc = config.get("toc", [])
-    # Compute folder depth and current folder name
-    rel_html_path = os.path.relpath(html_path, BUILD_HTML_DIR)
-    parts = rel_html_path.split(os.sep)
-    if len(parts) > 1:
-        current_folder = parts[0]
-        folder_depth = len(parts) - 1
-    else:
-        current_folder = ''
-        folder_depth = 0
-    nav_html = generate_nav_menu(toc, current_folder, folder_depth)
+    # Pass html_path to nav menu for correct relative mapping
+    nav_html = generate_nav_menu(toc, current_html_path=html_path)
     header = create_header(title, nav_html)
     footer = create_footer()
     html_output = render_page(title, html_body, header, footer)
@@ -185,9 +177,10 @@ def render_template(template: str, title: str, content: str) -> str:
 def generate_nav_menu(toc: list, current_folder: str = '', folder_depth: int = 0, current_html_path: str = '') -> str:
     seen_titles = set()
     nav_html = '<nav role="navigation" aria-label="Main menu"><ul>'
-    current_dir = os.path.dirname(current_html_path)
-    logging.debug(f"[DEBUG] generate_nav_menu: current_folder={current_folder}, folder_depth={folder_depth}, current_html_path={current_html_path}, current_dir={current_dir}")
-    print(f"[DEBUG] generate_nav_menu: current_folder={current_folder}, folder_depth={folder_depth}, current_html_path={current_html_path}, current_dir={current_dir}")
+    current_dir = os.path.dirname(current_html_path) if current_html_path else ''
+    abs_current_html = os.path.abspath(current_html_path) if current_html_path else ''
+    logging.debug(f"[DEBUG] generate_nav_menu: current_html_path={current_html_path}, abs_current_html={abs_current_html}, current_dir={current_dir}")
+    print(f"[DEBUG] generate_nav_menu: current_html_path={current_html_path}, abs_current_html={abs_current_html}, current_dir={current_dir}")
     for entry in toc:
         if entry.get('menu', False):
             title = entry.get('title', '')
@@ -195,25 +188,25 @@ def generate_nav_menu(toc: list, current_folder: str = '', folder_depth: int = 0
                 continue
             seen_titles.add(title)
             slug = slugify(title)
-            # Determine target HTML path for this menu item
+            # Determine absolute target HTML path for this menu item
             if 'file' in entry:
-                target_html = os.path.splitext(entry['file'])[0] + '.html'
+                target_html = os.path.join(PROJECT_ROOT, 'build', os.path.splitext(entry['file'])[0] + '.html')
             else:
-                target_html = os.path.join(slug, 'index.html')
-            logging.debug(f"[DEBUG] Menu item: title={title}, slug={slug}, target_html={target_html}")
-            print(f"[DEBUG] Menu item: title={title}, slug={slug}, target_html={target_html}")
-            # Compute relative path from current page to target
+                target_html = os.path.join(PROJECT_ROOT, 'build', slug, 'index.html')
+            # Compute robust relative path from current page to menu item
             if current_dir:
                 try:
                     link = os.path.relpath(target_html, start=current_dir)
+                    abs_link = os.path.abspath(os.path.join(current_dir, link))
+                    mark = '✓' if os.path.exists(abs_link) else '✗'
+                    logging.debug(f"[MENU] {title}: {link} [{mark}] from {current_html_path}")
+                    print(f"[MENU] {title}: {link} [{mark}] from {current_html_path}")
                 except Exception as e:
                     logging.error(f"[DEBUG] relpath error: {e}")
                     print(f"[DEBUG] relpath error: {e}")
                     link = target_html
             else:
                 link = target_html
-            logging.debug(f"[DEBUG] Computed link for '{title}': {link}")
-            print(f"[DEBUG] Computed link for '{title}': {link}")
             nav_html += f'<li><a href="{link}">{title}</a></li>'
     nav_html += '</ul></nav>'
     return nav_html
