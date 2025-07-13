@@ -1,3 +1,16 @@
+def load_template(template_path: str) -> str:
+    """
+    Load the HTML template from the given path.
+    """
+    with open(template_path, 'r', encoding='utf-8') as f:
+        return f.read()
+
+def render_template(template: str, title: str, content: str) -> str:
+    """
+    Render the template with the given title and content.
+    """
+    return template.replace('{{ title }}', title).replace('{{ content }}', content)
+
 """
 Prototype script to convert Markdown files in build/files to accessible standalone HTML pages in build/.
 
@@ -78,16 +91,6 @@ def convert_markdown_to_html(md_path, html_path):
     # Convert markdown to HTML
     html_body = markdown.markdown(md_text, extensions=extensions, extension_configs=extension_configs)
 
-    # Inject highlight.js and MathJax
-    highlight_js = (
-        '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">\n'
-        '<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>\n'
-        '<script>hljs.highlightAll();</script>'
-    )
-    mathjax = (
-        '<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>'
-    )
-
     # Add ARIA attributes to code blocks
     import re
     html_body = re.sub(r'<pre><code', '<pre aria-label="Code block"><code role="code"', html_body)
@@ -96,36 +99,30 @@ def convert_markdown_to_html(md_path, html_path):
     html_body = re.sub(r'<div class="admonition', '<div class="admonition', html_body)
 
     # Rewrite image src paths to point to files/assets/... instead of assets/...
-    def rewrite_img_src(match):
-        src = match.group(1)
-        # Only rewrite if src starts with 'assets/'
-        if src.startswith('assets/'):
-            return f'<img alt="{match.group(2)}" src="files/{src}"'
-        return match.group(0)
+    html_body = re.sub(
+        r'<img alt="([^"]*)" src="([^"]+)"',
+        lambda m: f'<img alt="{m.group(1)}" src="files/{m.group(2)}"' if m.group(2).startswith('assets/') else m.group(0),
+        html_body
+    )
 
-    html_body = re.sub(r'<img alt="([^"]*)" src="([^"]+)"',
-                      lambda m: f'<img alt="{m.group(1)}" src="files/{m.group(2)}"' if m.group(2).startswith('assets/') else m.group(0),
-                      html_body)
+    # Extract first markdown heading as title
+    import re
+    match = re.search(r'^#\s+(.+)', md_text, re.MULTILINE)
+    if match:
+        title = match.group(1).strip()
+        # Remove the first <h1> from the HTML body to avoid duplication
+        html_body = re.sub(r'<h1[^>]*>.*?</h1>', '', html_body, count=1)
+    else:
+        title = "Untitled"
 
-    # Basic HTML template
-    html_template = f"""
-    <!DOCTYPE html>
-    <html lang='en'>
-    <head>
-        <meta charset='utf-8'>
-        <title>{os.path.basename(md_path)}</title>
-        {highlight_js}
-        {mathjax}
-    </head>
-    <body>
-        {html_body}
-    </body>
-    </html>
-    """
+    # Load and render the template
+    template_path = os.path.join(PROJECT_ROOT, 'static', 'templates', 'page.html')
+    template = load_template(template_path)
+    html_output = render_template(template, title, html_body)
 
     # Write output
     with open(html_path, 'w', encoding='utf-8') as f:
-        f.write(html_template)
+        f.write(html_output)
 
 def ensure_output_dir(md_path):
     """
