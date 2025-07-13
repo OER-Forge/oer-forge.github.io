@@ -22,6 +22,7 @@ def initialize_database():
     cursor = conn.cursor()
     
     # Drop tables if they exist
+    cursor.execute("DROP TABLE IF EXISTS build_images")
     cursor.execute("DROP TABLE IF EXISTS page_images")
     cursor.execute("DROP TABLE IF EXISTS page")
     cursor.execute("DROP TABLE IF EXISTS toc")
@@ -108,10 +109,60 @@ def initialize_database():
             FOREIGN KEY(image_page_id) REFERENCES page(page_id)
         )
     """)
+    
+    # Create build_images table
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS build_images (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            image_filename TEXT,
+            image_rel_path TEXT,
+            image_ext TEXT,
+            image_size INTEGER,
+            image_found BOOLEAN
+        )
+    """)
 
     conn.commit()
     conn.close()
-    
+
+
+# --- Build Images Scanning ---
+def populate_build_images():
+    """
+    Scans build/files/assets recursively for all image files and populates the build_images table.
+    Columns: image_filename, image_rel_path, image_abs_path, image_ext, image_size, image_found
+    """
+    import os
+    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    assets_dir = os.path.join(project_root, 'build', 'files', 'assets')
+    db_path = os.path.join(project_root, 'db', 'sqlite.db')
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+    # Clear table first
+    cursor.execute("DELETE FROM build_images")
+    build_dir = os.path.join(project_root, 'build')
+    for dirpath, dirnames, filenames in os.walk(assets_dir):
+        for filename in filenames:
+            if filename.startswith('.'):
+                continue
+            abs_path = os.path.join(dirpath, filename)
+            rel_path = os.path.relpath(abs_path, build_dir)
+            ext = os.path.splitext(filename)[1][1:].lower()
+            try:
+                size = os.path.getsize(abs_path)
+                found = 1
+            except Exception:
+                size = 0
+                found = 0
+            cursor.execute(
+                """
+                INSERT INTO build_images (image_filename, image_rel_path, image_ext, image_size, image_found)
+                VALUES (?, ?, ?, ?, ?)
+                """,
+                (filename, rel_path, ext, size, found)
+            )
+    conn.commit()
+    conn.close()  
 
 def populate_site_info():
     """
