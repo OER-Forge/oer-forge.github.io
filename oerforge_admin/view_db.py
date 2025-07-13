@@ -79,8 +79,26 @@ def export_table_to_html(table_name, output_path, template_path=None, columns=No
     - template_path: Optional path to HTML template (from static/templates)
     - columns, where, limit: Optional query params
     """
-    # TODO: Query table, render as HTML table, inject into template, write to output_path
-    pass
+    # Query table
+    rows = fetch_table(table_name, columns=columns, where=where, limit=limit)
+    cols = columns if columns else get_table_columns(table_name)
+    table_html = tabulate(rows, headers=cols, tablefmt="html")
+
+    # Load template
+    if not template_path:
+        template_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "static", "templates", "admin_page.html")
+    with open(template_path, "r") as tpl:
+        template = tpl.read()
+
+    # Inject table HTML and title
+    html = template.replace("{{ content }}", table_html)
+    html = html.replace("{{ title }}", f"{table_name} Table")
+    # Optionally inject header/footer if desired
+    html = html.replace("{{ header }}", "")
+    html = html.replace("{{ footer }}", "")
+
+    with open(output_path, "w") as f:
+        f.write(html)
 
 def export_all_tables_to_html(output_dir, template_path=None):
     """
