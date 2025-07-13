@@ -113,10 +113,10 @@ def render_page(title: str, content: str, header: str, footer: str) -> str:
     )
     # Add CSS and JS links (use /css/ and /js/ to match build output)
     css_links = (
-        '<link rel="stylesheet" href="./css/theme-light.css" id="theme-light">\n'
-        '<link rel="stylesheet" href="./css/theme-dark.css" id="theme-dark" disabled>\n'
+        '<link rel="stylesheet" href="/css/theme-light.css" id="theme-light">\n'
+        '<link rel="stylesheet" href="/css/theme-dark.css" id="theme-dark" disabled>\n'
     )
-    js_links = '<script src="./js/main.js" defer></script>\n'
+    js_links = '<script src="/js/main.js" defer></script>\n'
     # Insert CSS/JS into template only if not already present
     html = template.replace('{{ title }}', title)
     html = html.replace('{{ content }}', content)
