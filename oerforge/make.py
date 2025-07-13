@@ -296,19 +296,29 @@ def get_canonical_image_path(filename):
 
 def fix_image_paths(html_body):
     """Rewrite <img> src attributes to use canonical paths from build_images DB."""
+def fix_image_paths(html_body, html_path=None):
     def replacer(match):
         before = match.group(1)
         src = match.group(2)
-        # Extract filename from src
         filename = os.path.basename(src)
         canonical_path = get_canonical_image_path(filename)
+        rel_path = canonical_path
+        if html_path and canonical_path:
+            html_dir = os.path.dirname(html_path)
+            # Determine output root (build or docs)
+            if '/docs/' in html_path:
+                output_root = os.path.join(PROJECT_ROOT, 'docs')
+            else:
+                output_root = os.path.join(PROJECT_ROOT, 'build')
+            abs_img_path = os.path.join(output_root, canonical_path)
+            rel_path = os.path.relpath(abs_img_path, start=html_dir)
+        print(f"[DEBUG] fix_image_paths: src={src}, filename={filename}, canonical_path={canonical_path}, html_path={html_path}, rel_path={rel_path}")
+        logging.info(f"fix_image_paths: src={src}, filename={filename}, canonical_path={canonical_path}, html_path={html_path}, rel_path={rel_path}")
         if canonical_path:
-            return f'<img{before}src="{canonical_path}"'
+            return f'<img{before}src="{rel_path}"'
         else:
-            # Optionally log missing image
             logging.warning(f"Image not found in build_images DB: {src}")
             return match.group(0)
-    # Replace src in all <img ... src="..."> tags
     html_body = re.sub(r'<img([^>]+)src=["\']([^"\']+)["\']', replacer, html_body)
     return html_body
 
@@ -327,7 +337,7 @@ def convert_markdown_to_html(md_path, html_path):
     html_body = html_body.replace('<nav>', '<nav role="navigation">')
     html_body = html_body.replace('<header>', '<header role="banner">')
     html_body = html_body.replace('<footer>', '<footer role="contentinfo">')
-    html_body = fix_image_paths(html_body)
+    html_body = fix_image_paths(html_body, html_path)
     mathjax_script = '<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>'
     html_body += mathjax_script
     match = re.search(r'^#\s+(.+)', md_text, re.MULTILINE)

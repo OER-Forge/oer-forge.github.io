@@ -24,6 +24,9 @@ toc:
       - title: "Build System"
         file: docs/build_system.md
         menu: false
+      - title: "OER Forge Logos"
+        file: docs/logos.md
+        menu: false
   - title: "Dev"
     menu: true
     children: 
