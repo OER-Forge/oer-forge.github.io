@@ -125,6 +125,64 @@ def initialize_database():
     conn.commit()
     conn.close()
 
+# --- New Files Table and Linking ---
+def create_files_table():
+    """
+    Creates the 'files' and 'pages_files' tables in the SQLite database for tracking all linked files (images, PDFs, docs, remote files) and their references.
+    """
+    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    db_path = os.path.join(project_root, 'db', 'sqlite.db')
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+    # Drop tables if they exist
+    cursor.execute("DROP TABLE IF EXISTS files")
+    cursor.execute("DROP TABLE IF EXISTS pages_files")
+    # Create files table
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS files (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            filename TEXT,
+            extension TEXT,
+            mime_type TEXT,
+            is_image BOOLEAN,
+            is_remote BOOLEAN,
+            url TEXT,
+            referenced_page TEXT,
+            relative_path TEXT,
+            absolute_path TEXT
+        )
+    """)
+    # Create pages_files table (many-to-many)
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS pages_files (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            file_id INTEGER,
+            page_path TEXT,
+            FOREIGN KEY(file_id) REFERENCES files(id)
+        )
+    """)
+    conn.commit()
+    conn.close()
+
+def extract_linked_files_from_markdown(md_path, page_id):
+    """
+    Parses a markdown file and extracts all linked files (images, PDFs, docs, remote files), ignoring HTML and YouTube links.
+    Returns a list of file records to be inserted into the files table.
+    """
+    pass
+
+def insert_file_record(file_record):
+    """
+    Inserts a single file record into the 'files' table.
+    """
+    pass
+
+def link_file_to_page(file_id, page_id):
+    """
+    Inserts a record into the 'pages_files' table to link a file to a referencing page (many-to-many).
+    """
+    pass
+
 
 # --- Build Images Scanning ---
 def populate_build_images():

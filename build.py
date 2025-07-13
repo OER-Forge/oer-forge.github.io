@@ -35,6 +35,14 @@ def initialize_images_db():
     populate_build_images()
     print("[OK] Database initialized and build_images table populated.")
 
+def test_files_table_creation():
+    print("[TEST] Creating files and pages_files tables...")
+    from oerforge.scan import create_files_table, print_table
+    create_files_table()
+    print("[TEST] Contents of files table:")
+    print_table("files")
+    print("[TEST] Contents of pages_files table:")
+    print_table("pages_files")
 def build_site(toc):
     print("[INFO] Creating index.html pages for folders as per toc...")
     ensure_build_structure(toc)
@@ -72,7 +80,8 @@ def main():
 
     copy_files()
     initialize_images_db()
-    build_site(toc)
+    test_files_table_creation()
+    #build_site(toc)
     #run_accessibility_checks_and_report()
     # Convert WCAG reports to HTML and copy to projectroot/docs/wcag-reports
     convert_wcag_reports_to_html()
