@@ -17,6 +17,7 @@ def initialize_database():
     cursor.execute("DROP TABLE IF EXISTS files")
     cursor.execute("DROP TABLE IF EXISTS pages_files")
     cursor.execute("DROP TABLE IF EXISTS pages")
+    cursor.execute("DROP TABLE IF EXISTS site_info")
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS files (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -47,6 +48,57 @@ def initialize_database():
             is_autobuilt BOOLEAN DEFAULT 0
         )
     """)
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS site_info (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            title TEXT,
+            author TEXT,
+            description TEXT,
+            logo TEXT,
+            favicon TEXT,
+            theme_default TEXT,
+            theme_light TEXT,
+            theme_dark TEXT,
+            language TEXT,
+            github_url TEXT,
+            footer_text TEXT
+        )
+    """)
+def populate_site_info_from_config(config_path):
+    """
+    Reads _config.yml and populates the site_info table with site and footer info.
+    """
+    import yaml
+    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    db_path = os.path.join(project_root, 'db', 'sqlite.db')
+    full_config_path = os.path.join(project_root, config_path)
+    with open(full_config_path, 'r', encoding='utf-8') as f:
+        config = yaml.safe_load(f)
+    site = config.get('site', {})
+    footer = config.get('footer', {})
+    theme = site.get('theme', {})
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM site_info")
+    cursor.execute(
+        """
+        INSERT INTO site_info (title, author, description, logo, favicon, theme_default, theme_light, theme_dark, language, github_url, footer_text)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """,
+        (
+            site.get('title', ''),
+            site.get('author', ''),
+            site.get('description', ''),
+            site.get('logo', ''),
+            site.get('favicon', ''),
+            theme.get('default', ''),
+            theme.get('light', ''),
+            theme.get('dark', ''),
+            site.get('language', ''),
+            site.get('github_url', ''),
+            footer.get('text', '')
+        )
+    )
     conn.commit()
     conn.close()
 

@@ -1,3 +1,19 @@
+# --- Site info DB access ---
+def get_site_info():
+    """
+    Returns a dict of site and footer info from the site_info table.
+    """
+    import sqlite3
+    db_path = get_db_path()
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+    cursor.execute("SELECT title, author, description, logo, favicon, theme_default, theme_light, theme_dark, language, github_url, footer_text FROM site_info LIMIT 1")
+    row = cursor.fetchone()
+    conn.close()
+    if row:
+        keys = ["title", "author", "description", "logo", "favicon", "theme_default", "theme_light", "theme_dark", "language", "github_url", "footer_text"]
+        return dict(zip(keys, row))
+    return {}
 """
 view_db.py: CLI/utility for viewing asset database contents (files/pages_files only).
 Intended for future web admin interface.
@@ -90,12 +106,18 @@ def export_table_to_html(table_name, output_path, template_path=None, columns=No
     with open(template_path, "r") as tpl:
         template = tpl.read()
 
-    # Inject table HTML and title
+    # Get site info for title and footer
+    site_info = get_site_info()
+    page_title = site_info.get("title", "Admin Table")
+    footer_text = site_info.get("footer_text", "")
+
+    # Inject table HTML, title, and footer
     html = template.replace("{{ content }}", table_html)
-    html = html.replace("{{ title }}", f"{table_name} Table")
-    # Optionally inject header/footer if desired
+    html = html.replace("{{ title }}", page_title)
+    html = html.replace("{{ footer }}", footer_text)
+    # Optionally inject header/nav (stubbed as empty)
     html = html.replace("{{ header }}", "")
-    html = html.replace("{{ footer }}", "")
+    html = html.replace("{{ nav_menu }}", "")
 
     with open(output_path, "w") as f:
         f.write(html)
@@ -104,8 +126,10 @@ def export_all_tables_to_html(output_dir, template_path=None):
     """
     Stub: Export all tables to static HTML files in output_dir using a site template.
     """
-    # TODO: Loop over tables, call export_table_to_html for each
-    pass
+    os.makedirs(output_dir, exist_ok=True)
+    for table in get_table_names():
+        output_path = os.path.join(output_dir, f"{table}_table.html")
+        export_table_to_html(table, output_path, template_path)
 
 def integrate_with_make():
     """

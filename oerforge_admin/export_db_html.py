@@ -17,21 +17,12 @@ def inject_table_into_template(table_html, template_path, output_path):
     """
     with open(template_path, "r") as f:
         template = f.read()
-    # Inject header/footer from static/templates
-    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    header_path = os.path.join(project_root, "static", "templates", "header.html")
-    footer_path = os.path.join(project_root, "static", "templates", "footer.html")
-    header = ""
-    footer = ""
-    if os.path.exists(header_path):
-        with open(header_path, "r") as hf:
-            header = hf.read()
-    if os.path.exists(footer_path):
-        with open(footer_path, "r") as ff:
-            footer = ff.read()
-    # Replace header/footer placeholders
-    template = template.replace("{{ header }}", header)
-    template = template.replace("{{ footer }}", footer)
+    # Inject site info from DB
+    from oerforge_admin.view_db import get_site_info
+    site_info = get_site_info()
+    # Replace title and footer placeholders
+    template = template.replace("{{ title }}", site_info.get("title", "Admin Table"))
+    template = template.replace("{{ footer }}", site_info.get("footer_text", ""))
     # Replace CSS/JS references to point to local admin assets
     template = template.replace("/build/css/", "css/")
     template = template.replace("/build/js/", "js/")
