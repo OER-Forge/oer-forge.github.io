@@ -192,6 +192,7 @@ def create_header(title: str, nav_html: str) -> str:
 def create_footer() -> str:
     """Generate the footer HTML, reading content from _config.yml if available."""
     import html
+    import re
     config_path = os.path.join(PROJECT_ROOT, "_config.yml")
     config = load_yaml_config(config_path)
     footer = config.get("footer", "<!-- footer content here -->")
@@ -200,9 +201,13 @@ def create_footer() -> str:
         footer_content = footer.get("text", "")
     else:
         footer_content = str(footer)
-    # Escape HTML for safety, but allow basic tags
+    # Escape HTML for safety, but allow full <a ...>...</a> tags and some basic tags
+    # First, escape everything
     safe_footer = html.escape(footer_content, quote=False)
-    for tag in ["<a ", "<a>", "</a>", "<br>", "<br/>", "<strong>", "</strong>", "<em>", "</em>"]:
+    # Restore <a ...>...</a> tags
+    safe_footer = re.sub(r'&lt;a ([^&]*)&gt;(.*?)&lt;/a&gt;', r'<a \1>\2</a>', safe_footer)
+    # Restore <br>, <strong>, <em> tags
+    for tag in ["<br>", "<br/>", "<strong>", "</strong>", "<em>", "</em>"]:
         safe_footer = safe_footer.replace(html.escape(tag, quote=False), tag)
     return f'<footer>\n{safe_footer}\n</footer>'
 

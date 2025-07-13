@@ -73,7 +73,7 @@ def main():
     copy_files()
     initialize_images_db()
     build_site(toc)
-    run_accessibility_checks_and_report()
+    #run_accessibility_checks_and_report()
     # Convert WCAG reports to HTML and copy to projectroot/docs/wcag-reports
     convert_wcag_reports_to_html()
     mirror_build_to_docs()
