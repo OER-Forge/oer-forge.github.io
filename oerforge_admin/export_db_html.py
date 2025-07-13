@@ -31,7 +31,15 @@ def inject_table_into_template(table_html, template_path, output_path):
     # Replace title, header, and footer placeholders
     template = template.replace("{{ title }}", site_info.get("title", "Admin Table"))
     template = template.replace("{{ header }}", header_html)
-    template = template.replace("{{ footer }}", site_info.get("footer_text", ""))
+    # Inject full footer HTML from static/templates/footer.html
+    import os
+    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    footer_path = os.path.join(project_root, "static", "templates", "footer.html")
+    with open(footer_path, "r") as f:
+        footer_html = f.read()
+    # Replace {{ footer_text }} in footer.html with site_info value
+    footer_html = footer_html.replace("{{ footer_text }}", site_info.get("footer_text", ""))
+    template = template.replace("{{ footer }}", footer_html)
     print("[DEBUG] Template after header injection (first 500 chars):", template[:500])
     # Replace CSS/JS references to point to local admin assets
     template = template.replace("/build/css/", "css/")
