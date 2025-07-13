@@ -16,7 +16,19 @@ def inject_table_into_template(table_html, template_path, output_path):
     """
     with open(template_path, "r") as f:
         template = f.read()
-    html = template.replace("<!-- ASSET_TABLE -->", table_html)
+    # Try <!-- ASSET_TABLE -->
+    if "<!-- ASSET_TABLE -->" in template:
+        html = template.replace("<!-- ASSET_TABLE -->", table_html)
+    # Else try {{ content }}
+    elif "{{ content }}" in template:
+        html = template.replace("{{ content }}", table_html)
+    # Else insert before </main> or </body>
+    elif "</main>" in template:
+        html = template.replace("</main>", f"{table_html}\n</main>")
+    elif "</body>" in template:
+        html = template.replace("</body>", f"{table_html}\n</body>")
+    else:
+        html = template + table_html
     with open(output_path, "w") as f:
         f.write(html)
 
@@ -44,10 +56,20 @@ def export_all_tables_to_html(output_dir, template_path=None):
 
 def copy_static_assets_to_admin(output_dir):
     """
-    Stub: Copy required CSS and JS files to build/admin for correct styling and interactivity.
+    Copy required CSS and JS files to build/admin for correct styling and interactivity.
     """
-    # TODO: Copy static/css/* and static/js/* to output_dir
-    pass
+    import shutil
+    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    static_css = os.path.join(project_root, "static", "css")
+    static_js = os.path.join(project_root, "static", "js")
+    admin_css = os.path.join(output_dir, "css")
+    admin_js = os.path.join(output_dir, "js")
+    # Copy CSS
+    if os.path.exists(static_css):
+        shutil.copytree(static_css, admin_css, dirs_exist_ok=True)
+    # Copy JS
+    if os.path.exists(static_js):
+        shutil.copytree(static_js, admin_js, dirs_exist_ok=True)
 if __name__ == "__main__":
     # Example usage stub
     # export_all_tables_to_html("build/admin/")
