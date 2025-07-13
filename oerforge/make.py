@@ -98,8 +98,21 @@ def create_header(title: str, nav_html: str) -> str:
     return f'<header class="site-header">\n{theme_toggle}\n<h1 class="site-title">{title}</h1>\n{nav_html}\n</header>'
 
 def create_footer() -> str:
-    """Generate the footer HTML."""
-    return '<footer>\n<!-- footer content here -->\n</footer>'
+    """Generate the footer HTML, reading content from _config.yml if available."""
+    import html
+    config_path = os.path.join(PROJECT_ROOT, "_config.yml")
+    config = load_yaml_config(config_path)
+    footer = config.get("footer", "<!-- footer content here -->")
+    # If footer is a dict, extract 'text' field
+    if isinstance(footer, dict):
+        footer_content = footer.get("text", "")
+    else:
+        footer_content = str(footer)
+    # Escape HTML for safety, but allow basic tags
+    safe_footer = html.escape(footer_content, quote=False)
+    for tag in ["<a ", "<a>", "</a>", "<br>", "<br/>", "<strong>", "</strong>", "<em>", "</em>"]:
+        safe_footer = safe_footer.replace(html.escape(tag, quote=False), tag)
+    return f'<footer>\n{safe_footer}\n</footer>'
 
 def render_page(title: str, content: str, header: str, footer: str, html_path: str) -> str:
     """Render the full HTML page using header, content, and footer."""
