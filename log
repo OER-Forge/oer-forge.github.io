@@ -322,3 +322,1125 @@
 2025-07-13 00:43:51,497 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
 2025-07-13 00:43:51,501 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
 2025-07-13 00:43:51,501 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/dev/punchlist.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/dev/punchlist.html
+2025-07-13 00:46:20,708 INFO Starting copy_project_files
+2025-07-13 00:46:20,708 DEBUG Removing entire build directory: /Users/caballero/repos/oerforge/oer-forge.github.io/build
+2025-07-13 00:46:20,710 DEBUG Creating directory: /Users/caballero/repos/oerforge/oer-forge.github.io/build
+2025-07-13 00:46:20,710 DEBUG Copying from /Users/caballero/repos/oerforge/oer-forge.github.io/content to /Users/caballero/repos/oerforge/oer-forge.github.io/build/files
+2025-07-13 00:46:20,718 INFO Copied /Users/caballero/repos/oerforge/oer-forge.github.io/content to /Users/caballero/repos/oerforge/oer-forge.github.io/build/files
+2025-07-13 00:46:20,718 DEBUG Copying from /Users/caballero/repos/oerforge/oer-forge.github.io/static/css to /Users/caballero/repos/oerforge/oer-forge.github.io/build/css
+2025-07-13 00:46:20,719 INFO Copied /Users/caballero/repos/oerforge/oer-forge.github.io/static/css to /Users/caballero/repos/oerforge/oer-forge.github.io/build/css
+2025-07-13 00:46:20,719 DEBUG Copying from /Users/caballero/repos/oerforge/oer-forge.github.io/static/js to /Users/caballero/repos/oerforge/oer-forge.github.io/build/js
+2025-07-13 00:46:20,719 INFO Copied /Users/caballero/repos/oerforge/oer-forge.github.io/static/js to /Users/caballero/repos/oerforge/oer-forge.github.io/build/js
+2025-07-13 00:46:20,719 INFO Created .nojekyll at /Users/caballero/repos/oerforge/oer-forge.github.io/build/.nojekyll
+2025-07-13 00:46:20,719 INFO Finished copy_project_files
+2025-07-13 00:46:20,722 INFO Created directory for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs
+2025-07-13 00:46:20,723 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/index.html
+2025-07-13 00:46:20,723 INFO Created directory for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/dev
+2025-07-13 00:46:20,723 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/dev/index.html
+2025-07-13 00:46:20,723 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/index.html
+2025-07-13 00:46:20,723 INFO Created directory for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag
+2025-07-13 00:46:20,723 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/index.html
+2025-07-13 00:46:20,723 INFO Created directory for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports
+2025-07-13 00:46:20,723 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/index.html
+2025-07-13 00:46:20,757 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 00:46:20,757 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 00:46:20,757 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 00:46:20,759 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 00:46:20,759 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 00:46:20,762 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 00:46:20,762 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/index.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/index.html
+2025-07-13 00:46:20,762 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 00:46:20,762 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 00:46:20,762 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 00:46:20,762 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 00:46:20,762 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 00:46:20,765 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 00:46:20,765 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/about.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/about.html
+2025-07-13 00:46:20,765 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 00:46:20,765 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 00:46:20,765 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 00:46:20,765 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 00:46:20,765 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 00:46:20,768 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 00:46:20,768 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/wcag/main_js.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/main_js.html
+2025-07-13 00:46:20,768 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 00:46:20,768 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 00:46:20,768 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 00:46:20,768 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 00:46:20,768 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 00:46:20,770 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 00:46:20,770 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/wcag/reports/report2.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/report2.html
+2025-07-13 00:46:20,770 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 00:46:20,770 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 00:46:20,770 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 00:46:20,770 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 00:46:20,770 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 00:46:20,773 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 00:46:20,773 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/wcag/reports/report1.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/report1.html
+2025-07-13 00:46:20,773 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 00:46:20,773 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 00:46:20,773 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 00:46:20,773 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 00:46:20,773 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 00:46:20,776 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 00:46:20,776 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/docs/build_system.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/build_system.html
+2025-07-13 00:46:20,776 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 00:46:20,776 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 00:46:20,776 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 00:46:20,776 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 00:46:20,776 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 00:46:20,779 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 00:46:20,779 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/docs/installation.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/installation.html
+2025-07-13 00:46:20,779 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 00:46:20,779 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 00:46:20,779 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 00:46:20,779 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 00:46:20,779 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 00:46:20,782 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 00:46:20,782 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/dev/punchlist.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/dev/punchlist.html
+2025-07-13 00:48:51,059 INFO Starting copy_project_files
+2025-07-13 00:48:51,059 DEBUG Removing entire build directory: /Users/caballero/repos/oerforge/oer-forge.github.io/build
+2025-07-13 00:48:51,061 DEBUG Creating directory: /Users/caballero/repos/oerforge/oer-forge.github.io/build
+2025-07-13 00:48:51,062 DEBUG Copying from /Users/caballero/repos/oerforge/oer-forge.github.io/content to /Users/caballero/repos/oerforge/oer-forge.github.io/build/files
+2025-07-13 00:48:51,066 INFO Copied /Users/caballero/repos/oerforge/oer-forge.github.io/content to /Users/caballero/repos/oerforge/oer-forge.github.io/build/files
+2025-07-13 00:48:51,066 DEBUG Copying from /Users/caballero/repos/oerforge/oer-forge.github.io/static/css to /Users/caballero/repos/oerforge/oer-forge.github.io/build/css
+2025-07-13 00:48:51,066 INFO Copied /Users/caballero/repos/oerforge/oer-forge.github.io/static/css to /Users/caballero/repos/oerforge/oer-forge.github.io/build/css
+2025-07-13 00:48:51,066 DEBUG Copying from /Users/caballero/repos/oerforge/oer-forge.github.io/static/js to /Users/caballero/repos/oerforge/oer-forge.github.io/build/js
+2025-07-13 00:48:51,066 INFO Copied /Users/caballero/repos/oerforge/oer-forge.github.io/static/js to /Users/caballero/repos/oerforge/oer-forge.github.io/build/js
+2025-07-13 00:48:51,066 INFO Created .nojekyll at /Users/caballero/repos/oerforge/oer-forge.github.io/build/.nojekyll
+2025-07-13 00:48:51,066 INFO Finished copy_project_files
+2025-07-13 00:48:51,069 INFO Created directory for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs
+2025-07-13 00:48:51,069 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/index.html
+2025-07-13 00:48:51,069 INFO Created directory for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/dev
+2025-07-13 00:48:51,069 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/dev/index.html
+2025-07-13 00:48:51,069 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/index.html
+2025-07-13 00:48:51,069 INFO Created directory for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag
+2025-07-13 00:48:51,070 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/index.html
+2025-07-13 00:48:51,070 INFO Created directory for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports
+2025-07-13 00:48:51,070 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/index.html
+2025-07-13 00:48:51,090 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 00:48:51,090 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 00:48:51,091 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 00:48:51,091 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 00:48:51,091 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 00:48:51,094 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 00:48:51,094 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/index.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/index.html
+2025-07-13 00:48:51,094 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 00:48:51,094 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 00:48:51,094 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 00:48:51,094 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 00:48:51,094 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 00:48:51,097 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 00:48:51,097 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/about.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/about.html
+2025-07-13 00:48:51,097 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 00:48:51,097 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 00:48:51,097 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 00:48:51,097 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 00:48:51,097 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 00:48:51,100 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 00:48:51,100 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/wcag/main_js.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/main_js.html
+2025-07-13 00:48:51,100 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 00:48:51,100 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 00:48:51,100 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 00:48:51,100 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 00:48:51,100 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 00:48:51,102 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 00:48:51,103 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/wcag/reports/report2.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/report2.html
+2025-07-13 00:48:51,103 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 00:48:51,103 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 00:48:51,103 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 00:48:51,103 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 00:48:51,103 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 00:48:51,105 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 00:48:51,105 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/wcag/reports/report1.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/report1.html
+2025-07-13 00:48:51,105 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 00:48:51,105 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 00:48:51,105 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 00:48:51,105 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 00:48:51,105 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 00:48:51,109 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 00:48:51,109 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/docs/build_system.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/build_system.html
+2025-07-13 00:48:51,109 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 00:48:51,109 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 00:48:51,109 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 00:48:51,109 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 00:48:51,109 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 00:48:51,112 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 00:48:51,112 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/docs/installation.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/installation.html
+2025-07-13 00:48:51,112 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 00:48:51,112 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 00:48:51,112 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 00:48:51,112 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 00:48:51,112 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 00:48:51,115 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 00:48:51,115 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/dev/punchlist.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/dev/punchlist.html
+2025-07-13 00:49:58,376 INFO Starting copy_project_files
+2025-07-13 00:49:58,376 DEBUG Removing entire build directory: /Users/caballero/repos/oerforge/oer-forge.github.io/build
+2025-07-13 00:49:58,378 DEBUG Creating directory: /Users/caballero/repos/oerforge/oer-forge.github.io/build
+2025-07-13 00:49:58,378 DEBUG Copying from /Users/caballero/repos/oerforge/oer-forge.github.io/content to /Users/caballero/repos/oerforge/oer-forge.github.io/build/files
+2025-07-13 00:49:58,383 INFO Copied /Users/caballero/repos/oerforge/oer-forge.github.io/content to /Users/caballero/repos/oerforge/oer-forge.github.io/build/files
+2025-07-13 00:49:58,383 DEBUG Copying from /Users/caballero/repos/oerforge/oer-forge.github.io/static/css to /Users/caballero/repos/oerforge/oer-forge.github.io/build/css
+2025-07-13 00:49:58,383 INFO Copied /Users/caballero/repos/oerforge/oer-forge.github.io/static/css to /Users/caballero/repos/oerforge/oer-forge.github.io/build/css
+2025-07-13 00:49:58,383 DEBUG Copying from /Users/caballero/repos/oerforge/oer-forge.github.io/static/js to /Users/caballero/repos/oerforge/oer-forge.github.io/build/js
+2025-07-13 00:49:58,384 INFO Copied /Users/caballero/repos/oerforge/oer-forge.github.io/static/js to /Users/caballero/repos/oerforge/oer-forge.github.io/build/js
+2025-07-13 00:49:58,384 INFO Created .nojekyll at /Users/caballero/repos/oerforge/oer-forge.github.io/build/.nojekyll
+2025-07-13 00:49:58,384 INFO Finished copy_project_files
+2025-07-13 00:49:58,386 INFO Created directory for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs
+2025-07-13 00:49:58,386 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/index.html
+2025-07-13 00:49:58,386 INFO Created directory for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/dev
+2025-07-13 00:49:58,387 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/dev/index.html
+2025-07-13 00:49:58,387 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/index.html
+2025-07-13 00:49:58,387 INFO Created directory for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag
+2025-07-13 00:49:58,387 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/index.html
+2025-07-13 00:49:58,387 INFO Created directory for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports
+2025-07-13 00:49:58,387 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/index.html
+2025-07-13 00:49:58,407 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 00:49:58,407 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 00:49:58,408 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 00:49:58,408 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 00:49:58,408 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 00:49:58,411 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 00:49:58,411 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/index.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/index.html
+2025-07-13 00:49:58,412 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 00:49:58,412 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 00:49:58,412 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 00:49:58,412 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 00:49:58,412 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 00:49:58,414 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 00:49:58,414 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/about.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/about.html
+2025-07-13 00:49:58,414 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 00:49:58,414 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 00:49:58,414 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 00:49:58,414 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 00:49:58,414 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 00:49:58,417 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 00:49:58,417 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/wcag/main_js.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/main_js.html
+2025-07-13 00:49:58,417 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 00:49:58,417 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 00:49:58,417 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 00:49:58,417 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 00:49:58,417 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 00:49:58,419 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 00:49:58,419 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/wcag/reports/report2.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/report2.html
+2025-07-13 00:49:58,420 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 00:49:58,420 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 00:49:58,420 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 00:49:58,420 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 00:49:58,420 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 00:49:58,422 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 00:49:58,422 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/wcag/reports/report1.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/report1.html
+2025-07-13 00:49:58,422 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 00:49:58,422 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 00:49:58,422 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 00:49:58,422 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 00:49:58,422 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 00:49:58,425 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 00:49:58,426 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/docs/build_system.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/build_system.html
+2025-07-13 00:49:58,426 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 00:49:58,426 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 00:49:58,426 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 00:49:58,426 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 00:49:58,426 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 00:49:58,428 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 00:49:58,429 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/docs/installation.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/installation.html
+2025-07-13 00:49:58,429 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 00:49:58,429 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 00:49:58,429 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 00:49:58,429 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 00:49:58,429 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 00:49:58,432 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 00:49:58,432 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/dev/punchlist.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/dev/punchlist.html
+2025-07-13 00:52:18,033 INFO Starting copy_project_files
+2025-07-13 00:52:18,033 DEBUG Removing entire build directory: /Users/caballero/repos/oerforge/oer-forge.github.io/build
+2025-07-13 00:52:18,036 DEBUG Creating directory: /Users/caballero/repos/oerforge/oer-forge.github.io/build
+2025-07-13 00:52:18,036 DEBUG Copying from /Users/caballero/repos/oerforge/oer-forge.github.io/content to /Users/caballero/repos/oerforge/oer-forge.github.io/build/files
+2025-07-13 00:52:18,040 INFO Copied /Users/caballero/repos/oerforge/oer-forge.github.io/content to /Users/caballero/repos/oerforge/oer-forge.github.io/build/files
+2025-07-13 00:52:18,041 DEBUG Copying from /Users/caballero/repos/oerforge/oer-forge.github.io/static/css to /Users/caballero/repos/oerforge/oer-forge.github.io/build/css
+2025-07-13 00:52:18,041 INFO Copied /Users/caballero/repos/oerforge/oer-forge.github.io/static/css to /Users/caballero/repos/oerforge/oer-forge.github.io/build/css
+2025-07-13 00:52:18,041 DEBUG Copying from /Users/caballero/repos/oerforge/oer-forge.github.io/static/js to /Users/caballero/repos/oerforge/oer-forge.github.io/build/js
+2025-07-13 00:52:18,041 INFO Copied /Users/caballero/repos/oerforge/oer-forge.github.io/static/js to /Users/caballero/repos/oerforge/oer-forge.github.io/build/js
+2025-07-13 00:52:18,041 INFO Created .nojekyll at /Users/caballero/repos/oerforge/oer-forge.github.io/build/.nojekyll
+2025-07-13 00:52:18,041 INFO Finished copy_project_files
+2025-07-13 00:52:18,044 INFO Created directory for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs
+2025-07-13 00:52:18,044 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/index.html
+2025-07-13 00:52:18,044 INFO Created directory for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/dev
+2025-07-13 00:52:18,044 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/dev/index.html
+2025-07-13 00:52:18,044 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/index.html
+2025-07-13 00:52:18,044 INFO Created directory for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag
+2025-07-13 00:52:18,044 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/index.html
+2025-07-13 00:52:18,044 INFO Created directory for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports
+2025-07-13 00:52:18,044 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/index.html
+2025-07-13 00:52:18,065 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 00:52:18,065 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 00:52:18,065 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 00:52:18,066 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 00:52:18,066 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 00:52:18,068 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 00:52:18,069 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/index.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/index.html
+2025-07-13 00:52:18,069 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 00:52:18,069 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 00:52:18,069 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 00:52:18,069 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 00:52:18,069 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 00:52:18,071 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 00:52:18,071 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/about.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/about.html
+2025-07-13 00:52:18,071 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 00:52:18,071 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 00:52:18,071 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 00:52:18,071 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 00:52:18,071 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 00:52:18,074 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 00:52:18,074 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/wcag/main_js.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/main_js.html
+2025-07-13 00:52:18,074 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 00:52:18,075 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 00:52:18,075 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 00:52:18,075 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 00:52:18,075 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 00:52:18,077 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 00:52:18,077 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/wcag/reports/report2.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/report2.html
+2025-07-13 00:52:18,077 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 00:52:18,077 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 00:52:18,077 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 00:52:18,077 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 00:52:18,077 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 00:52:18,079 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 00:52:18,080 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/wcag/reports/report1.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/report1.html
+2025-07-13 00:52:18,080 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 00:52:18,080 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 00:52:18,080 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 00:52:18,080 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 00:52:18,080 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 00:52:18,083 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 00:52:18,083 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/docs/build_system.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/build_system.html
+2025-07-13 00:52:18,083 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 00:52:18,083 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 00:52:18,083 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 00:52:18,083 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 00:52:18,083 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 00:52:18,086 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 00:52:18,086 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/docs/installation.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/installation.html
+2025-07-13 00:52:18,086 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 00:52:18,086 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 00:52:18,086 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 00:52:18,086 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 00:52:18,086 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 00:52:18,089 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 00:52:18,090 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/dev/punchlist.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/dev/punchlist.html
+2025-07-13 00:56:32,296 INFO Starting copy_project_files
+2025-07-13 00:56:32,296 DEBUG Removing entire build directory: /Users/caballero/repos/oerforge/oer-forge.github.io/build
+2025-07-13 00:56:32,298 DEBUG Creating directory: /Users/caballero/repos/oerforge/oer-forge.github.io/build
+2025-07-13 00:56:32,299 DEBUG Copying from /Users/caballero/repos/oerforge/oer-forge.github.io/content to /Users/caballero/repos/oerforge/oer-forge.github.io/build/files
+2025-07-13 00:56:32,303 INFO Copied /Users/caballero/repos/oerforge/oer-forge.github.io/content to /Users/caballero/repos/oerforge/oer-forge.github.io/build/files
+2025-07-13 00:56:32,303 DEBUG Copying from /Users/caballero/repos/oerforge/oer-forge.github.io/static/css to /Users/caballero/repos/oerforge/oer-forge.github.io/build/css
+2025-07-13 00:56:32,304 INFO Copied /Users/caballero/repos/oerforge/oer-forge.github.io/static/css to /Users/caballero/repos/oerforge/oer-forge.github.io/build/css
+2025-07-13 00:56:32,304 DEBUG Copying from /Users/caballero/repos/oerforge/oer-forge.github.io/static/js to /Users/caballero/repos/oerforge/oer-forge.github.io/build/js
+2025-07-13 00:56:32,304 INFO Copied /Users/caballero/repos/oerforge/oer-forge.github.io/static/js to /Users/caballero/repos/oerforge/oer-forge.github.io/build/js
+2025-07-13 00:56:32,304 INFO Created .nojekyll at /Users/caballero/repos/oerforge/oer-forge.github.io/build/.nojekyll
+2025-07-13 00:56:32,304 INFO Finished copy_project_files
+2025-07-13 00:56:32,307 INFO Created directory for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs
+2025-07-13 00:56:32,307 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/index.html
+2025-07-13 00:56:32,307 INFO Created directory for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/dev
+2025-07-13 00:56:32,307 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/dev/index.html
+2025-07-13 00:56:32,307 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/index.html
+2025-07-13 00:56:32,307 INFO Created directory for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag
+2025-07-13 00:56:32,307 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/index.html
+2025-07-13 00:56:32,307 INFO Created directory for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports
+2025-07-13 00:56:32,307 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/index.html
+2025-07-13 00:56:32,327 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 00:56:32,327 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 00:56:32,327 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 00:56:32,328 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 00:56:32,328 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 00:56:32,331 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 00:56:32,331 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/index.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/index.html
+2025-07-13 00:56:32,331 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 00:56:32,331 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 00:56:32,331 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 00:56:32,331 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 00:56:32,331 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 00:56:32,333 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 00:56:32,334 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/about.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/about.html
+2025-07-13 00:56:32,334 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 00:56:32,334 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 00:56:32,334 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 00:56:32,334 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 00:56:32,334 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 00:56:32,337 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 00:56:32,337 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/wcag/main_js.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/main_js.html
+2025-07-13 00:56:32,337 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 00:56:32,337 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 00:56:32,337 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 00:56:32,337 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 00:56:32,337 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 00:56:32,339 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 00:56:32,339 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/wcag/reports/report2.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/report2.html
+2025-07-13 00:56:32,340 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 00:56:32,340 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 00:56:32,340 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 00:56:32,340 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 00:56:32,340 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 00:56:32,342 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 00:56:32,342 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/wcag/reports/report1.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/report1.html
+2025-07-13 00:56:32,342 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 00:56:32,342 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 00:56:32,342 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 00:56:32,342 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 00:56:32,342 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 00:56:32,346 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 00:56:32,346 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/docs/build_system.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/build_system.html
+2025-07-13 00:56:32,346 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 00:56:32,346 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 00:56:32,346 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 00:56:32,346 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 00:56:32,346 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 00:56:32,349 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 00:56:32,349 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/docs/installation.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/installation.html
+2025-07-13 00:56:32,349 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 00:56:32,349 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 00:56:32,349 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 00:56:32,349 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 00:56:32,349 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 00:56:32,352 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 00:56:32,352 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/dev/punchlist.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/dev/punchlist.html
+2025-07-13 01:02:52,249 INFO Starting copy_project_files
+2025-07-13 01:02:52,249 DEBUG Removing entire build directory: /Users/caballero/repos/oerforge/oer-forge.github.io/build
+2025-07-13 01:02:52,251 DEBUG Creating directory: /Users/caballero/repos/oerforge/oer-forge.github.io/build
+2025-07-13 01:02:52,251 DEBUG Copying from /Users/caballero/repos/oerforge/oer-forge.github.io/content to /Users/caballero/repos/oerforge/oer-forge.github.io/build/files
+2025-07-13 01:02:52,257 INFO Copied /Users/caballero/repos/oerforge/oer-forge.github.io/content to /Users/caballero/repos/oerforge/oer-forge.github.io/build/files
+2025-07-13 01:02:52,257 DEBUG Copying from /Users/caballero/repos/oerforge/oer-forge.github.io/static/css to /Users/caballero/repos/oerforge/oer-forge.github.io/build/css
+2025-07-13 01:02:52,257 INFO Copied /Users/caballero/repos/oerforge/oer-forge.github.io/static/css to /Users/caballero/repos/oerforge/oer-forge.github.io/build/css
+2025-07-13 01:02:52,257 DEBUG Copying from /Users/caballero/repos/oerforge/oer-forge.github.io/static/js to /Users/caballero/repos/oerforge/oer-forge.github.io/build/js
+2025-07-13 01:02:52,257 INFO Copied /Users/caballero/repos/oerforge/oer-forge.github.io/static/js to /Users/caballero/repos/oerforge/oer-forge.github.io/build/js
+2025-07-13 01:02:52,257 INFO Created .nojekyll at /Users/caballero/repos/oerforge/oer-forge.github.io/build/.nojekyll
+2025-07-13 01:02:52,257 INFO Finished copy_project_files
+2025-07-13 01:02:52,260 INFO Created directory for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs
+2025-07-13 01:02:52,260 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/index.html
+2025-07-13 01:02:52,260 INFO Created directory for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/dev
+2025-07-13 01:02:52,260 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/dev/index.html
+2025-07-13 01:02:52,260 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/index.html
+2025-07-13 01:02:52,260 INFO Created directory for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag
+2025-07-13 01:02:52,260 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/index.html
+2025-07-13 01:02:52,260 INFO Created directory for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports
+2025-07-13 01:02:52,261 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/index.html
+2025-07-13 01:02:52,280 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:02:52,280 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:02:52,280 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:02:52,281 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:02:52,281 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:02:52,284 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:02:52,284 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/index.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/index.html
+2025-07-13 01:02:52,284 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:02:52,284 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:02:52,284 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:02:52,284 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:02:52,284 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:02:52,287 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:02:52,287 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/about.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/about.html
+2025-07-13 01:02:52,287 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:02:52,287 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:02:52,287 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:02:52,287 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:02:52,287 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:02:52,290 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:02:52,290 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/wcag/main_js.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/main_js.html
+2025-07-13 01:02:52,290 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:02:52,290 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:02:52,290 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:02:52,290 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:02:52,290 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:02:52,292 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:02:52,292 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/wcag/reports/report2.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/report2.html
+2025-07-13 01:02:52,292 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:02:52,292 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:02:52,292 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:02:52,292 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:02:52,292 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:02:52,294 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:02:52,295 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/wcag/reports/report1.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/report1.html
+2025-07-13 01:02:52,295 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:02:52,295 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:02:52,295 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:02:52,295 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:02:52,295 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:02:52,298 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:02:52,298 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/docs/build_system.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/build_system.html
+2025-07-13 01:02:52,298 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:02:52,298 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:02:52,298 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:02:52,298 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:02:52,298 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:02:52,301 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:02:52,301 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/docs/installation.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/installation.html
+2025-07-13 01:02:52,302 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:02:52,302 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:02:52,302 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:02:52,302 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:02:52,302 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:02:52,305 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:02:52,305 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/dev/punchlist.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/dev/punchlist.html
+2025-07-13 01:03:55,777 INFO Starting copy_project_files
+2025-07-13 01:03:55,778 DEBUG Removing entire build directory: /Users/caballero/repos/oerforge/oer-forge.github.io/build
+2025-07-13 01:03:55,780 DEBUG Creating directory: /Users/caballero/repos/oerforge/oer-forge.github.io/build
+2025-07-13 01:03:55,780 DEBUG Copying from /Users/caballero/repos/oerforge/oer-forge.github.io/content to /Users/caballero/repos/oerforge/oer-forge.github.io/build/files
+2025-07-13 01:03:55,785 INFO Copied /Users/caballero/repos/oerforge/oer-forge.github.io/content to /Users/caballero/repos/oerforge/oer-forge.github.io/build/files
+2025-07-13 01:03:55,785 DEBUG Copying from /Users/caballero/repos/oerforge/oer-forge.github.io/static/css to /Users/caballero/repos/oerforge/oer-forge.github.io/build/css
+2025-07-13 01:03:55,785 INFO Copied /Users/caballero/repos/oerforge/oer-forge.github.io/static/css to /Users/caballero/repos/oerforge/oer-forge.github.io/build/css
+2025-07-13 01:03:55,785 DEBUG Copying from /Users/caballero/repos/oerforge/oer-forge.github.io/static/js to /Users/caballero/repos/oerforge/oer-forge.github.io/build/js
+2025-07-13 01:03:55,786 INFO Copied /Users/caballero/repos/oerforge/oer-forge.github.io/static/js to /Users/caballero/repos/oerforge/oer-forge.github.io/build/js
+2025-07-13 01:03:55,786 INFO Created .nojekyll at /Users/caballero/repos/oerforge/oer-forge.github.io/build/.nojekyll
+2025-07-13 01:03:55,786 INFO Finished copy_project_files
+2025-07-13 01:03:55,788 INFO Created directory for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs
+2025-07-13 01:03:55,788 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/index.html
+2025-07-13 01:03:55,788 INFO Created directory for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/dev
+2025-07-13 01:03:55,788 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/dev/index.html
+2025-07-13 01:03:55,788 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/index.html
+2025-07-13 01:03:55,789 INFO Created directory for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag
+2025-07-13 01:03:55,789 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/index.html
+2025-07-13 01:03:55,789 INFO Created directory for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports
+2025-07-13 01:03:55,789 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/index.html
+2025-07-13 01:03:55,811 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:03:55,811 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:03:55,811 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:03:55,811 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:03:55,812 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:03:55,814 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:03:55,814 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/index.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/index.html
+2025-07-13 01:03:55,815 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:03:55,815 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:03:55,815 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:03:55,815 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:03:55,815 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:03:55,817 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:03:55,817 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/about.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/about.html
+2025-07-13 01:03:55,817 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:03:55,817 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:03:55,818 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:03:55,818 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:03:55,818 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:03:55,820 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:03:55,820 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/wcag/main_js.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/main_js.html
+2025-07-13 01:03:55,821 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:03:55,821 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:03:55,821 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:03:55,821 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:03:55,821 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:03:55,823 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:03:55,823 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/wcag/reports/report2.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/report2.html
+2025-07-13 01:03:55,823 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:03:55,823 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:03:55,823 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:03:55,823 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:03:55,823 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:03:55,825 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:03:55,826 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/wcag/reports/report1.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/report1.html
+2025-07-13 01:03:55,826 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:03:55,826 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:03:55,826 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:03:55,826 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:03:55,826 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:03:55,829 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:03:55,829 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/docs/build_system.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/build_system.html
+2025-07-13 01:03:55,829 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:03:55,829 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:03:55,829 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:03:55,829 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:03:55,829 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:03:55,832 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:03:55,832 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/docs/installation.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/installation.html
+2025-07-13 01:03:55,832 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:03:55,832 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:03:55,832 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:03:55,832 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:03:55,832 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:03:55,835 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:03:55,835 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/dev/punchlist.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/dev/punchlist.html
+2025-07-13 01:05:25,527 INFO Starting copy_project_files
+2025-07-13 01:05:25,528 DEBUG Removing entire build directory: /Users/caballero/repos/oerforge/oer-forge.github.io/build
+2025-07-13 01:05:25,530 DEBUG Creating directory: /Users/caballero/repos/oerforge/oer-forge.github.io/build
+2025-07-13 01:05:25,531 DEBUG Copying from /Users/caballero/repos/oerforge/oer-forge.github.io/content to /Users/caballero/repos/oerforge/oer-forge.github.io/build/files
+2025-07-13 01:05:25,536 INFO Copied /Users/caballero/repos/oerforge/oer-forge.github.io/content to /Users/caballero/repos/oerforge/oer-forge.github.io/build/files
+2025-07-13 01:05:25,536 DEBUG Copying from /Users/caballero/repos/oerforge/oer-forge.github.io/static/css to /Users/caballero/repos/oerforge/oer-forge.github.io/build/css
+2025-07-13 01:05:25,536 INFO Copied /Users/caballero/repos/oerforge/oer-forge.github.io/static/css to /Users/caballero/repos/oerforge/oer-forge.github.io/build/css
+2025-07-13 01:05:25,537 DEBUG Copying from /Users/caballero/repos/oerforge/oer-forge.github.io/static/js to /Users/caballero/repos/oerforge/oer-forge.github.io/build/js
+2025-07-13 01:05:25,537 INFO Copied /Users/caballero/repos/oerforge/oer-forge.github.io/static/js to /Users/caballero/repos/oerforge/oer-forge.github.io/build/js
+2025-07-13 01:05:25,537 INFO Created .nojekyll at /Users/caballero/repos/oerforge/oer-forge.github.io/build/.nojekyll
+2025-07-13 01:05:25,537 INFO Finished copy_project_files
+2025-07-13 01:05:25,540 INFO Created directory for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs
+2025-07-13 01:05:25,540 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/index.html
+2025-07-13 01:05:25,540 INFO Created directory for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/dev
+2025-07-13 01:05:25,540 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/dev/index.html
+2025-07-13 01:05:25,540 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/index.html
+2025-07-13 01:05:25,540 INFO Created directory for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag
+2025-07-13 01:05:25,540 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/index.html
+2025-07-13 01:05:25,540 INFO Created directory for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports
+2025-07-13 01:05:25,540 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/index.html
+2025-07-13 01:05:25,562 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:05:25,562 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:05:25,562 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:05:25,562 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:05:25,563 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:05:25,565 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:05:25,566 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/index.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/index.html
+2025-07-13 01:05:25,566 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:05:25,566 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:05:25,566 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:05:25,566 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:05:25,566 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:05:25,568 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:05:25,568 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/about.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/about.html
+2025-07-13 01:05:25,568 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:05:25,568 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:05:25,568 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:05:25,568 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:05:25,568 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:05:25,571 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:05:25,571 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/wcag/main_js.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/main_js.html
+2025-07-13 01:05:25,571 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:05:25,571 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:05:25,571 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:05:25,571 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:05:25,571 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:05:25,574 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:05:25,574 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/wcag/reports/report2.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/report2.html
+2025-07-13 01:05:25,574 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:05:25,574 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:05:25,574 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:05:25,574 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:05:25,574 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:05:25,576 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:05:25,576 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/wcag/reports/report1.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/report1.html
+2025-07-13 01:05:25,576 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:05:25,576 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:05:25,576 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:05:25,576 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:05:25,576 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:05:25,580 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:05:25,580 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/docs/build_system.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/build_system.html
+2025-07-13 01:05:25,580 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:05:25,580 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:05:25,580 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:05:25,580 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:05:25,580 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:05:25,583 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:05:25,583 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/docs/installation.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/installation.html
+2025-07-13 01:05:25,583 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:05:25,583 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:05:25,583 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:05:25,583 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:05:25,583 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:05:25,586 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:05:25,586 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/dev/punchlist.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/dev/punchlist.html
+2025-07-13 01:06:36,170 INFO Starting copy_project_files
+2025-07-13 01:06:36,170 DEBUG Removing entire build directory: /Users/caballero/repos/oerforge/oer-forge.github.io/build
+2025-07-13 01:06:36,173 DEBUG Creating directory: /Users/caballero/repos/oerforge/oer-forge.github.io/build
+2025-07-13 01:06:36,174 DEBUG Copying from /Users/caballero/repos/oerforge/oer-forge.github.io/content to /Users/caballero/repos/oerforge/oer-forge.github.io/build/files
+2025-07-13 01:06:36,179 INFO Copied /Users/caballero/repos/oerforge/oer-forge.github.io/content to /Users/caballero/repos/oerforge/oer-forge.github.io/build/files
+2025-07-13 01:06:36,179 DEBUG Copying from /Users/caballero/repos/oerforge/oer-forge.github.io/static/css to /Users/caballero/repos/oerforge/oer-forge.github.io/build/css
+2025-07-13 01:06:36,179 INFO Copied /Users/caballero/repos/oerforge/oer-forge.github.io/static/css to /Users/caballero/repos/oerforge/oer-forge.github.io/build/css
+2025-07-13 01:06:36,179 DEBUG Copying from /Users/caballero/repos/oerforge/oer-forge.github.io/static/js to /Users/caballero/repos/oerforge/oer-forge.github.io/build/js
+2025-07-13 01:06:36,179 INFO Copied /Users/caballero/repos/oerforge/oer-forge.github.io/static/js to /Users/caballero/repos/oerforge/oer-forge.github.io/build/js
+2025-07-13 01:06:36,180 INFO Created .nojekyll at /Users/caballero/repos/oerforge/oer-forge.github.io/build/.nojekyll
+2025-07-13 01:06:36,180 INFO Finished copy_project_files
+2025-07-13 01:06:36,182 INFO Created directory for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs
+2025-07-13 01:06:36,182 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/index.html
+2025-07-13 01:06:36,182 INFO Created directory for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/dev
+2025-07-13 01:06:36,183 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/dev/index.html
+2025-07-13 01:06:36,183 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/index.html
+2025-07-13 01:06:36,183 INFO Created directory for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag
+2025-07-13 01:06:36,183 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/index.html
+2025-07-13 01:06:36,183 INFO Created directory for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports
+2025-07-13 01:06:36,183 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/index.html
+2025-07-13 01:06:36,205 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:06:36,205 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:06:36,205 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:06:36,205 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:06:36,206 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:06:36,208 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:06:36,208 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/index.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/index.html
+2025-07-13 01:06:36,209 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:06:36,209 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:06:36,209 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:06:36,209 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:06:36,209 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:06:36,211 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:06:36,211 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/about.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/about.html
+2025-07-13 01:06:36,211 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:06:36,211 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:06:36,211 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:06:36,211 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:06:36,211 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:06:36,214 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:06:36,214 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/wcag/main_js.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/main_js.html
+2025-07-13 01:06:36,214 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:06:36,214 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:06:36,214 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:06:36,214 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:06:36,214 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:06:36,217 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:06:36,217 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/wcag/reports/report2.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/report2.html
+2025-07-13 01:06:36,217 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:06:36,217 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:06:36,217 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:06:36,217 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:06:36,217 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:06:36,219 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:06:36,219 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/wcag/reports/report1.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/report1.html
+2025-07-13 01:06:36,219 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:06:36,219 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:06:36,219 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:06:36,219 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:06:36,219 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:06:36,222 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:06:36,223 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/docs/build_system.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/build_system.html
+2025-07-13 01:06:36,223 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:06:36,223 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:06:36,223 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:06:36,223 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:06:36,223 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:06:36,225 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:06:36,226 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/docs/installation.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/installation.html
+2025-07-13 01:06:36,226 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:06:36,226 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:06:36,226 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:06:36,226 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:06:36,226 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:06:36,229 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:06:36,229 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/dev/punchlist.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/dev/punchlist.html
+2025-07-13 01:07:37,863 INFO Starting copy_project_files
+2025-07-13 01:07:37,863 DEBUG Removing entire build directory: /Users/caballero/repos/oerforge/oer-forge.github.io/build
+2025-07-13 01:07:37,866 DEBUG Creating directory: /Users/caballero/repos/oerforge/oer-forge.github.io/build
+2025-07-13 01:07:37,866 DEBUG Copying from /Users/caballero/repos/oerforge/oer-forge.github.io/content to /Users/caballero/repos/oerforge/oer-forge.github.io/build/files
+2025-07-13 01:07:37,871 INFO Copied /Users/caballero/repos/oerforge/oer-forge.github.io/content to /Users/caballero/repos/oerforge/oer-forge.github.io/build/files
+2025-07-13 01:07:37,871 DEBUG Copying from /Users/caballero/repos/oerforge/oer-forge.github.io/static/css to /Users/caballero/repos/oerforge/oer-forge.github.io/build/css
+2025-07-13 01:07:37,871 INFO Copied /Users/caballero/repos/oerforge/oer-forge.github.io/static/css to /Users/caballero/repos/oerforge/oer-forge.github.io/build/css
+2025-07-13 01:07:37,871 DEBUG Copying from /Users/caballero/repos/oerforge/oer-forge.github.io/static/js to /Users/caballero/repos/oerforge/oer-forge.github.io/build/js
+2025-07-13 01:07:37,872 INFO Copied /Users/caballero/repos/oerforge/oer-forge.github.io/static/js to /Users/caballero/repos/oerforge/oer-forge.github.io/build/js
+2025-07-13 01:07:37,872 INFO Created .nojekyll at /Users/caballero/repos/oerforge/oer-forge.github.io/build/.nojekyll
+2025-07-13 01:07:37,872 INFO Finished copy_project_files
+2025-07-13 01:07:37,875 INFO Created directory for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs
+2025-07-13 01:07:37,875 DEBUG [DEBUG] generate_nav_menu: current_folder=, folder_depth=0, current_html_path=, current_dir=
+2025-07-13 01:07:37,875 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html
+2025-07-13 01:07:37,875 DEBUG [DEBUG] Computed link for 'Home': index.html
+2025-07-13 01:07:37,875 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html
+2025-07-13 01:07:37,875 DEBUG [DEBUG] Computed link for 'Docs': docs/index.html
+2025-07-13 01:07:37,875 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html
+2025-07-13 01:07:37,875 DEBUG [DEBUG] Computed link for 'Dev': dev/index.html
+2025-07-13 01:07:37,875 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html
+2025-07-13 01:07:37,875 DEBUG [DEBUG] Computed link for 'WCAG': wcag/index.html
+2025-07-13 01:07:37,875 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html
+2025-07-13 01:07:37,875 DEBUG [DEBUG] Computed link for 'About': about.html
+2025-07-13 01:07:37,875 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/index.html
+2025-07-13 01:07:37,875 INFO Created directory for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/dev
+2025-07-13 01:07:37,875 DEBUG [DEBUG] generate_nav_menu: current_folder=, folder_depth=0, current_html_path=, current_dir=
+2025-07-13 01:07:37,875 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html
+2025-07-13 01:07:37,875 DEBUG [DEBUG] Computed link for 'Home': index.html
+2025-07-13 01:07:37,875 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html
+2025-07-13 01:07:37,875 DEBUG [DEBUG] Computed link for 'Docs': docs/index.html
+2025-07-13 01:07:37,875 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html
+2025-07-13 01:07:37,875 DEBUG [DEBUG] Computed link for 'Dev': dev/index.html
+2025-07-13 01:07:37,875 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html
+2025-07-13 01:07:37,875 DEBUG [DEBUG] Computed link for 'WCAG': wcag/index.html
+2025-07-13 01:07:37,875 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html
+2025-07-13 01:07:37,875 DEBUG [DEBUG] Computed link for 'About': about.html
+2025-07-13 01:07:37,875 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/dev/index.html
+2025-07-13 01:07:37,875 DEBUG [DEBUG] generate_nav_menu: current_folder=, folder_depth=0, current_html_path=, current_dir=
+2025-07-13 01:07:37,875 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html
+2025-07-13 01:07:37,875 DEBUG [DEBUG] Computed link for 'Home': index.html
+2025-07-13 01:07:37,875 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html
+2025-07-13 01:07:37,875 DEBUG [DEBUG] Computed link for 'Docs': docs/index.html
+2025-07-13 01:07:37,875 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html
+2025-07-13 01:07:37,875 DEBUG [DEBUG] Computed link for 'Dev': dev/index.html
+2025-07-13 01:07:37,875 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html
+2025-07-13 01:07:37,875 DEBUG [DEBUG] Computed link for 'WCAG': wcag/index.html
+2025-07-13 01:07:37,875 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html
+2025-07-13 01:07:37,875 DEBUG [DEBUG] Computed link for 'About': about.html
+2025-07-13 01:07:37,875 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/index.html
+2025-07-13 01:07:37,875 INFO Created directory for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag
+2025-07-13 01:07:37,875 DEBUG [DEBUG] generate_nav_menu: current_folder=, folder_depth=0, current_html_path=, current_dir=
+2025-07-13 01:07:37,875 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html
+2025-07-13 01:07:37,875 DEBUG [DEBUG] Computed link for 'Home': index.html
+2025-07-13 01:07:37,875 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html
+2025-07-13 01:07:37,876 DEBUG [DEBUG] Computed link for 'Docs': docs/index.html
+2025-07-13 01:07:37,876 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html
+2025-07-13 01:07:37,876 DEBUG [DEBUG] Computed link for 'Dev': dev/index.html
+2025-07-13 01:07:37,876 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html
+2025-07-13 01:07:37,876 DEBUG [DEBUG] Computed link for 'WCAG': wcag/index.html
+2025-07-13 01:07:37,876 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html
+2025-07-13 01:07:37,876 DEBUG [DEBUG] Computed link for 'About': about.html
+2025-07-13 01:07:37,876 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/index.html
+2025-07-13 01:07:37,876 INFO Created directory for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports
+2025-07-13 01:07:37,876 DEBUG [DEBUG] generate_nav_menu: current_folder=, folder_depth=0, current_html_path=, current_dir=
+2025-07-13 01:07:37,876 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html
+2025-07-13 01:07:37,876 DEBUG [DEBUG] Computed link for 'Home': index.html
+2025-07-13 01:07:37,876 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html
+2025-07-13 01:07:37,876 DEBUG [DEBUG] Computed link for 'Docs': docs/index.html
+2025-07-13 01:07:37,876 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html
+2025-07-13 01:07:37,876 DEBUG [DEBUG] Computed link for 'Dev': dev/index.html
+2025-07-13 01:07:37,876 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html
+2025-07-13 01:07:37,876 DEBUG [DEBUG] Computed link for 'WCAG': wcag/index.html
+2025-07-13 01:07:37,876 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html
+2025-07-13 01:07:37,876 DEBUG [DEBUG] Computed link for 'About': about.html
+2025-07-13 01:07:37,876 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/index.html
+2025-07-13 01:07:37,897 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:07:37,897 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:07:37,897 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:07:37,898 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:07:37,898 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:07:37,901 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:07:37,901 DEBUG [DEBUG] generate_nav_menu: current_folder=, folder_depth=0, current_html_path=, current_dir=
+2025-07-13 01:07:37,901 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html
+2025-07-13 01:07:37,901 DEBUG [DEBUG] Computed link for 'Home': index.html
+2025-07-13 01:07:37,901 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html
+2025-07-13 01:07:37,901 DEBUG [DEBUG] Computed link for 'Docs': docs/index.html
+2025-07-13 01:07:37,901 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html
+2025-07-13 01:07:37,901 DEBUG [DEBUG] Computed link for 'Dev': dev/index.html
+2025-07-13 01:07:37,901 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html
+2025-07-13 01:07:37,901 DEBUG [DEBUG] Computed link for 'WCAG': wcag/index.html
+2025-07-13 01:07:37,901 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html
+2025-07-13 01:07:37,901 DEBUG [DEBUG] Computed link for 'About': about.html
+2025-07-13 01:07:37,901 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/index.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/index.html
+2025-07-13 01:07:37,901 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:07:37,901 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:07:37,901 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:07:37,901 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:07:37,901 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:07:37,903 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:07:37,903 DEBUG [DEBUG] generate_nav_menu: current_folder=, folder_depth=0, current_html_path=, current_dir=
+2025-07-13 01:07:37,903 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html
+2025-07-13 01:07:37,903 DEBUG [DEBUG] Computed link for 'Home': index.html
+2025-07-13 01:07:37,903 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html
+2025-07-13 01:07:37,903 DEBUG [DEBUG] Computed link for 'Docs': docs/index.html
+2025-07-13 01:07:37,903 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html
+2025-07-13 01:07:37,903 DEBUG [DEBUG] Computed link for 'Dev': dev/index.html
+2025-07-13 01:07:37,903 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html
+2025-07-13 01:07:37,903 DEBUG [DEBUG] Computed link for 'WCAG': wcag/index.html
+2025-07-13 01:07:37,903 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html
+2025-07-13 01:07:37,903 DEBUG [DEBUG] Computed link for 'About': about.html
+2025-07-13 01:07:37,904 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/about.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/about.html
+2025-07-13 01:07:37,904 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:07:37,904 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:07:37,904 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:07:37,904 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:07:37,904 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:07:37,907 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:07:37,907 DEBUG [DEBUG] generate_nav_menu: current_folder=wcag, folder_depth=1, current_html_path=, current_dir=
+2025-07-13 01:07:37,907 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html
+2025-07-13 01:07:37,907 DEBUG [DEBUG] Computed link for 'Home': index.html
+2025-07-13 01:07:37,907 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html
+2025-07-13 01:07:37,907 DEBUG [DEBUG] Computed link for 'Docs': docs/index.html
+2025-07-13 01:07:37,907 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html
+2025-07-13 01:07:37,907 DEBUG [DEBUG] Computed link for 'Dev': dev/index.html
+2025-07-13 01:07:37,907 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html
+2025-07-13 01:07:37,907 DEBUG [DEBUG] Computed link for 'WCAG': wcag/index.html
+2025-07-13 01:07:37,907 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html
+2025-07-13 01:07:37,907 DEBUG [DEBUG] Computed link for 'About': about.html
+2025-07-13 01:07:37,907 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/wcag/main_js.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/main_js.html
+2025-07-13 01:07:37,907 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:07:37,907 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:07:37,907 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:07:37,907 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:07:37,907 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:07:37,909 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:07:37,909 DEBUG [DEBUG] generate_nav_menu: current_folder=wcag, folder_depth=2, current_html_path=, current_dir=
+2025-07-13 01:07:37,909 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html
+2025-07-13 01:07:37,909 DEBUG [DEBUG] Computed link for 'Home': index.html
+2025-07-13 01:07:37,909 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html
+2025-07-13 01:07:37,909 DEBUG [DEBUG] Computed link for 'Docs': docs/index.html
+2025-07-13 01:07:37,909 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html
+2025-07-13 01:07:37,909 DEBUG [DEBUG] Computed link for 'Dev': dev/index.html
+2025-07-13 01:07:37,909 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html
+2025-07-13 01:07:37,909 DEBUG [DEBUG] Computed link for 'WCAG': wcag/index.html
+2025-07-13 01:07:37,909 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html
+2025-07-13 01:07:37,909 DEBUG [DEBUG] Computed link for 'About': about.html
+2025-07-13 01:07:37,909 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/wcag/reports/report2.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/report2.html
+2025-07-13 01:07:37,910 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:07:37,910 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:07:37,910 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:07:37,910 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:07:37,910 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:07:37,912 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:07:37,912 DEBUG [DEBUG] generate_nav_menu: current_folder=wcag, folder_depth=2, current_html_path=, current_dir=
+2025-07-13 01:07:37,912 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html
+2025-07-13 01:07:37,912 DEBUG [DEBUG] Computed link for 'Home': index.html
+2025-07-13 01:07:37,912 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html
+2025-07-13 01:07:37,912 DEBUG [DEBUG] Computed link for 'Docs': docs/index.html
+2025-07-13 01:07:37,912 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html
+2025-07-13 01:07:37,912 DEBUG [DEBUG] Computed link for 'Dev': dev/index.html
+2025-07-13 01:07:37,912 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html
+2025-07-13 01:07:37,912 DEBUG [DEBUG] Computed link for 'WCAG': wcag/index.html
+2025-07-13 01:07:37,912 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html
+2025-07-13 01:07:37,912 DEBUG [DEBUG] Computed link for 'About': about.html
+2025-07-13 01:07:37,912 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/wcag/reports/report1.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/report1.html
+2025-07-13 01:07:37,912 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:07:37,912 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:07:37,912 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:07:37,912 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:07:37,912 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:07:37,915 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:07:37,915 DEBUG [DEBUG] generate_nav_menu: current_folder=docs, folder_depth=1, current_html_path=, current_dir=
+2025-07-13 01:07:37,915 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html
+2025-07-13 01:07:37,915 DEBUG [DEBUG] Computed link for 'Home': index.html
+2025-07-13 01:07:37,915 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html
+2025-07-13 01:07:37,915 DEBUG [DEBUG] Computed link for 'Docs': docs/index.html
+2025-07-13 01:07:37,915 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html
+2025-07-13 01:07:37,915 DEBUG [DEBUG] Computed link for 'Dev': dev/index.html
+2025-07-13 01:07:37,915 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html
+2025-07-13 01:07:37,915 DEBUG [DEBUG] Computed link for 'WCAG': wcag/index.html
+2025-07-13 01:07:37,915 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html
+2025-07-13 01:07:37,915 DEBUG [DEBUG] Computed link for 'About': about.html
+2025-07-13 01:07:37,916 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/docs/build_system.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/build_system.html
+2025-07-13 01:07:37,916 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:07:37,916 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:07:37,916 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:07:37,916 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:07:37,916 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:07:37,919 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:07:37,919 DEBUG [DEBUG] generate_nav_menu: current_folder=docs, folder_depth=1, current_html_path=, current_dir=
+2025-07-13 01:07:37,919 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html
+2025-07-13 01:07:37,919 DEBUG [DEBUG] Computed link for 'Home': index.html
+2025-07-13 01:07:37,919 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html
+2025-07-13 01:07:37,919 DEBUG [DEBUG] Computed link for 'Docs': docs/index.html
+2025-07-13 01:07:37,919 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html
+2025-07-13 01:07:37,919 DEBUG [DEBUG] Computed link for 'Dev': dev/index.html
+2025-07-13 01:07:37,919 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html
+2025-07-13 01:07:37,919 DEBUG [DEBUG] Computed link for 'WCAG': wcag/index.html
+2025-07-13 01:07:37,919 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html
+2025-07-13 01:07:37,919 DEBUG [DEBUG] Computed link for 'About': about.html
+2025-07-13 01:07:37,919 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/docs/installation.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/installation.html
+2025-07-13 01:07:37,919 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:07:37,919 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:07:37,919 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:07:37,919 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:07:37,919 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:07:37,923 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:07:37,923 DEBUG [DEBUG] generate_nav_menu: current_folder=dev, folder_depth=1, current_html_path=, current_dir=
+2025-07-13 01:07:37,923 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html
+2025-07-13 01:07:37,923 DEBUG [DEBUG] Computed link for 'Home': index.html
+2025-07-13 01:07:37,923 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html
+2025-07-13 01:07:37,923 DEBUG [DEBUG] Computed link for 'Docs': docs/index.html
+2025-07-13 01:07:37,923 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html
+2025-07-13 01:07:37,923 DEBUG [DEBUG] Computed link for 'Dev': dev/index.html
+2025-07-13 01:07:37,923 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html
+2025-07-13 01:07:37,923 DEBUG [DEBUG] Computed link for 'WCAG': wcag/index.html
+2025-07-13 01:07:37,923 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html
+2025-07-13 01:07:37,923 DEBUG [DEBUG] Computed link for 'About': about.html
+2025-07-13 01:07:37,923 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/dev/punchlist.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/dev/punchlist.html
+2025-07-13 01:08:37,978 INFO Starting copy_project_files
+2025-07-13 01:08:37,978 DEBUG Removing entire build directory: /Users/caballero/repos/oerforge/oer-forge.github.io/build
+2025-07-13 01:08:37,980 DEBUG Creating directory: /Users/caballero/repos/oerforge/oer-forge.github.io/build
+2025-07-13 01:08:37,980 DEBUG Copying from /Users/caballero/repos/oerforge/oer-forge.github.io/content to /Users/caballero/repos/oerforge/oer-forge.github.io/build/files
+2025-07-13 01:08:37,985 INFO Copied /Users/caballero/repos/oerforge/oer-forge.github.io/content to /Users/caballero/repos/oerforge/oer-forge.github.io/build/files
+2025-07-13 01:08:37,985 DEBUG Copying from /Users/caballero/repos/oerforge/oer-forge.github.io/static/css to /Users/caballero/repos/oerforge/oer-forge.github.io/build/css
+2025-07-13 01:08:37,986 INFO Copied /Users/caballero/repos/oerforge/oer-forge.github.io/static/css to /Users/caballero/repos/oerforge/oer-forge.github.io/build/css
+2025-07-13 01:08:37,986 DEBUG Copying from /Users/caballero/repos/oerforge/oer-forge.github.io/static/js to /Users/caballero/repos/oerforge/oer-forge.github.io/build/js
+2025-07-13 01:08:37,986 INFO Copied /Users/caballero/repos/oerforge/oer-forge.github.io/static/js to /Users/caballero/repos/oerforge/oer-forge.github.io/build/js
+2025-07-13 01:08:37,986 INFO Created .nojekyll at /Users/caballero/repos/oerforge/oer-forge.github.io/build/.nojekyll
+2025-07-13 01:08:37,986 INFO Finished copy_project_files
+2025-07-13 01:08:37,989 INFO Created directory for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs
+2025-07-13 01:08:37,989 DEBUG [DEBUG] generate_nav_menu: current_folder=, folder_depth=0, current_html_path=, current_dir=
+2025-07-13 01:08:37,989 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html
+2025-07-13 01:08:37,989 DEBUG [DEBUG] Computed link for 'Home': index.html
+2025-07-13 01:08:37,989 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html
+2025-07-13 01:08:37,989 DEBUG [DEBUG] Computed link for 'Docs': docs/index.html
+2025-07-13 01:08:37,989 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html
+2025-07-13 01:08:37,989 DEBUG [DEBUG] Computed link for 'Dev': dev/index.html
+2025-07-13 01:08:37,989 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html
+2025-07-13 01:08:37,989 DEBUG [DEBUG] Computed link for 'WCAG': wcag/index.html
+2025-07-13 01:08:37,989 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html
+2025-07-13 01:08:37,989 DEBUG [DEBUG] Computed link for 'About': about.html
+2025-07-13 01:08:37,990 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/index.html
+2025-07-13 01:08:37,990 INFO Created directory for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/dev
+2025-07-13 01:08:37,990 DEBUG [DEBUG] generate_nav_menu: current_folder=, folder_depth=0, current_html_path=, current_dir=
+2025-07-13 01:08:37,990 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html
+2025-07-13 01:08:37,990 DEBUG [DEBUG] Computed link for 'Home': index.html
+2025-07-13 01:08:37,990 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html
+2025-07-13 01:08:37,990 DEBUG [DEBUG] Computed link for 'Docs': docs/index.html
+2025-07-13 01:08:37,990 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html
+2025-07-13 01:08:37,990 DEBUG [DEBUG] Computed link for 'Dev': dev/index.html
+2025-07-13 01:08:37,990 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html
+2025-07-13 01:08:37,990 DEBUG [DEBUG] Computed link for 'WCAG': wcag/index.html
+2025-07-13 01:08:37,990 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html
+2025-07-13 01:08:37,990 DEBUG [DEBUG] Computed link for 'About': about.html
+2025-07-13 01:08:37,990 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/dev/index.html
+2025-07-13 01:08:37,990 DEBUG [DEBUG] generate_nav_menu: current_folder=, folder_depth=0, current_html_path=, current_dir=
+2025-07-13 01:08:37,990 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html
+2025-07-13 01:08:37,990 DEBUG [DEBUG] Computed link for 'Home': index.html
+2025-07-13 01:08:37,990 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html
+2025-07-13 01:08:37,990 DEBUG [DEBUG] Computed link for 'Docs': docs/index.html
+2025-07-13 01:08:37,990 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html
+2025-07-13 01:08:37,990 DEBUG [DEBUG] Computed link for 'Dev': dev/index.html
+2025-07-13 01:08:37,990 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html
+2025-07-13 01:08:37,990 DEBUG [DEBUG] Computed link for 'WCAG': wcag/index.html
+2025-07-13 01:08:37,990 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html
+2025-07-13 01:08:37,990 DEBUG [DEBUG] Computed link for 'About': about.html
+2025-07-13 01:08:37,990 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/index.html
+2025-07-13 01:08:37,990 INFO Created directory for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag
+2025-07-13 01:08:37,990 DEBUG [DEBUG] generate_nav_menu: current_folder=, folder_depth=0, current_html_path=, current_dir=
+2025-07-13 01:08:37,990 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html
+2025-07-13 01:08:37,990 DEBUG [DEBUG] Computed link for 'Home': index.html
+2025-07-13 01:08:37,990 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html
+2025-07-13 01:08:37,990 DEBUG [DEBUG] Computed link for 'Docs': docs/index.html
+2025-07-13 01:08:37,990 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html
+2025-07-13 01:08:37,990 DEBUG [DEBUG] Computed link for 'Dev': dev/index.html
+2025-07-13 01:08:37,990 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html
+2025-07-13 01:08:37,990 DEBUG [DEBUG] Computed link for 'WCAG': wcag/index.html
+2025-07-13 01:08:37,990 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html
+2025-07-13 01:08:37,990 DEBUG [DEBUG] Computed link for 'About': about.html
+2025-07-13 01:08:37,990 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/index.html
+2025-07-13 01:08:37,990 INFO Created directory for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports
+2025-07-13 01:08:37,990 DEBUG [DEBUG] generate_nav_menu: current_folder=, folder_depth=0, current_html_path=, current_dir=
+2025-07-13 01:08:37,990 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html
+2025-07-13 01:08:37,991 DEBUG [DEBUG] Computed link for 'Home': index.html
+2025-07-13 01:08:37,991 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html
+2025-07-13 01:08:37,991 DEBUG [DEBUG] Computed link for 'Docs': docs/index.html
+2025-07-13 01:08:37,991 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html
+2025-07-13 01:08:37,991 DEBUG [DEBUG] Computed link for 'Dev': dev/index.html
+2025-07-13 01:08:37,991 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html
+2025-07-13 01:08:37,991 DEBUG [DEBUG] Computed link for 'WCAG': wcag/index.html
+2025-07-13 01:08:37,991 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html
+2025-07-13 01:08:37,991 DEBUG [DEBUG] Computed link for 'About': about.html
+2025-07-13 01:08:37,991 INFO Created index.html for section: /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/index.html
+2025-07-13 01:08:38,011 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:08:38,012 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:08:38,012 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:08:38,012 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:08:38,013 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:08:38,016 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:08:38,016 DEBUG [DEBUG] generate_nav_menu: current_folder=, folder_depth=0, current_html_path=, current_dir=
+2025-07-13 01:08:38,016 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html
+2025-07-13 01:08:38,016 DEBUG [DEBUG] Computed link for 'Home': index.html
+2025-07-13 01:08:38,016 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html
+2025-07-13 01:08:38,016 DEBUG [DEBUG] Computed link for 'Docs': docs/index.html
+2025-07-13 01:08:38,016 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html
+2025-07-13 01:08:38,016 DEBUG [DEBUG] Computed link for 'Dev': dev/index.html
+2025-07-13 01:08:38,016 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html
+2025-07-13 01:08:38,016 DEBUG [DEBUG] Computed link for 'WCAG': wcag/index.html
+2025-07-13 01:08:38,016 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html
+2025-07-13 01:08:38,016 DEBUG [DEBUG] Computed link for 'About': about.html
+2025-07-13 01:08:38,016 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/index.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/index.html
+2025-07-13 01:08:38,016 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:08:38,016 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:08:38,016 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:08:38,016 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:08:38,016 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:08:38,018 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:08:38,019 DEBUG [DEBUG] generate_nav_menu: current_folder=, folder_depth=0, current_html_path=, current_dir=
+2025-07-13 01:08:38,019 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html
+2025-07-13 01:08:38,019 DEBUG [DEBUG] Computed link for 'Home': index.html
+2025-07-13 01:08:38,019 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html
+2025-07-13 01:08:38,019 DEBUG [DEBUG] Computed link for 'Docs': docs/index.html
+2025-07-13 01:08:38,019 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html
+2025-07-13 01:08:38,019 DEBUG [DEBUG] Computed link for 'Dev': dev/index.html
+2025-07-13 01:08:38,019 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html
+2025-07-13 01:08:38,019 DEBUG [DEBUG] Computed link for 'WCAG': wcag/index.html
+2025-07-13 01:08:38,019 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html
+2025-07-13 01:08:38,019 DEBUG [DEBUG] Computed link for 'About': about.html
+2025-07-13 01:08:38,019 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/about.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/about.html
+2025-07-13 01:08:38,019 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:08:38,019 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:08:38,019 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:08:38,019 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:08:38,019 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:08:38,022 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:08:38,022 DEBUG [DEBUG] generate_nav_menu: current_folder=wcag, folder_depth=1, current_html_path=, current_dir=
+2025-07-13 01:08:38,022 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html
+2025-07-13 01:08:38,022 DEBUG [DEBUG] Computed link for 'Home': index.html
+2025-07-13 01:08:38,022 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html
+2025-07-13 01:08:38,022 DEBUG [DEBUG] Computed link for 'Docs': docs/index.html
+2025-07-13 01:08:38,022 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html
+2025-07-13 01:08:38,022 DEBUG [DEBUG] Computed link for 'Dev': dev/index.html
+2025-07-13 01:08:38,022 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html
+2025-07-13 01:08:38,022 DEBUG [DEBUG] Computed link for 'WCAG': wcag/index.html
+2025-07-13 01:08:38,022 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html
+2025-07-13 01:08:38,022 DEBUG [DEBUG] Computed link for 'About': about.html
+2025-07-13 01:08:38,022 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/wcag/main_js.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/main_js.html
+2025-07-13 01:08:38,022 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:08:38,022 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:08:38,022 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:08:38,022 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:08:38,022 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:08:38,025 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:08:38,025 DEBUG [DEBUG] generate_nav_menu: current_folder=wcag, folder_depth=2, current_html_path=, current_dir=
+2025-07-13 01:08:38,025 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html
+2025-07-13 01:08:38,025 DEBUG [DEBUG] Computed link for 'Home': index.html
+2025-07-13 01:08:38,025 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html
+2025-07-13 01:08:38,025 DEBUG [DEBUG] Computed link for 'Docs': docs/index.html
+2025-07-13 01:08:38,025 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html
+2025-07-13 01:08:38,025 DEBUG [DEBUG] Computed link for 'Dev': dev/index.html
+2025-07-13 01:08:38,025 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html
+2025-07-13 01:08:38,025 DEBUG [DEBUG] Computed link for 'WCAG': wcag/index.html
+2025-07-13 01:08:38,025 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html
+2025-07-13 01:08:38,025 DEBUG [DEBUG] Computed link for 'About': about.html
+2025-07-13 01:08:38,025 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/wcag/reports/report2.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/report2.html
+2025-07-13 01:08:38,025 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:08:38,025 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:08:38,025 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:08:38,025 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:08:38,025 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:08:38,027 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:08:38,027 DEBUG [DEBUG] generate_nav_menu: current_folder=wcag, folder_depth=2, current_html_path=, current_dir=
+2025-07-13 01:08:38,027 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html
+2025-07-13 01:08:38,027 DEBUG [DEBUG] Computed link for 'Home': index.html
+2025-07-13 01:08:38,027 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html
+2025-07-13 01:08:38,027 DEBUG [DEBUG] Computed link for 'Docs': docs/index.html
+2025-07-13 01:08:38,027 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html
+2025-07-13 01:08:38,027 DEBUG [DEBUG] Computed link for 'Dev': dev/index.html
+2025-07-13 01:08:38,027 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html
+2025-07-13 01:08:38,027 DEBUG [DEBUG] Computed link for 'WCAG': wcag/index.html
+2025-07-13 01:08:38,027 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html
+2025-07-13 01:08:38,027 DEBUG [DEBUG] Computed link for 'About': about.html
+2025-07-13 01:08:38,028 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/wcag/reports/report1.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/wcag/reports/report1.html
+2025-07-13 01:08:38,028 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:08:38,028 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:08:38,028 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:08:38,028 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:08:38,028 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:08:38,031 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:08:38,031 DEBUG [DEBUG] generate_nav_menu: current_folder=docs, folder_depth=1, current_html_path=, current_dir=
+2025-07-13 01:08:38,031 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html
+2025-07-13 01:08:38,031 DEBUG [DEBUG] Computed link for 'Home': index.html
+2025-07-13 01:08:38,031 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html
+2025-07-13 01:08:38,031 DEBUG [DEBUG] Computed link for 'Docs': docs/index.html
+2025-07-13 01:08:38,031 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html
+2025-07-13 01:08:38,031 DEBUG [DEBUG] Computed link for 'Dev': dev/index.html
+2025-07-13 01:08:38,031 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html
+2025-07-13 01:08:38,031 DEBUG [DEBUG] Computed link for 'WCAG': wcag/index.html
+2025-07-13 01:08:38,031 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html
+2025-07-13 01:08:38,031 DEBUG [DEBUG] Computed link for 'About': about.html
+2025-07-13 01:08:38,031 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/docs/build_system.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/build_system.html
+2025-07-13 01:08:38,031 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:08:38,031 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:08:38,031 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:08:38,031 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:08:38,031 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:08:38,034 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:08:38,034 DEBUG [DEBUG] generate_nav_menu: current_folder=docs, folder_depth=1, current_html_path=, current_dir=
+2025-07-13 01:08:38,034 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html
+2025-07-13 01:08:38,034 DEBUG [DEBUG] Computed link for 'Home': index.html
+2025-07-13 01:08:38,034 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html
+2025-07-13 01:08:38,034 DEBUG [DEBUG] Computed link for 'Docs': docs/index.html
+2025-07-13 01:08:38,034 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html
+2025-07-13 01:08:38,034 DEBUG [DEBUG] Computed link for 'Dev': dev/index.html
+2025-07-13 01:08:38,034 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html
+2025-07-13 01:08:38,034 DEBUG [DEBUG] Computed link for 'WCAG': wcag/index.html
+2025-07-13 01:08:38,034 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html
+2025-07-13 01:08:38,034 DEBUG [DEBUG] Computed link for 'About': about.html
+2025-07-13 01:08:38,034 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/docs/installation.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/docs/installation.html
+2025-07-13 01:08:38,034 DEBUG Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2025-07-13 01:08:38,034 DEBUG Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2025-07-13 01:08:38,034 DEBUG Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2025-07-13 01:08:38,034 DEBUG Successfully loaded extension "markdown.extensions.toc.TocExtension".
+2025-07-13 01:08:38,034 DEBUG Successfully loaded extension "markdown.extensions.meta.MetaExtension".
+2025-07-13 01:08:38,038 INFO Loaded YAML config from /Users/caballero/repos/oerforge/oer-forge.github.io/_config.yml
+2025-07-13 01:08:38,038 DEBUG [DEBUG] generate_nav_menu: current_folder=dev, folder_depth=1, current_html_path=, current_dir=
+2025-07-13 01:08:38,038 DEBUG [DEBUG] Menu item: title=Home, slug=home, target_html=index.html
+2025-07-13 01:08:38,038 DEBUG [DEBUG] Computed link for 'Home': index.html
+2025-07-13 01:08:38,038 DEBUG [DEBUG] Menu item: title=Docs, slug=docs, target_html=docs/index.html
+2025-07-13 01:08:38,038 DEBUG [DEBUG] Computed link for 'Docs': docs/index.html
+2025-07-13 01:08:38,038 DEBUG [DEBUG] Menu item: title=Dev, slug=dev, target_html=dev/index.html
+2025-07-13 01:08:38,038 DEBUG [DEBUG] Computed link for 'Dev': dev/index.html
+2025-07-13 01:08:38,038 DEBUG [DEBUG] Menu item: title=WCAG, slug=wcag, target_html=wcag/index.html
+2025-07-13 01:08:38,038 DEBUG [DEBUG] Computed link for 'WCAG': wcag/index.html
+2025-07-13 01:08:38,038 DEBUG [DEBUG] Menu item: title=About, slug=about, target_html=about.html
+2025-07-13 01:08:38,038 DEBUG [DEBUG] Computed link for 'About': about.html
+2025-07-13 01:08:38,038 INFO Converted /Users/caballero/repos/oerforge/oer-forge.github.io/build/files/dev/punchlist.md to /Users/caballero/repos/oerforge/oer-forge.github.io/build/dev/punchlist.html
