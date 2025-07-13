@@ -1,3 +1,14 @@
+def get_markdown_source_and_output_paths(toc: list, files_dir: str, build_dir: str) -> list:
+    """
+    Recursively walk the toc: structure.
+    For each menu item with a file:, compute:
+      - The source markdown file path in files_dir (using the file: value).
+      - The output HTML path in build_dir (mirroring toc: hierarchy and slugification).
+    Returns a list of (source_md_path, output_html_path, toc_entry) tuples for conversion.
+    Logs missing files and errors.
+    """
+    # Stub: will implement path computation logic
+    pass
 def copy_files_to_toc_structure(toc: list, files_dir: str, build_dir: str):
     """
     Recursively process toc: structure.
