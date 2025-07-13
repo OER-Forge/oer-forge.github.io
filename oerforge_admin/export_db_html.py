@@ -22,10 +22,15 @@ def inject_table_into_template(table_html, template_path, output_path):
     # Inject site info from DB
     from oerforge_admin.view_db import get_site_info
     site_info = get_site_info()
-    print("[DEBUG] Header from DB (first 500 chars):", repr(site_info.get("header", ""))[:500])
+    header_html = site_info.get("header", "")
+    # Replace {{ site_title }} and {{ nav_menu }} in header HTML
+    header_html = header_html.replace("{{ site_title }}", site_info.get("title", "Admin Table"))
+    # For now, nav_menu is empty or can be set to a default value
+    header_html = header_html.replace("{{ nav_menu }}", "")
+    print("[DEBUG] Header from DB (first 500 chars):", repr(header_html)[:500])
     # Replace title, header, and footer placeholders
     template = template.replace("{{ title }}", site_info.get("title", "Admin Table"))
-    template = template.replace("{{ header }}", site_info.get("header", ""))
+    template = template.replace("{{ header }}", header_html)
     template = template.replace("{{ footer }}", site_info.get("footer_text", ""))
     print("[DEBUG] Template after header injection (first 500 chars):", template[:500])
     # Replace CSS/JS references to point to local admin assets
