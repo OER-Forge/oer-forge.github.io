@@ -233,6 +233,49 @@ def print_table(table_name):
         print(" | ".join(str(item) if item is not None else "" for item in row))
     conn.close()
 
+# --- Notebook Asset Scanning Stubs ---
+def get_notebook_paths_from_toc(toc_path):
+    """
+    Parses the toc file and returns a list of notebook (.ipynb) paths to scan.
+    Only returns notebooks listed in toc.
+    """
+    # TODO: Implement parsing logic
+    return []
+
+def scan_notebook_for_assets(nb_path):
+    """
+    Scans a notebook for assets (images/files) in all cells.
+    Calls extract_images_from_notebook_cell for each cell.
+    """
+    # TODO: Implement notebook scanning logic
+    pass
+
+def extract_images_from_notebook_cell(cell, nb_path):
+    """
+    Extracts images/files from a single notebook cell.
+    Records cell_type, is_code_generated, is_embedded, and logs warnings if expected images are missing.
+    Returns a list of file records.
+    """
+    # TODO: Implement image extraction logic
+    return []
+
+def log_event(message, level="INFO"):
+    """
+    Logs an event to both stdout and a log file in the project root.
+    """
+    # TODO: Implement logging logic
+    print(f"[{level}] {message}")
+    # Append to log file
+    pass
+
+def insert_notebook_file_record(file_record):
+    """
+    Inserts a notebook file record into the 'files' table, supporting new fields (cell_type, is_code_generated, is_embedded).
+    Returns the inserted file_id.
+    """
+    # TODO: Extend DB schema and implement insertion logic
+    pass
+
 __all__ = [
     "initialize_database",
     "extract_linked_files_from_markdown",
