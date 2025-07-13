@@ -1,3 +1,20 @@
+# --- Build All Markdown Files ---
+def build_all_markdown_files(source_dir, build_dir):
+    """
+    Find all markdown files in source_dir, compute their output locations in build_dir,
+    and convert them to HTML using templates and accessibility features.
+    Mirrors directory structure and changes .md to .html.
+    """
+    md_files = find_markdown_files(source_dir)
+    for md_path in md_files:
+        rel_path = os.path.relpath(md_path, source_dir)
+        output_path = os.path.join(build_dir, os.path.splitext(rel_path)[0] + '.html')
+        # Ensure output directory exists
+        output_dir = os.path.dirname(output_path)
+        if not os.path.exists(output_dir):
+            os.makedirs(output_dir, exist_ok=True)
+        convert_markdown_to_html(md_path, output_path)
+        logging.info(f"Converted {md_path} to {output_path}")
 """
 Prototype script to convert Markdown files in build/files to accessible standalone HTML pages in build/.
 
@@ -21,6 +38,57 @@ PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BUILD_FILES_DIR = os.path.join(PROJECT_ROOT, 'build', 'files')
 BUILD_HTML_DIR = os.path.join(PROJECT_ROOT, 'build')
 LOG_PATH = os.path.join(PROJECT_ROOT, 'log')
+
+__all__ = [
+    "get_markdown_source_and_output_paths",
+    "load_yaml_config",
+    "ensure_build_structure",
+    "convert_markdown_to_html",
+    "create_section_index_html",
+    "slugify"
+]
+
+# --- Markdown to HTML Conversion ---
+def convert_markdown_to_html(md_path, html_path):
+    """
+    Convert a markdown file to HTML and write to html_path using templates and accessibility features.
+    """
+    import markdown
+    with open(md_path, 'r', encoding='utf-8') as f:
+        md_text = f.read()
+    # Convert markdown to HTML
+    html_body = markdown.markdown(md_text, extensions=['fenced_code', 'codehilite', 'tables', 'toc', 'meta'])
+    # Accessibility and ARIA attributes
+    html_body = html_body.replace('<table>', '<table role=\"table\">')
+    html_body = html_body.replace('<th>', '<th role=\"columnheader\">')
+    html_body = html_body.replace('<td>', '<td role=\"cell\">')
+    html_body = html_body.replace('<ul>', '<ul role=\"list\">')
+    html_body = html_body.replace('<ol>', '<ol role=\"list\">')
+    html_body = html_body.replace('<li>', '<li role=\"listitem\">')
+    html_body = html_body.replace('<nav>', '<nav role=\"navigation\">')
+    html_body = html_body.replace('<header>', '<header role=\"banner\">')
+    html_body = html_body.replace('<footer>', '<footer role=\"contentinfo\">')
+    # MathJax
+    mathjax_script = '<script src=\"https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js\"></script>'
+    html_body += mathjax_script
+    # Extract first markdown heading as title
+    import re
+    match = re.search(r'^#\\s+(.+)', md_text, re.MULTILINE)
+    if match:
+        title = match.group(1).strip()
+        html_body = re.sub(r'<h1[^>]*>.*?</h1>', '', html_body, count=1)
+    else:
+        title = "Untitled"
+    # Navigation
+    config_path = os.path.join(PROJECT_ROOT, "_config.yml")
+    config = load_yaml_config(config_path)
+    toc = config.get("toc", [])
+    nav_html = generate_nav_menu(toc)
+    header = create_header(title, nav_html)
+    footer = create_footer()
+    html_output = render_page(title, html_body, header, footer)
+    with open(html_path, 'w', encoding='utf-8') as f:
+        f.write(html_output)
 
 # --- Logging Setup ---
 def setup_logging():
@@ -112,8 +180,19 @@ def generate_nav_menu(toc: list) -> str:
     Uses <nav> with ARIA roles and is mobile accessible (hamburger toggle).
     Returns HTML string.
     """
-    # Stub: will implement menu rendering logic
-    return '<nav role="navigation" aria-label="Main menu">\n<!-- menu items here -->\n</nav>'
+    # Only top-level menu items
+    menu_items = [entry for entry in toc if entry.get('menu', False)]
+    nav_html = '<nav role="navigation" aria-label="Main menu"><ul>'
+    for entry in menu_items:
+        title = entry.get('title', '')
+        # Link to index.html for sections, or to output html for files
+        if 'file' in entry:
+            link = os.path.splitext(entry['file'])[0] + '.html'
+        else:
+            link = slugify(title) + '/index.html'
+        nav_html += f'<li><a href="{link}">{title}</a></li>'
+    nav_html += '</ul></nav>'
+    return nav_html
 
 def create_header(title: str, nav_html: str) -> str:
     """
@@ -136,11 +215,24 @@ def render_page(title: str, content: str, header: str, footer: str) -> str:
     Render the full HTML page using header, content, and footer.
     Returns HTML string.
     """
-    # Stub: will use page.html template
-    return f'{header}\n<main>{content}</main>\n{footer}'
+    # Load page.html template
+    template_path = os.path.join(PROJECT_ROOT, 'static', 'templates', 'page.html')
+    template = load_template(template_path)
+    # Add SEO meta tags and dummy metadata
+    meta = (
+        '<meta name="description" content="A modern, open-source course in mathematical methods.">\n'
+        '<meta name="author" content="Danny Caballero">\n'
+        '<meta name="keywords" content="math, physics, open, oer">\n'
+        '<meta name="robots" content="noindex,nofollow">\n'
+    )
 
-# --- Markdown Conversion ---
-def convert_markdown_to_html(md_path, html_path):
+    # Replace placeholders in template
+    html = template.replace('{{ title }}', title)
+    html = html.replace('{{ content }}', content)
+    html = html.replace('{{ meta }}', meta)
+    html = html.replace('{{ header }}', header)
+    html = html.replace('{{ footer }}', footer)
+    return html
     """
     Convert a Markdown file to HTML.
     - Use highlight.js for code blocks, add ARIA attributes
@@ -194,14 +286,48 @@ def convert_markdown_to_html(md_path, html_path):
     else:
         title = "Untitled"
 
-    # Load and render the template
-    template_path = os.path.join(PROJECT_ROOT, 'static', 'templates', 'page.html')
-    template = load_template(template_path)
-    html_output = render_template(template, title, html_body)
+    # Generate navigation
+    config_path = os.path.join(PROJECT_ROOT, "_config.yml")
+    config = load_yaml_config(config_path)
+    toc = config.get("toc", [])
+    nav_html = generate_nav_menu(toc)
+    header = create_header(title, nav_html)
+    footer = create_footer()
+    html_output = render_page(title, html_body, header, footer)
 
     # Write output
     with open(html_path, 'w', encoding='utf-8') as f:
         f.write(html_output)
+def create_section_index_html(section_entry, output_dir, toc):
+    """
+    Generate index.html for a section, listing links to all children and grandchildren.
+    """
+    title = section_entry.get('title', 'Section')
+    # Recursively collect child links
+    def collect_links(entries, parent_path=[]):
+        links = []
+        for entry in entries:
+            current_path = parent_path.copy()
+            if 'title' in entry:
+                current_path.append(slugify(entry['title']))
+            if 'file' in entry:
+                # Output HTML path
+                link = os.path.splitext(entry['file'])[0] + '.html'
+                links.append((entry.get('title', ''), link))
+            if 'children' in entry and isinstance(entry['children'], list):
+                links.extend(collect_links(entry['children'], current_path))
+        return links
+    child_links = collect_links(section_entry.get('children', []))
+    # Build HTML list
+    links_html = '<ul>' + ''.join([f'<li><a href="{link}">{title}</a></li>' for title, link in child_links]) + '</ul>'
+    nav_html = generate_nav_menu(toc)
+    header = create_header(title, nav_html)
+    footer = create_footer()
+    page_html = render_page(title, links_html, header, footer)
+    index_html_path = os.path.join(output_dir, 'index.html')
+    with open(index_html_path, 'w', encoding='utf-8') as f:
+        f.write(page_html)
+    logging.info(f"Created section index with child links: {index_html_path}")
 
 # --- TOC and Build Structure Functions ---
 def get_markdown_source_and_output_paths(toc: list, files_dir: str, build_dir: str) -> list:
@@ -249,8 +375,31 @@ def ensure_build_structure(toc: list):
     Creates empty directories and index.html files for top-level menu items without files.
     Logs all actions.
     """
-    # Stub: will implement directory and file creation logic
-    pass
+    def walk_toc(entries, parent_path=[]):
+        for entry in entries:
+            current_path = parent_path.copy()
+            if 'title' in entry:
+                current_path.append(slugify(entry['title']))
+            # If this entry has children but no file, create directory and index.html
+            if 'children' in entry and isinstance(entry['children'], list) and 'file' not in entry:
+                output_dir = os.path.join(BUILD_HTML_DIR, *current_path)
+                if not os.path.exists(output_dir):
+                    os.makedirs(output_dir, exist_ok=True)
+                    logging.info(f"Created directory for section: {output_dir}")
+                # Create index.html for section
+                header = create_header(entry.get('title', 'Section'), generate_nav_menu(toc))
+                footer = create_footer()
+                index_html_path = os.path.join(output_dir, 'index.html')
+                page_html = render_page(entry.get('title', 'Section'), '', header, footer)
+                with open(index_html_path, 'w', encoding='utf-8') as f:
+                    f.write(page_html)
+                logging.info(f"Created index.html for section: {index_html_path}")
+                # Recurse into children
+                walk_toc(entry['children'], current_path)
+            elif 'children' in entry and isinstance(entry['children'], list):
+                # If entry has both file and children, just recurse
+                walk_toc(entry['children'], current_path)
+    walk_toc(toc)
 
 def create_index_html_for_menu(title: str, header: str, footer: str, output_dir: str):
     """
@@ -268,18 +417,9 @@ def run_make(debug: bool = False):
     Can be called from build.py or CLI.
     """
     setup_logging()
-    md_files = find_markdown_files(BUILD_FILES_DIR)
-    for md_path in md_files:
-        try:
-            # Compute output HTML path
-            rel_path = os.path.relpath(md_path, BUILD_FILES_DIR)
-            html_path = os.path.join(BUILD_HTML_DIR, os.path.splitext(rel_path)[0] + '.html')
-            ensure_output_dir(md_path)
-            convert_markdown_to_html(md_path, html_path)
-            logging.info(f"Converted {md_path} to {html_path}")
-        except Exception as e:
-            logging.error(f"Failed to convert {md_path}: {e}")
-            print(f"[ERROR] Failed to convert {md_path}: {e}")
+    # Use build_all_markdown_files to process all markdown files in build/files
+    build_all_markdown_files(BUILD_FILES_DIR, BUILD_HTML_DIR)
+    # The previous logic is now handled by build_all_markdown_files
 
 if __name__ == "__main__":
     setup_logging()

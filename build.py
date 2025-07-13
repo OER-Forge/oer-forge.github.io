@@ -4,9 +4,10 @@ Main build orchestration script.
 Purpose: Handles command-line flags and calls modules to build the site.
 """
 
+# from oerforge.copyfile import *
 from oerforge.copyfile import copy_project_files
+from oerforge.make import build_all_markdown_files
 # from oerforge.make import run_make
-from oerforge.make import get_markdown_source_and_output_paths, load_yaml_config
 import os
 
 def main():
@@ -20,18 +21,22 @@ def main():
     except Exception as e:
         print(f"[ERROR] Copying project files failed: {e}")
 
-    # Test get_markdown_source_and_output_paths after copying
-    
+    # Build and convert all markdown files in build/files to build/ as HTML
     PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
     config_path = os.path.join(PROJECT_ROOT, "_config.yml")
-    config = load_yaml_config(config_path)
+    import yaml
+    with open(config_path, 'r', encoding='utf-8') as f:
+        config = yaml.safe_load(f)
     toc = config.get("toc", [])
     files_dir = os.path.join(PROJECT_ROOT, "build", "files")
     build_dir = os.path.join(PROJECT_ROOT, "build")
-    results = get_markdown_source_and_output_paths(toc, files_dir, build_dir)
-    for src, out, entry in results:
-        print(f"Source: {src}\nOutput: {out}\nTOC Entry: {entry}\n")
-    print("Check the log file for missing file errors.")
+    print("[INFO] Creating index.html pages for folders as per toc...")
+    from oerforge.make import ensure_build_structure
+    ensure_build_structure(toc)
+    print("[OK] Index.html pages created.")
+    print("[INFO] Converting all markdown files in build/files to HTML...")
+    build_all_markdown_files(files_dir, build_dir)
+    print("[OK] All markdown files converted.")
 
 if __name__ == "__main__":
     main()
