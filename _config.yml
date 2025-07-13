@@ -30,6 +30,21 @@ toc:
       - title: "Main JS"
         file: docs/main_js.md
         menu: false
+  - title: "WCAG"
+    menu: true
+    children:
+      - title: "Reports"
+        menu: true
+        children:
+          - title: "Report 1"
+            file: wcag/reports/report1.md
+            menu: false
+          - title: "Report 2"
+            file: wcag/reports/report2.md
+            menu: false
+  - title: "About"
+    menu: true
+    file: content/about.md
 
 footer:
   text: 'Made in Michigan with tons of ☕️  and lots of ❤️ for students and educators everywhere.
