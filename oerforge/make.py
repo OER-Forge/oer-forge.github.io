@@ -148,19 +148,32 @@ def generate_nav_menu(toc: list, current_folder: str = '', folder_depth: int = 0
     return nav_html
 
 # --- Markdown to HTML Conversion ---
+import sqlite3
+def get_canonical_image_path(filename):
+    db_path = os.path.join(PROJECT_ROOT, 'db', 'sqlite.db')
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+    cursor.execute("SELECT image_rel_path FROM build_images WHERE image_filename = ?", (filename,))
+    row = cursor.fetchone()
+    conn.close()
+    return row[0] if row else None
+
 def fix_image_paths(html_body):
-    """Replace any src="...assets/..." with src="files/assets/..."."""
+    """Rewrite <img> src attributes to use canonical paths from build_images DB."""
     def replacer(match):
         before = match.group(1)
-        path = match.group(2)
-        path = re.sub(r'^(\.\./|\./)+', '', path)
-        new_path = f'files/{path}'
-        return f'<img{before}src="{new_path}"'
-    html_body = re.sub(
-        r'<img([^>]+)src=["\']((?:\.\./|\./)?assets/[^"\']+)["\']',
-        replacer,
-        html_body
-    )
+        src = match.group(2)
+        # Extract filename from src
+        filename = os.path.basename(src)
+        canonical_path = get_canonical_image_path(filename)
+        if canonical_path:
+            return f'<img{before}src="{canonical_path}"'
+        else:
+            # Optionally log missing image
+            logging.warning(f"Image not found in build_images DB: {src}")
+            return match.group(0)
+    # Replace src in all <img ... src="..."> tags
+    html_body = re.sub(r'<img([^>]+)src=["\']([^"\']+)["\']', replacer, html_body)
     return html_body
 
 def convert_markdown_to_html(md_path, html_path):
