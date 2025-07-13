@@ -1,3 +1,11 @@
+def copy_files_to_toc_structure(toc: list, files_dir: str, build_dir: str):
+    """
+    Recursively process toc: structure.
+    For each menu item with a file:, copy or move the corresponding .md or .ipynb (converted to .html) from files_dir to the correct folder in build_dir (mirroring toc: hierarchy).
+    Logs all actions and errors.
+    """
+    # Stub: will implement file copying/moving logic
+    pass
 def load_template(template_path: str) -> str:
     """
     Load the HTML template from the given path.
