@@ -299,16 +299,16 @@ def fix_image_paths(html_body):
     def replacer(match):
         before = match.group(1)
         src = match.group(2)
-        # Extract filename from src
         filename = os.path.basename(src)
         canonical_path = get_canonical_image_path(filename)
+        # Debug output for each image processed
+        print(f"[DEBUG] fix_image_paths: src={src}, filename={filename}, canonical_path={canonical_path}")
+        logging.info(f"fix_image_paths: src={src}, filename={filename}, canonical_path={canonical_path}")
         if canonical_path:
             return f'<img{before}src="{canonical_path}"'
         else:
-            # Optionally log missing image
             logging.warning(f"Image not found in build_images DB: {src}")
             return match.group(0)
-    # Replace src in all <img ... src="..."> tags
     html_body = re.sub(r'<img([^>]+)src=["\']([^"\']+)["\']', replacer, html_body)
     return html_body
 
