@@ -29,7 +29,10 @@ def initialize_database():
             url TEXT,
             referenced_page TEXT,
             relative_path TEXT,
-            absolute_path TEXT
+            absolute_path TEXT,
+            cell_type TEXT,
+            is_code_generated BOOLEAN,
+            is_embedded BOOLEAN
         )
     """)
     cursor.execute("""
