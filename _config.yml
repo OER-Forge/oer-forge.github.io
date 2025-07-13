@@ -29,13 +29,7 @@ toc:
     children: 
       - title: "Punchlist"
         menu: true
-        file: dev/punchlist.md
-  - title: "Docs"
-    menu: true
-    children:
-      - title: "Installation"
-        file: docs/installation.md
-        menu: false    
+        file: dev/punchlist.md 
   - title: "WCAG"
     menu: true
     children:

@@ -83,6 +83,46 @@ def convert_markdown_to_html(md_path, html_path):
     config_path = os.path.join(PROJECT_ROOT, "_config.yml")
     config = load_yaml_config(config_path)
     toc = config.get("toc", [])
+    # Find the TOC entry for this page
+    def find_entry_by_html(html_path, toc):
+        html_rel = os.path.relpath(html_path, os.path.join(PROJECT_ROOT, 'build'))
+        def walk(entries):
+            for entry in entries:
+                if 'file' in entry:
+                    expected_html = os.path.splitext(entry['file'])[0] + '.html'
+                    if expected_html == html_rel:
+                        return entry
+                if 'children' in entry and isinstance(entry['children'], list):
+                    found = walk(entry['children'])
+                    if found:
+                        return found
+            return None
+        return walk(toc)
+    toc_entry = find_entry_by_html(html_path, toc)
+    # If this is a section with children, append child/grandchild links to content
+    links_html = ''
+    if toc_entry and 'children' in toc_entry and isinstance(toc_entry['children'], list):
+        def collect_links(entries):
+            links = []
+            for entry in entries:
+                if 'title' in entry:
+                    title = entry['title']
+                    if 'file' in entry:
+                        link = os.path.splitext(entry['file'])[0] + '.html'
+                        links.append((title, link))
+                    if 'children' in entry and isinstance(entry['children'], list):
+                        links.extend(collect_links(entry['children']))
+            return links
+        child_links = collect_links(toc_entry['children'])
+        current_dir = os.path.dirname(html_path)
+        links_html = '<ul>'
+        for title, target_html in child_links:
+            abs_target_html = os.path.join(PROJECT_ROOT, 'build', target_html) if not os.path.isabs(target_html) else target_html
+            rel_link = os.path.relpath(abs_target_html, start=current_dir)
+            mark = '✓' if os.path.exists(abs_target_html) else '✗'
+            links_html += f'<li><a href="{rel_link}">{title}</a> [{mark}]</li>'
+        links_html += '</ul>'
+        html_body += links_html
     # Pass html_path to nav menu for correct relative mapping
     nav_html = generate_nav_menu(toc, current_html_path=html_path)
     header = create_header(title, nav_html)
@@ -335,9 +375,17 @@ def create_section_index_html(section_entry, output_dir, toc):
                 links.extend(collect_links(entry['children'], current_path))
         return links
     child_links = collect_links(section_entry.get('children', []))
-    # Build HTML list
-    links_html = '<ul>' + ''.join([f'<li><a href="{link}">{title}</a></li>' for title, link in child_links]) + '</ul>'
-    nav_html = generate_nav_menu(toc)
+    # Compute robust relative links for each child/grandchild page
+    links_html = '<ul>'
+    current_dir = output_dir
+    for title, target_html in child_links:
+        # Compute absolute path to target html
+        abs_target_html = os.path.join(PROJECT_ROOT, 'build', target_html) if not os.path.isabs(target_html) else target_html
+        rel_link = os.path.relpath(abs_target_html, start=current_dir)
+        mark = '✓' if os.path.exists(abs_target_html) else '✗'
+        links_html += f'<li><a href="{rel_link}">{title}</a> [{mark}]</li>'
+    links_html += '</ul>'
+    nav_html = generate_nav_menu(toc, current_html_path=os.path.join(output_dir, 'index.html'))
     header = create_header(title, nav_html)
     footer = create_footer()
     page_html = render_page(title, links_html, header, footer)
@@ -401,20 +449,15 @@ def ensure_build_structure(toc: list):
             current_path = parent_path.copy()
             if 'title' in entry:
                 current_path.append(slugify(entry['title']))
-            # If this entry has children but no file, create directory and index.html
+            # If this entry has children but no file, create directory and index.html with child links
             if 'children' in entry and isinstance(entry['children'], list) and 'file' not in entry:
                 output_dir = os.path.join(BUILD_HTML_DIR, *current_path)
                 if not os.path.exists(output_dir):
                     os.makedirs(output_dir, exist_ok=True)
                     logging.info(f"Created directory for section: {output_dir}")
-                # Create index.html for section
-                header = create_header(entry.get('title', 'Section'), generate_nav_menu(toc))
-                footer = create_footer()
-                index_html_path = os.path.join(output_dir, 'index.html')
-                page_html = render_page(entry.get('title', 'Section'), '', header, footer)
-                with open(index_html_path, 'w', encoding='utf-8') as f:
-                    f.write(page_html)
-                logging.info(f"Created index.html for section: {index_html_path}")
+                # Use create_section_index_html to generate index.html with child/grandchild links
+                create_section_index_html(entry, output_dir, toc)
+                logging.info(f"Created section index with child links: {os.path.join(output_dir, 'index.html')}")
                 # Recurse into children
                 walk_toc(entry['children'], current_path)
             elif 'children' in entry and isinstance(entry['children'], list):
