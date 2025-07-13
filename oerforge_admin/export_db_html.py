@@ -32,9 +32,9 @@ def inject_table_into_template(table_html, template_path, output_path):
     # Replace header/footer placeholders
     template = template.replace("{{ header }}", header)
     template = template.replace("{{ footer }}", footer)
-    # Replace CSS/JS references to point to /build/css and /build/js
-    template = template.replace("static/css/", "/build/css/")
-    template = template.replace("static/js/", "/build/js/")
+    # Replace CSS/JS references to point to local admin assets
+    template = template.replace("/build/css/", "css/")
+    template = template.replace("/build/js/", "js/")
     # Inject table HTML
     if "<!-- ASSET_TABLE -->" in template:
         html = template.replace("<!-- ASSET_TABLE -->", table_html)
@@ -54,9 +54,9 @@ def export_table_to_html(table_name, output_path, template_path=None, columns=No
     Export a table to static HTML using a site template.
     """
     if not template_path:
-        # Default to page.html in static/templates
+        # Default to admin_page.html in static/templates
         project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        template_path = os.path.join(project_root, "static", "templates", "page.html")
+        template_path = os.path.join(project_root, "static", "templates", "admin_page.html")
     table_html = render_table_html(table_name, columns, where, limit)
     inject_table_into_template(table_html, template_path, output_path)
 
@@ -73,9 +73,27 @@ def export_all_tables_to_html(output_dir, template_path=None):
 
 def copy_static_assets_to_admin(output_dir):
     """
-    No asset copying needed; admin pages reference /build/css and /build/js
+    Copy only required CSS and JS files to build/admin for standalone admin pages.
     """
-    pass
+    import shutil
+    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    static_css = os.path.join(project_root, "static", "css")
+    static_js = os.path.join(project_root, "static", "js")
+    admin_css = os.path.join(output_dir, "css")
+    admin_js = os.path.join(output_dir, "js")
+    os.makedirs(admin_css, exist_ok=True)
+    os.makedirs(admin_js, exist_ok=True)
+    # Copy only theme-dark.css and theme-light.css
+    for css_file in ["theme-dark.css", "theme-light.css"]:
+        src = os.path.join(static_css, css_file)
+        dst = os.path.join(admin_css, css_file)
+        if os.path.exists(src):
+            shutil.copy2(src, dst)
+    # Copy main.js
+    js_src = os.path.join(static_js, "main.js")
+    js_dst = os.path.join(admin_js, "main.js")
+    if os.path.exists(js_src):
+        shutil.copy2(js_src, js_dst)
 if __name__ == "__main__":
     # Example usage stub
     # export_all_tables_to_html("build/admin/")
