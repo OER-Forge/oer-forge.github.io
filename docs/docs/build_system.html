@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OER-Forge Build System</title>
+    <!-- Theme CSS and main.js are injected by Python -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <link rel="stylesheet" href="../css/theme-light.css" id="theme-light">
+<link rel="stylesheet" href="../css/theme-dark.css" id="theme-dark" disabled>
+<script src="../js/main.js" defer></script>
+</head>
+  <body>
+    <header class="site-header">
+<button id="theme-toggle" aria-label="Switch theme" style="float:right; margin:0.5em 1em; font-size:1.5em;">🌙</button>
+<h1 class="site-title">OER-Forge Build System</h1>
+<nav class="site-nav" role="navigation" aria-label="Main menu"><ul><li><a href="../index.html">Home</a></li><li><a href="index.html">Docs</a></li><li><a href="../dev/index.html">Dev</a></li><li><a href="../wcag/index.html">WCAG</a></li><li><a href="../about.html">About</a></li></ul></nav>
+</header>
+    <main role="main">
+      <div class="container">
+        
+<p><a href="https://github.com/OER-Forge/">OER-Forge</a> is a Python package with five modules (<code>oerforge/</code>):</p>
+<ul role="list">
+<li role="listitem"><code>scan.py</code> - uses <code>_config.yml</code> and the files present in <code>content/</code> to populate an sqlite database with site and file info.</li>
+<li role="listitem"><code>convert.py</code> - draws from <code>sqlite.db</code> to convert files in <code>content/</code> and places them in <code>build/files/</code> preserving the user's file structure</li>
+<li role="listitem"><code>make.py</code> - draws from <code>sqlite.db</code> to builds a temporary WCAG compliant site in <code>build/</code>.</li>
+<li role="listitem"><code>verify.py</code> - reviews <code>build/</code> in the context of WCAG Guidelines to generate a report and update pages on the site indicating level of compliance.</li>
+<li role="listitem"><code>confirm.py</code> - integrates the WCAG reporting information into the site and rebuilds as a public site in <code>docs/</code></li>
+</ul>
+<h2 id="orchestration">Orchestration</h2>
+<p><a href="https://github.com/OER-Forge/">OER-Forge</a> uses <code>build.py</code> to orchestrate the build process.
+- <code>build.py</code> - uses functions from each module to construct the build in <code>build/</code></p>
+<h2 id="overview-of-the-build-process">Overview of the Build Process</h2>
+<p>The following diagram illustrates the envisioned build process:</p>
+<ol role="list">
+<li role="listitem">Starting with the <code>content/</code> directory and <code>_config.yml</code>, <code>scan.py</code> populates <code>sqlite.db</code>. This includes metadata about the site and the files to be processed as well as their locations. Figures and images are also identified and catalogued. <strong>This is functional.</strong></li>
+<li role="listitem"><code>convert.py</code> reads from <code>sqlite.db</code> to convert files in <code>content/</code> to their appropriate formats, placing them in <code>build/files/</code> while preserving the user's file structure. The tools in <code>convert.py</code> currently support conversion of Jupyter Notebooks (<code>.ipynb</code>) to Markdown (<code>.md</code>) and Word (<code>.docx</code>), and will be extended to support additional formats. The module <code>convert.py</code> uses the file extensions to determine the appropriate conversion tools and which formats to convert to (i.e., it will not attempt to convert a <code>.md</code> file to <code>.md</code> or a <code>.docx</code> file to <code>.ipynb</code>). <strong>This is partially functional.</strong></li>
+<li role="listitem"><code>make.py</code> reads from <code>sqlite.db</code> to build a temporary WCAG compliant site in <code>build/</code>. <strong>This is not yet functional.</strong></li>
+<li role="listitem"><code>verify.py</code> reviews <code>build/</code> in the context of WCAG Guidelines to generate a report and update pages on the site indicating level of compliance. <strong>This is not yet functional.</strong></li>
+<li role="listitem"><code>confirm.py</code> integrates the WCAG reporting information into the site and rebuilds as a public site in <code>docs/</code>. <strong>This is not yet functional.</strong></li>
+</ol>
+<p><img alt="Overview of build system" src="files/assets/images/oerforge/overview.png" /></p><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      </div>
+    </main>
+    <footer>
+Made in Michigan with tons of ☕️  and lots of ❤️ for students and educators everywhere. <br> <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" style="display:inline-block; vertical-align:middle; margin-top:0.5em;"&gt; &lt;img alt="Creative Commons License" style="border-width:0; height:22px; margin-right:0.3em; vertical-align:middle;" src="https://licensebuttons.net/l/by-nc-sa/4.0/88x31.png" /&gt; </a><a href="https://open-physics-ed-org.github.io/"&gt;openphysicsed.org</a>
+</footer>
+  </body>
+</html>

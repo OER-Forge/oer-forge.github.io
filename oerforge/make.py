@@ -1,16 +1,23 @@
 def convert_wcag_reports_to_html():
+    print("[DEBUG] Running convert_wcag_reports_to_html...")
+    src_dir = os.path.join(PROJECT_ROOT, 'build', 'files', 'wcag-reports')
+    dest_dir = os.path.join(PROJECT_ROOT, 'docs', 'wcag-reports')
+    if not os.path.exists(dest_dir):
+        print(f"[DEBUG] Creating output directory: {dest_dir}")
+        os.makedirs(dest_dir, exist_ok=True)
     """
     Convert all markdown accessibility reports in build/files/wcag-reports to HTML using site templates, saving to build/docs/wcag-reports.
     """
     import markdown
     src_dir = os.path.join(PROJECT_ROOT, 'build', 'files', 'wcag-reports')
-    dest_dir = os.path.join(PROJECT_ROOT, 'build', 'docs', 'wcag-reports')
+    dest_dir = os.path.join(PROJECT_ROOT, 'docs', 'wcag-reports')
+    # Always create output directory
+    if not os.path.exists(dest_dir):
+        os.makedirs(dest_dir, exist_ok=True)
+    # If no source directory, nothing to convert
     if not os.path.exists(src_dir):
         logging.info(f"No accessibility reports found in {src_dir}")
         return
-    if os.path.exists(dest_dir):
-        shutil.rmtree(dest_dir)
-    os.makedirs(dest_dir, exist_ok=True)
     template_path = os.path.join(PROJECT_ROOT, 'static', 'templates', 'page.html')
     template = load_template(template_path)
     for dirpath, dirnames, filenames in os.walk(src_dir):
@@ -63,28 +70,26 @@ def copy_wcag_reports_to_docs():
                 shutil.copy2(src_path, dest_path)
                 logging.info(f"Copied report {src_path} to {dest_path}")
 import shutil
-def clean_and_copy_html_to_docs():
-    """Clean (remove) build/docs if exists, create it, and copy all HTML files from build/ into build/docs."""
-    docs_dir = os.path.join(PROJECT_ROOT, 'build', 'docs')
+def mirror_build_to_docs():
+    """Remove docs/ if exists, then copy the entire build/ folder (all files and subfolders) to docs/ in the project root."""
+    docs_dir = os.path.join(PROJECT_ROOT, 'docs')
+    build_dir = os.path.join(PROJECT_ROOT, 'build')
     # Remove docs_dir if exists
     if os.path.exists(docs_dir):
         shutil.rmtree(docs_dir)
-    os.makedirs(docs_dir, exist_ok=True)
-    # Walk through build/ and copy all .html files to docs_dir, preserving relative structure
-    for dirpath, dirnames, filenames in os.walk(os.path.join(PROJECT_ROOT, 'build')):
-        # Skip docs itself
-        if os.path.abspath(dirpath) == os.path.abspath(docs_dir):
-            continue
-        for filename in filenames:
-            if filename.lower().endswith('.html'):
-                src_path = os.path.join(dirpath, filename)
-                rel_path = os.path.relpath(src_path, os.path.join(PROJECT_ROOT, 'build'))
-                dest_path = os.path.join(docs_dir, rel_path)
-                dest_dir = os.path.dirname(dest_path)
-                if not os.path.exists(dest_dir):
-                    os.makedirs(dest_dir, exist_ok=True)
-                shutil.copy2(src_path, dest_path)
-                logging.info(f"Copied {src_path} to {dest_path}")
+    # Recursively copy build/ to docs/
+    def copytree(src, dst):
+        for root, dirs, files in os.walk(src):
+            rel_root = os.path.relpath(root, src)
+            target_root = os.path.join(dst, rel_root) if rel_root != '.' else dst
+            if not os.path.exists(target_root):
+                os.makedirs(target_root, exist_ok=True)
+            for file in files:
+                src_file = os.path.join(root, file)
+                dst_file = os.path.join(target_root, file)
+                shutil.copy2(src_file, dst_file)
+                logging.info(f"Copied {src_file} to {dst_file}")
+    copytree(build_dir, docs_dir)
 """
 Prototype script to convert Markdown files in build/files to accessible standalone HTML pages in build/.
 

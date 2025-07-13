@@ -8,7 +8,7 @@ import os
 import yaml
 
 from oerforge.copyfile import copy_project_files
-from oerforge.make import build_all_markdown_files, ensure_build_structure, clean_and_copy_html_to_docs, copy_wcag_reports_to_docs, convert_wcag_reports_to_html
+from oerforge.make import build_all_markdown_files, ensure_build_structure, copy_wcag_reports_to_docs, convert_wcag_reports_to_html, mirror_build_to_docs
 from oerforge.scan import initialize_database, populate_build_images
 from oerforge.verify import run_wcag_zoo_on_page, run_wcag_zoo_on_all_pages, generate_markdown_report, save_report_to_build_folder
 
@@ -74,8 +74,9 @@ def main():
     initialize_images_db()
     build_site(toc)
     run_accessibility_checks_and_report()
+    # Convert WCAG reports to HTML and copy to projectroot/docs/wcag-reports
     convert_wcag_reports_to_html()
-    clean_and_copy_html_to_docs()
+    mirror_build_to_docs()
 
 if __name__ == "__main__":
     main()

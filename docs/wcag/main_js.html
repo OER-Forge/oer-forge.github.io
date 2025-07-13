@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAIN.JS.md</title>
+    <!-- Theme CSS and main.js are injected by Python -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <link rel="stylesheet" href="../css/theme-light.css" id="theme-light">
+<link rel="stylesheet" href="../css/theme-dark.css" id="theme-dark" disabled>
+<script src="../js/main.js" defer></script>
+</head>
+  <body>
+    <header class="site-header">
+<button id="theme-toggle" aria-label="Switch theme" style="float:right; margin:0.5em 1em; font-size:1.5em;">🌙</button>
+<h1 class="site-title">MAIN.JS.md</h1>
+<nav class="site-nav" role="navigation" aria-label="Main menu"><ul><li><a href="../index.html">Home</a></li><li><a href="../docs/index.html">Docs</a></li><li><a href="../dev/index.html">Dev</a></li><li><a href="index.html">WCAG</a></li><li><a href="../about.html">About</a></li></ul></nav>
+</header>
+    <main role="main">
+      <div class="container">
+        
+<p>This file documents the functionality of <code>static/js/main.js</code>, which provides interactive UI features for the main documentation page.</p>
+<h2 id="features">Features</h2>
+<h3 id="theme-toggle">Theme Toggle</h3>
+<ul role="list">
+<li role="listitem">The theme toggle button (<code>#theme-toggle</code>) switches between light and dark CSS themes by updating the <code>href</code> of the theme stylesheet (<code>#theme-css</code>).</li>
+<li role="listitem">The button icon and ARIA label update to reflect the current theme (🌙 for light, ☀️ for dark).</li>
+<li role="listitem">The theme persists for the session (until page reload).</li>
+</ul>
+<h3 id="font-appearance-controls">Font Appearance Controls</h3>
+<ul role="list">
+<li role="listitem">Font controls (radio buttons in <code>.font-controls</code>) allow users to select font family, size, letter spacing, and line height.</li>
+<li role="listitem">Selections are saved to <code>localStorage</code> and applied on page load.</li>
+<li role="listitem">Changes update CSS variables or the <code>font-family</code> property for the body, container, and markdown content.</li>
+<li role="listitem">The selected radio button is checked on load to reflect saved preferences.</li>
+</ul>
+<h3 id="accessibility">Accessibility</h3>
+<ul role="list">
+<li role="listitem">All controls are keyboard accessible and use ARIA labels for improved accessibility.</li>
+<li role="listitem">Focus styles and persistent settings enhance usability for all users.</li>
+</ul>
+<h2 id="usage">Usage</h2>
+<ul role="list">
+<li role="listitem">This script should be loaded only on the main documentation page.</li>
+<li role="listitem">It expects the HTML template to include the theme toggle button, font controls, and the appropriate CSS classes/IDs.</li>
+</ul>
+<h2 id="example-html-structure">Example HTML Structure</h2>
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">link</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;theme-css&quot;</span> <span class="na">rel</span><span class="o">=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;css/theme-light.css&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;font-controls&quot;</span><span class="p">&gt;</span> ... <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">button</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;theme-toggle&quot;</span><span class="p">&gt;</span>🌙<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;markdown-body&quot;</span><span class="p">&gt;</span> ... <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</code></pre></div>
+
+<h2 id="see-also">See Also</h2>
+<ul role="list">
+<li role="listitem"><code>static/js/site.js</code> for site-wide accessibility and UI enhancements.</li>
+</ul><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      </div>
+    </main>
+    <footer>
+Made in Michigan with tons of ☕️  and lots of ❤️ for students and educators everywhere. <br> <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" style="display:inline-block; vertical-align:middle; margin-top:0.5em;"&gt; &lt;img alt="Creative Commons License" style="border-width:0; height:22px; margin-right:0.3em; vertical-align:middle;" src="https://licensebuttons.net/l/by-nc-sa/4.0/88x31.png" /&gt; </a><a href="https://open-physics-ed-org.github.io/"&gt;openphysicsed.org</a>
+</footer>
+  </body>
+</html>
