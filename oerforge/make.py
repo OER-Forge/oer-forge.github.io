@@ -27,6 +27,89 @@ Features:
 import os
 import logging
 
+import yaml
+import re
+
+def load_yaml_config(config_path: str) -> dict:
+    """
+    Load and parse the YAML config file with strict ordering using PyYAML.
+    Returns the config as a dictionary.
+    Logs errors if parsing fails.
+    """
+    try:
+        with open(config_path, 'r', encoding='utf-8') as f:
+            config = yaml.safe_load(f)
+        logging.info(f"Loaded YAML config from {config_path}")
+        return config
+    except Exception as e:
+        logging.error(f"Failed to load YAML config: {e}")
+        return {}
+
+def slugify(title: str) -> str:
+    """
+    Convert a title to a slug suitable for folder names.
+    Handles spaces, capitalization, and special characters.
+    Example: 'A Big BluE MOuSe!' -> 'a-big-blue-mouse'
+    """
+    slug = title.lower()
+    slug = re.sub(r'[^a-z0-9\s-]', '', slug)
+    slug = re.sub(r'\s+', '-', slug)
+    slug = re.sub(r'-+', '-', slug)
+    slug = slug.strip('-')
+    return slug
+
+def generate_nav_menu(toc: list) -> str:
+    """
+    Generate the HTML for the top-level navigation menu.
+    Only includes items with menu: true.
+    Uses <nav> with ARIA roles and is mobile accessible (hamburger toggle).
+    Returns HTML string.
+    """
+    # Stub: will implement menu rendering logic
+    return '<nav role="navigation" aria-label="Main menu">\n<!-- menu items here -->\n</nav>'
+
+def create_header(title: str, nav_html: str) -> str:
+    """
+    Generate the header HTML, including nav menu.
+    Returns HTML string.
+    """
+    # Stub: will load header.html or build header string
+    return f'<header>\n<h1>{title}</h1>\n{nav_html}\n</header>'
+
+def create_footer() -> str:
+    """
+    Generate the footer HTML.
+    Returns HTML string.
+    """
+    # Stub: will load footer.html or build footer string
+    return '<footer>\n<!-- footer content here -->\n</footer>'
+
+def render_page(title: str, content: str, header: str, footer: str) -> str:
+    """
+    Render the full HTML page using header, content, and footer.
+    Returns HTML string.
+    """
+    # Stub: will use page.html template
+    return f'{header}\n<main>{content}</main>\n{footer}'
+
+def ensure_build_structure(toc: list):
+    """
+    Ensure the build/ directory mirrors the toc: structure.
+    Creates empty directories and index.html files for top-level menu items without files.
+    Logs all actions.
+    """
+    # Stub: will implement directory and file creation logic
+    pass
+
+def create_index_html_for_menu(title: str, header: str, footer: str, output_dir: str):
+    """
+    Create an index.html file for a top-level menu item without a file.
+    The page contains the title and blank content, with header/footer.
+    Logs creation.
+    """
+    # Stub: will implement file writing logic
+    pass
+
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BUILD_FILES_DIR = os.path.join(PROJECT_ROOT, 'build', 'files')
 BUILD_HTML_DIR = os.path.join(PROJECT_ROOT, 'build')
