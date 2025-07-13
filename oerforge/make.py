@@ -20,7 +20,7 @@ import re
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BUILD_FILES_DIR = os.path.join(PROJECT_ROOT, 'build', 'files')
 BUILD_HTML_DIR = os.path.join(PROJECT_ROOT, 'build')
-LOG_PATH = os.path.join(PROJECT_ROOT, 'loh')
+LOG_PATH = os.path.join(PROJECT_ROOT, 'log')
 
 # --- Logging Setup ---
 def setup_logging():
@@ -213,8 +213,26 @@ def get_markdown_source_and_output_paths(toc: list, files_dir: str, build_dir: s
     Returns a list of (source_md_path, output_html_path, toc_entry) tuples for conversion.
     Logs missing files and errors.
     """
-    # Stub: will implement path computation logic
-    pass
+    results = []
+    def walk_toc(entries, parent_path=[]):
+        for entry in entries:
+            # Compute the output directory path from parent_path and slugified title
+            current_path = parent_path.copy()
+            if 'title' in entry:
+                current_path.append(slugify(entry['title']))
+            # If this entry has a file, compute source and output paths
+            if 'file' in entry:
+                source_md_path = os.path.join(files_dir, entry['file'])
+                output_dir = os.path.join(build_dir, *current_path[:-1]) if len(current_path) > 1 else build_dir
+                output_html_path = os.path.join(output_dir, os.path.splitext(os.path.basename(entry['file']))[0] + '.html')
+                if not os.path.exists(source_md_path):
+                    logging.error(f"Missing markdown file: {source_md_path} for toc entry: {entry.get('title', '')}")
+                results.append((source_md_path, output_html_path, entry))
+            # If this entry has children, recurse
+            if 'children' in entry and isinstance(entry['children'], list):
+                walk_toc(entry['children'], current_path)
+    walk_toc(toc)
+    return results
 
 def copy_files_to_toc_structure(toc: list, files_dir: str, build_dir: str):
     """
@@ -264,4 +282,13 @@ def run_make(debug: bool = False):
             print(f"[ERROR] Failed to convert {md_path}: {e}")
 
 if __name__ == "__main__":
-    run_make(debug=True)
+    setup_logging()
+    config_path = os.path.join(PROJECT_ROOT, "_config.yml")
+    config = load_yaml_config(config_path)
+    toc = config.get("toc", [])
+    files_dir = os.path.join(PROJECT_ROOT, "content")
+    build_dir = os.path.join(PROJECT_ROOT, "build")
+    results = get_markdown_source_and_output_paths(toc, files_dir, build_dir)
+    for src, out, entry in results:
+        print(f"Source: {src}\nOutput: {out}\nTOC Entry: {entry}\n")
+    print("Check the log file for missing file errors.")

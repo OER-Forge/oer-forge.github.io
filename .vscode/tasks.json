@@ -4,7 +4,7 @@
         {
             "label": "Run build.py",
             "type": "shell",
-            "command": "python build.py",
+            "command": ".venv/bin/python build.py",
             "group": "build",
             "problemMatcher": []
         }

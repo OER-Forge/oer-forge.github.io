@@ -15,26 +15,36 @@ toc:
   - title: "Home"
     menu: true
     file: index.md
-  - title: "Punchlist"
-    menu: true
-    file: punchlist.md
-  - title: "Build System"
-    menu: true
-    file: build_system.md
   - title: "Docs"
     menu: true
     children:
       - title: "Installation"
         file: docs/installation.md
         menu: false
-      - title: "Main JS"
-        file: docs/main_js.md
+      - title: "Build System"
+        file: docs/build_system.md
         menu: false
+  - title: "Dev"
+    menu: true
+    children: 
+      - title: "Punchlist"
+        menu: true
+        file: dev/punchlist.md
+  - title: "Docs"
+    menu: true
+    children:
+      - title: "Installation"
+        file: docs/installation.md
+        menu: false    
   - title: "WCAG"
     menu: true
     children:
+      - title: "Main JS"
+        file: docs/main_js.md
+        menu: false
+    children:
       - title: "Reports"
-        menu: true
+        menu: false
         children:
           - title: "Report 1"
             file: wcag/reports/report1.md
@@ -44,7 +54,7 @@ toc:
             menu: false
   - title: "About"
     menu: true
-    file: content/about.md
+    file: about.md
 
 footer:
   text: 'Made in Michigan with tons of ☕️  and lots of ❤️ for students and educators everywhere.
