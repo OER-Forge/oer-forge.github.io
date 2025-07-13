@@ -1,5 +1,7 @@
 # OER-Forge
 
+> This site is being build with [OER-Forge](https://github.com/OER-Forge). It's still a test site for `make.py` and `verify.py`. 
+
 ![OER-Forge Logo](assets/images/logos/oerforge-logo-light-small.png)
 
 [OER-Forge](https://github.com/OER-Forge/) is a suite of tools to help authors create WCAG-compliant Open Educational Resources (OERs). The project is currently under development.

@@ -18,11 +18,19 @@
     - [ ] `convert.py` can convert `.md` to `.pdf` with images
 - [ ] `convert.py` can write location of converted files to `sqlite.db`
 - [ ] `make.py` can build the initial WCAG compliant site to `build/`
+    - [X] `make.py` can build a site from converted markdown
+    - [X] `make.py` can handle the `<nav>`, `css`, and `js` with relative links.
+    - [X] `make.py` can handle the location of figures.
+    - [ ] `make.py` can use dark mode
+    - [ ] `make.py` uses correct ARIA tags
+    - [ ] `make.py` figures have alt text automatically if it's not there (MISSING ALT)
+    - [ ] `make.py` can change font, spacing, and size
 - [ ] `verify.py` can traverse `build/` to indicate which page builds are ok
 - [ ] `verify.py` can write build results to `sqlite.db` for each page
-- [ ] `verify.py` can read WCAG guidelines in a parse-able way
-- [ ] `verify.py` can traverse `build/` to evaluate level of WCAG compliance
-- [ ] `verify.py` can write ECAG compliance levels to `sqlite.db` for each page
+- [X] `verify.py` can read WCAG guidelines in a parse-able way (**solved with selenium**)
+- [X] `verify.py` can traverse `build/` to evaluate level of WCAG compliance
+    - [X] `verify.py` can create markdown report of WCAG compliance using `selenium`
+- [ ] `verify.py` can write WCAG compliance levels to `sqlite.db` for each page
 - [ ] `confirm.py` can read compliance levels and modify page to indicate current level
 - [ ] `confirm.py` can generate a WCAG report on site and individual pages
 - [ ] `confirm.py` can build public site to `docs/`
