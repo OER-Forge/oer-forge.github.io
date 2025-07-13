@@ -101,7 +101,7 @@ def create_footer() -> str:
     """Generate the footer HTML."""
     return '<footer>\n<!-- footer content here -->\n</footer>'
 
-def render_page(title: str, content: str, header: str, footer: str) -> str:
+def render_page(title: str, content: str, header: str, footer: str, html_path: str) -> str:
     """Render the full HTML page using header, content, and footer."""
     template_path = os.path.join(PROJECT_ROOT, 'static', 'templates', 'page.html')
     template = load_template(template_path)
@@ -111,12 +111,23 @@ def render_page(title: str, content: str, header: str, footer: str) -> str:
         '<meta name="keywords" content="math, physics, open, oer">\n'
         '<meta name="robots" content="noindex,nofollow">\n'
     )
-    # Add CSS and JS links using relative paths (./css/ and ./js/) for local/subdirectory support
+    # Compute correct relative asset path prefix based on output HTML location
+    def get_asset_prefix(html_path):
+        if html_path:
+            html_dir = os.path.dirname(html_path)
+            build_dir = os.path.join(PROJECT_ROOT, 'build')
+            rel_prefix = os.path.relpath(build_dir, start=html_dir)
+            if rel_prefix == '.':
+                return './'
+            else:
+                return rel_prefix.rstrip('/') + '/'
+        return './'
+    rel_prefix = get_asset_prefix(html_path)
     css_links = (
-        '<link rel="stylesheet" href="./css/theme-light.css" id="theme-light">\n'
-        '<link rel="stylesheet" href="./css/theme-dark.css" id="theme-dark" disabled>\n'
+        f'<link rel="stylesheet" href="{rel_prefix}css/theme-light.css" id="theme-light">\n'
+        f'<link rel="stylesheet" href="{rel_prefix}css/theme-dark.css" id="theme-dark" disabled>\n'
     )
-    js_links = '<script src="./js/main.js" defer></script>\n'
+    js_links = f'<script src="{rel_prefix}js/main.js" defer></script>\n'
     # Insert CSS/JS into template only if not already present
     html = template.replace('{{ title }}', title)
     html = html.replace('{{ content }}', content)
@@ -234,7 +245,7 @@ def convert_markdown_to_html(md_path, html_path):
     nav_html = generate_nav_menu(toc, current_html_path=html_path)
     header = create_header(title, nav_html)
     footer = create_footer()
-    html_output = render_page(title, html_body, header, footer)
+    html_output = render_page(title, html_body, header, footer, html_path)
     with open(html_path, 'w', encoding='utf-8') as f:
         f.write(html_output)
 
@@ -295,7 +306,7 @@ def create_section_index_html(section_entry, output_dir, toc):
     nav_html = generate_nav_menu(toc, current_html_path=os.path.join(output_dir, 'index.html'))
     header = create_header(title, nav_html)
     footer = create_footer()
-    page_html = render_page(title, links_html, header, footer)
+    page_html = render_page(title, links_html, header, footer, os.path.join(output_dir, 'index.html'))
     index_html_path = os.path.join(output_dir, 'index.html')
     with open(index_html_path, 'w', encoding='utf-8') as f:
         f.write(page_html)
