@@ -16,6 +16,7 @@ def initialize_database():
     cursor = conn.cursor()
     cursor.execute("DROP TABLE IF EXISTS files")
     cursor.execute("DROP TABLE IF EXISTS pages_files")
+    cursor.execute("DROP TABLE IF EXISTS pages")
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS files (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -36,6 +37,14 @@ def initialize_database():
             file_id INTEGER,
             page_path TEXT,
             FOREIGN KEY(file_id) REFERENCES files(id)
+        )
+    """)
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS pages (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            source_path TEXT,
+            output_path TEXT,
+            is_autobuilt BOOLEAN DEFAULT 0
         )
     """)
     conn.commit()

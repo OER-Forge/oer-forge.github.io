@@ -12,9 +12,9 @@ def get_db_path():
 
 def get_table_names():
     """
-    Return only the asset DB tables: files and pages_files.
+    Return asset DB tables: files, pages_files, and pages.
     """
-    return ['files', 'pages_files']
+    return ['files', 'pages_files', 'pages']
 
 def get_table_columns(table_name):
     db_path = get_db_path()
@@ -52,6 +52,25 @@ def display_all_tables():
 
 
 # --- Stubs for static HTML export and template integration ---
+def insert_autobuilt_page(output_path, source_path=None):
+    """
+    Insert a record for an auto-generated page (e.g., admin page) into the pages table.
+    output_path: location of the generated HTML file (e.g., build/admin/files_table.html)
+    source_path: original source (if any), else None
+    """
+    db_path = get_db_path()
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+    cursor.execute(
+        """
+        INSERT INTO pages (source_path, output_path, is_autobuilt)
+        VALUES (?, ?, 1)
+        """,
+        (source_path, output_path)
+    )
+    conn.commit()
+    conn.close()
+
 def export_table_to_html(table_name, output_path, template_path=None, columns=None, where=None, limit=None):
     """
     Stub: Export a table to static HTML using a site template.
@@ -77,14 +96,14 @@ def integrate_with_make():
     # TODO: Hook export functions into make.py/build.py workflow
     pass
 
+def main():
     import argparse
-    parser = argparse.ArgumentParser(description="View asset database contents (files/pages_files only).")
-    parser.add_argument('--table', type=str, choices=get_table_names(), help='Table name to display (files or pages_files)')
+    parser = argparse.ArgumentParser(description="View asset database contents (files/pages_files/pages).")
+    parser.add_argument('--table', type=str, choices=get_table_names(), help='Table name to display (files, pages_files, or pages)')
     parser.add_argument('--columns', type=str, nargs='+', help='Columns to display')
     parser.add_argument('--where', type=str, help='SQL WHERE clause')
     parser.add_argument('--limit', type=int, help='Limit number of rows')
-    parser.add_argument('--all', action='store_true', help='Display both files and pages_files tables')
-    # Future: parser.add_argument('--export-html', action='store_true', help='Export table(s) to static HTML')
+    parser.add_argument('--all', action='store_true', help='Display all tables')
     args = parser.parse_args()
 
     if args.all:
@@ -92,7 +111,10 @@ def integrate_with_make():
     elif args.table:
         display_table(args.table, columns=args.columns, where=args.where, limit=args.limit)
     else:
-        print("Specify --table files, --table pages_files, or --all to display asset database contents.")
+        print("Specify --table files, --table pages_files, --table pages, or --all to display asset database contents.")
+
+if __name__ == "__main__":
+    main()
 
 if __name__ == "__main__":
     def main():
@@ -113,6 +135,8 @@ if __name__ == "__main__":
         else:
             print("Specify --table files, --table pages_files, or --all to display asset database contents.")
 
+    # Test: Insert a sample admin page record
+    insert_autobuilt_page("build/admin/files_table.html")
     main()
 
 """
