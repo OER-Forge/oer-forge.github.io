@@ -93,7 +93,7 @@ def render_template(template: str, title: str, content: str) -> str:
 # --- HTML Page Construction ---
 def create_header(title: str, nav_html: str) -> str:
     """Generate the header HTML, including nav menu."""
-    return f'<header>\n<h1>{title}</h1>\n{nav_html}\n</header>'
+    return f'<header class="site-header">\n<h1 class="site-title">{title}</h1>\n{nav_html}\n</header>'
 
 def create_footer() -> str:
     """Generate the footer HTML."""
@@ -132,7 +132,7 @@ def render_page(title: str, content: str, header: str, footer: str) -> str:
 def generate_nav_menu(toc: list, current_folder: str = '', folder_depth: int = 0, current_html_path: str = '') -> str:
     """Generate navigation menu HTML from TOC."""
     seen_titles = set()
-    nav_html = '<nav role="navigation" aria-label="Main menu"><ul>'
+    nav_html = '<nav class="site-nav" role="navigation" aria-label="Main menu"><ul>'
     current_dir = os.path.dirname(current_html_path) if current_html_path else ''
     abs_current_html = os.path.abspath(current_html_path) if current_html_path else ''
     for entry in toc:
