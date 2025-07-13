@@ -93,7 +93,9 @@ def render_template(template: str, title: str, content: str) -> str:
 # --- HTML Page Construction ---
 def create_header(title: str, nav_html: str) -> str:
     """Generate the header HTML, including nav menu."""
-    return f'<header class="site-header">\n<h1 class="site-title">{title}</h1>\n{nav_html}\n</header>'
+    # Add theme toggle button for dark mode switching
+    theme_toggle = '<button id="theme-toggle" aria-label="Switch theme" style="float:right; margin:0.5em 1em; font-size:1.5em;">🌙</button>'
+    return f'<header class="site-header">\n{theme_toggle}\n<h1 class="site-title">{title}</h1>\n{nav_html}\n</header>'
 
 def create_footer() -> str:
     """Generate the footer HTML."""
