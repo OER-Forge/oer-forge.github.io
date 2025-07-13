@@ -10,6 +10,7 @@ import yaml
 from oerforge.copyfile import copy_project_files
 from oerforge.make import build_all_markdown_files, ensure_build_structure
 from oerforge.scan import initialize_database, populate_build_images
+from oerforge.verify import run_wcag_zoo_on_page, generate_one_markdown_report, save_report_to_build_folder
 
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 CONFIG_PATH = os.path.join(PROJECT_ROOT, "_config.yml")
@@ -43,6 +44,16 @@ def build_site(toc):
     build_all_markdown_files(FILES_DIR, BUILD_DIR)
     print("[OK] All markdown files converted.")
 
+def test_wcag_on_index():
+    page_path = os.path.join(BUILD_DIR, "index.html")
+    browser = "chrome"
+    print(f"[TEST] Running WCAG test on {page_path} with {browser}")
+    result = run_wcag_zoo_on_page(page_path, browser)
+    md_report = generate_one_markdown_report(result)
+    report_path = save_report_to_build_folder(md_report)
+    print(f"[TEST] WCAG Markdown Report saved to: {report_path}")
+    print(md_report)
+
 def main():
     config = load_config(CONFIG_PATH)
     toc = config.get("toc", [])
@@ -53,3 +64,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+    test_wcag_on_index()
