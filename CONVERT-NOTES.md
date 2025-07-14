@@ -62,3 +62,49 @@ This file documents the ongoing development, debugging, and enhancement of the b
 
 ## Last Updated
 July 14, 2025
+
+---
+
+# Implementation Notes for convert.py
+
+## Purpose
+This document provides implementation notes, design decisions, and usage tips for `convert.py`, the batch conversion and asset management script in OER Forge.
+
+## Design Overview
+- **TOC-Driven Conversion:** All files referenced in the Table of Contents (`_config.yml`) are copied to `build/files/`, preserving the hierarchy.
+- **Image Handling:** All images referenced in content files are copied to a flat `build/images/` directory. Image references in markdown files are rewritten to use the format `../../images/<filename>`, ensuring correct links regardless of directory depth.
+- **Database Integration:** Uses `sqlite.db` to track content, images, and conversion status. All image lookups and link rewrites are database-driven for robustness.
+- **Format Conversion:** Markdown files can be converted to DOCX (implemented), PDF, and LaTeX (stubs) using Pandoc.
+- **Logging:** All actions, errors, and warnings are logged for traceability.
+
+## Implementation Highlights
+- **Image Link Rewriting:**
+  - All markdown image references are rewritten to use `../../images/<filename>`, regardless of the markdown file's location.
+  - This is handled in `update_markdown_image_links`, which queries the database for image records and rewrites links accordingly.
+- **Batch Conversion:**
+  - The main function `batch_convert_all_content` walks the TOC, copies files, processes images, and updates markdown links.
+  - Errors (missing files, failed copies, DB issues) are logged and do not halt the batch process.
+- **Extensibility:**
+  - Stubs for PDF and LaTeX conversion are present for future implementation.
+  - The modular design allows for easy extension to other asset types or formats.
+
+## Usage Tips
+- Run the script directly to process all content:
+  ```bash
+  python oerforge/convert.py
+  ```
+- Check `build/files/` and `build/images/` for output. All image links in markdown should resolve correctly.
+- Review logs in `log/` for errors and warnings.
+- For documentation, see `content/docs/convert.md`.
+
+## Troubleshooting
+- If image links are incorrect, check the database for missing or misreferenced images.
+- If files are missing from `build/files/`, verify the TOC in `_config.yml` and source files in `content/`.
+- For conversion errors (DOCX, PDF, LaTeX), check Pandoc installation and log output.
+
+## Change Log
+- 2025-07-14: Image link rewriting standardized to `../../images/<filename>` for all markdown files.
+- 2025-07-14: Documentation and implementation notes updated for batch conversion and asset extraction.
+
+## Author
+[Your Name]
