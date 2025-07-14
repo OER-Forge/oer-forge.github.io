@@ -1,111 +1,81 @@
+
 # SCAN-NOTES.md
 
-## Modular Asset Scanning Plan (OER-Forge)
+## Modular and Batch Processing Plan for Asset Scanning
 
-This document outlines the step-by-step plan, rationale, and implementation notes for modular asset scanning in the OER-Forge static site generator. It is intended as a reference for future development, debugging, or onboarding.
-
----
-
-### 1. Database Schema Extension
-- **Goal:** Track notebook assets with rich metadata.
-- **Action:**
-  - Extend the `files` table to include:
-    - `cell_type` (Jupyter cell type: code, markdown, etc.)
-    - `is_code_generated` (True if asset is expected from code execution)
-    - `is_embedded` (True if asset is stored inside notebook, e.g., base64)
-- **Test:** Run DB initialization and confirm schema changes.
+### Overview
+This document outlines the modular architecture and batch processing strategy for asset scanning in the OER-Forge static site generator. The goal is to maximize code reuse, extensibility, and performance for tracking and managing assets (images, files, notebooks, docx, etc.) across markdown and notebook content.
 
 ---
 
-### 2. Logging
-- **Goal:** Robust, modular logging for all scan events.
-- **Action:**
-  - Implement `log_event(message, level)` to write to both stdout and a log file in the project root (e.g., `scan.log`).
-  - Log all warnings, errors, and image findings.
-- **Test:** Log sample messages and verify both outputs.
+## Modular Functions
+
+### 1. Content Loading
+- **batch_read_files(file_paths)**
+  - Reads multiple files and returns their contents as a dict: `{path: content}`.
+  - Supports markdown, notebook, docx, and other file types.
+
+### 2. Asset Extraction
+- **extract_linked_files_from_content(content, content_type, **kwargs)**
+  - Dispatches asset extraction based on content type (e.g., 'markdown', 'notebook_cell', 'docx').
+  - Calls specialized subfunctions:
+    - `extract_linked_files_from_markdown_content(md_text, page_id)`
+    - `extract_linked_files_from_notebook_cell_content(cell, nb_path)`
+    - `extract_linked_files_from_docx_content(docx_path, page_id)`
+- **batch_extract_assets(contents_dict, content_type, **kwargs)**
+  - Extracts assets from multiple file contents in one pass.
+  - Returns a dict: `{path: [asset_records]}`.
+
+### 3. Database Insertion
+- **insert_file_record(file_record)**
+  - Inserts a single asset record into the `files` table.
+- **insert_file_records(file_records)**
+  - Batch inserts multiple asset records into the `files` table.
+  - Returns a list of inserted file IDs.
+
+### 4. File-Page Linking
+- **link_file_to_page(file_id, page_path)**
+  - Links a single file to a page in the `pages_files` table.
+- **link_files_to_pages(file_page_pairs)**
+  - Batch links multiple files to pages in one transaction.
+  - Accepts a list of `(file_id, page_path)` tuples.
+
+### 5. Scanning Orchestration
+- **scan_and_populate_files_db(md_dir)**
+  - Orchestrates modular asset scanning for markdown, notebook, and docx files.
+  - Uses batch reading, extraction, and insertion functions for efficiency.
+- **scan_markdown_files(md_dir, toc_path)**
+- **scan_notebook_files(notebook_paths)**
+- **scan_docx_files(docx_paths)**
+  - Each uses batch workflows for their respective content types.
 
 ---
 
-### 3. TOC Parsing
-- **Goal:** Only scan notebooks listed in `toc:`.
-- **Action:**
-  - Implement `get_notebook_paths_from_toc(toc_path)` to parse the toc file and return a list of notebook paths.
-  - Ignore notebooks not listed in toc.
-- **Test:** Parse a sample toc file and confirm correct notebook list.
+## Batch Processing Benefits
+- **Performance:** Fewer database transactions and file reads.
+- **Clarity:** Cleaner code, easier error handling, and logging.
+- **Extensibility:** Easy to add new asset/content types and batch operations.
 
 ---
 
-### 4. Notebook Scanning
-- **Goal:** Modular, cell-by-cell asset extraction.
-- **Action:**
-  - Implement `scan_notebook_for_assets(nb_path)` to iterate notebook cells and call extraction logic.
-  - For each cell, call `extract_images_from_notebook_cell(cell, nb_path)`.
-- **Test:** Run on a sample notebook and print/log cell info.
+## Example Workflow
+1. **Batch Read:**
+   - `contents = batch_read_files(file_paths)`
+2. **Batch Extract:**
+   - `assets_dict = batch_extract_assets(contents, content_type)`
+3. **Batch Insert:**
+   - `file_ids = insert_file_records(flattened_asset_list)`
+4. **Batch Link:**
+   - `link_files_to_pages(file_page_pairs)`
 
 ---
 
-### 5. Image Extraction
-- **Goal:** Extract all images/files from notebook cells, with metadata.
-- **Action:**
-  - Implement `extract_images_from_notebook_cell(cell, nb_path)`:
-    - Handles both markdown and code cells.
-    - Records `cell_type`, `is_code_generated`, `is_embedded`.
-    - Logs warnings if code-generated images are missing.
-- **Test:** Extract images/files from sample cells, including embedded and code-generated.
+## Extending the System
+- Add new extractors for other content types (e.g., HTML, PDF).
+- Implement parallelization for large-scale batch operations.
+- Modularize error handling and logging for batch functions.
 
 ---
 
-### 6. Notebook File Insertion
-- **Goal:** Insert notebook asset records with full metadata.
-- **Action:**
-  - Implement `insert_notebook_file_record(file_record)` to insert all fields into the DB.
-- **Test:** Insert sample records and verify DB contents.
-
----
-
-### 7. Integration & End-to-End Testing
-- **Goal:** Validate the full workflow.
-- **Action:**
-  - Run the complete scan: parse toc, scan notebooks, extract assets, insert records, and log events.
-- **Test:** Confirm all assets are tracked, missing/code-generated images are logged, and DB is correct.
-
----
-
-## Implementation Notes
-- **Modularity:** Each function is independent and testable. Debugging is easier, and future extension (e.g., for `.docx`) is straightforward.
-- **Redundancy:** No major redundant functions. Consider refactoring file insertion if overlap occurs.
-- **Logging:** Always to both stdout and file.
-- **Schema:** Update schema before implementing asset extraction and insertion.
-- **__all__ List:** Add new stubs to `__all__` if needed for external use.
-
----
-
-## Next Steps
-1. Extend DB schema for notebook asset fields.
-2. Implement logging.
-3. Implement toc parsing.
-4. Implement notebook scanning.
-5. Implement image extraction.
-6. Implement notebook file insertion.
-7. Integrate and test end-to-end.
-
----
-
-## Reference: Key Functions
-- `initialize_database()`
-- `get_notebook_paths_from_toc(toc_path)`
-- `scan_notebook_for_assets(nb_path)`
-- `extract_images_from_notebook_cell(cell, nb_path)`
-- `insert_notebook_file_record(file_record)`
-- `log_event(message, level)`
-
----
-
-## Pause/Resume Guidance
-- If pausing, review this file before resuming.
-- Start with the next unimplemented step in the list above.
-- Use modular tests for each function before integration.
-
----
-
-_Last updated: July 13, 2025_
+## Summary
+This modular and batch-oriented design ensures robust, maintainable, and high-performance asset management for OER-Forge. All major operations—reading, extraction, insertion, and linking—support batch processing and are easy to extend for future needs.
