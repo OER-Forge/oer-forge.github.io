@@ -94,7 +94,7 @@ def batch_extract_assets(contents_dict, content_type, **kwargs):
     content_type: 'markdown', 'notebook', 'docx', etc.
     Returns a dict: {path: [asset_records]}
     """
-    from oerforge.db_utils import insert_file_records, link_files_to_pages, get_db_connection
+    from oerforge.db_utils import insert_records, link_files_to_pages, get_db_connection
     assets = {}
     # Helper: MIME type mapping (media, document, and data types)
     mime_map = {
@@ -207,7 +207,7 @@ def batch_extract_assets(contents_dict, content_type, **kwargs):
                 'is_embedded': None
             }
             file_records.append(file_record)
-    file_ids = insert_file_records(file_records)
+    file_ids = insert_records('files', file_records)
     # Link files to pages
     idx = 0
     for source_path, asset_list in assets.items():
@@ -422,7 +422,7 @@ def scan_toc_and_populate_db(config_path):
     Walks the toc: from _config.yml, reads each file, extracts assets/images, and populates the DB with both content and asset records, maintaining TOC hierarchy.
     """
     import yaml
-    from oerforge.db_utils import get_db_connection, insert_file_records, link_files_to_pages
+    from oerforge.db_utils import get_db_connection, insert_records, link_files_to_pages
     project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     full_config_path = os.path.join(project_root, config_path)
     with open(full_config_path, 'r', encoding='utf-8') as f:
@@ -437,7 +437,7 @@ def scan_toc_and_populate_db(config_path):
     cursor.execute("DELETE FROM content")
     seen_paths = set()
     file_paths = []
-    from oerforge.db_utils import insert_file_records, link_files_to_pages
+    # Removed outdated import of insert_file_records; link_files_to_pages is already imported above
 
     def walk_toc(items):
         content_records = []
@@ -478,7 +478,7 @@ def scan_toc_and_populate_db(config_path):
         return content_records
 
     all_content_records = walk_toc(toc)
-    insert_file_records(all_content_records, db_path=os.path.join(project_root, 'db', 'sqlite.db'), conn=conn, cursor=cursor)
+    insert_records('content', all_content_records, db_path=os.path.join(project_root, 'db', 'sqlite.db'), conn=conn, cursor=cursor)
     log_event(f"[DEBUG][{os.getpid()}][{threading.get_ident()}] Committing DB in scan_toc_and_populate_db at {time.time()}", level="DEBUG")
     try:
         conn.commit()
