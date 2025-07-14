@@ -10,29 +10,63 @@ def batch_read_files(file_paths):
     Supports markdown (.md), notebook (.ipynb), docx (.docx), and other file types.
     """
     contents = {}
-    # TODO: Implement batch file reading logic for supported types
+    for path in file_paths:
+        ext = os.path.splitext(path)[1].lower()
+        try:
+            if ext == '.md':
+                contents[path] = read_markdown_file(path)
+            elif ext == '.ipynb':
+                contents[path] = read_notebook_file(path)
+            elif ext == '.docx':
+                contents[path] = read_docx_file(path)
+            else:
+                contents[path] = None
+        except Exception as e:
+            print(f"[ERROR] Could not read {path}: {e}")
+            contents[path] = None
     return contents
 
 def read_markdown_file(path):
     """
     Reads a markdown (.md) file and returns its content as a string.
     """
-    # TODO: Implement markdown file reading
-    return ""
+    try:
+        with open(path, 'r', encoding='utf-8') as f:
+            return f.read()
+    except Exception as e:
+        print(f"[ERROR] Could not read markdown file {path}: {e}")
+        return None
 
 def read_notebook_file(path):
     """
     Reads a Jupyter notebook (.ipynb) file and returns its content as a dict.
     """
-    # TODO: Implement notebook file reading
-    return {}
+    import json
+    try:
+        with open(path, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    except Exception as e:
+        print(f"[ERROR] Could not read notebook file {path}: {e}")
+        return None
 
 def read_docx_file(path):
     """
-    Reads a docx file and returns its content as a python-docx Document object or similar.
+    Reads a docx file and returns its text content as a string.
+    Requires python-docx to be installed.
     """
-    # TODO: Implement docx file reading
-    return None
+    try:
+        from docx import Document
+        doc = Document(path)
+        text = []
+        for para in doc.paragraphs:
+            text.append(para.text)
+        return '\n'.join(text)
+    except ImportError:
+        print("[ERROR] python-docx is not installed. Run 'pip install python-docx' in your environment.")
+        return None
+    except Exception as e:
+        print(f"[ERROR] Could not read docx file {path}: {e}")
+        return None
 
 def batch_extract_assets(contents_dict, content_type, **kwargs):
     """
