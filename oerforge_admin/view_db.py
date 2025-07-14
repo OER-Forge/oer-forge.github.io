@@ -31,7 +31,7 @@ def get_table_names():
     """
     Return asset DB tables: files, pages_files, and pages.
     """
-    return ['files', 'pages_files', 'pages']
+    return ['files', 'pages_files', 'pages', 'content']
 
 def get_table_columns(table_name):
     db_path = get_db_path()

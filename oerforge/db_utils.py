@@ -134,75 +134,59 @@ def get_db_connection(db_path=None):
         db_path = os.path.join(project_root, 'db', 'sqlite.db')
     return sqlite3.connect(db_path)
 
-def insert_file_records(file_records, db_path=None):
+def insert_records(table_name, records, db_path=None, conn=None, cursor=None):
     """
-    Batch inserts multiple file records into the 'files' table.
-
+    General-purpose batch insert for any table.
+    Checks if table exists, inserts records, returns list of inserted row ids.
     Args:
-        file_records (list of dict): Each dict contains file metadata fields.
+        table_name (str): Name of the table to insert into.
+        records (list of dict): Each dict contains column-value pairs.
         db_path (str, optional): Path to the SQLite database file.
-
-        list of int: List of inserted file_ids (primary keys).
-
-    Example file_record dict keys:
-        - filename, extension, mime_type, is_image, is_remote, url,
-          referenced_page, relative_path, absolute_path, cell_type,
-          is_code_generated, is_embedded
+        conn, cursor: Optional existing connection/cursor.
+    Returns:
+        list of int: List of inserted row ids.
     """
-def insert_file_records(file_records, db_path=None, conn=None, cursor=None):
     import threading
     import time
     close_conn = False
     if conn is None or cursor is None:
         conn = get_db_connection(db_path)
-        log_event(f"[DEBUG][{os.getpid()}][{threading.get_ident()}] Opened DB connection in insert_file_records at {time.time()}", level="DEBUG")
+        log_event(f"[DEBUG][{os.getpid()}][{threading.get_ident()}] Opened DB connection in insert_records for table '{table_name}' at {time.time()}", level="DEBUG")
         cursor = conn.cursor()
         close_conn = True
-    file_ids = []
-    for file_record in file_records:
-        cursor.execute(
-            """
-            INSERT INTO files (filename, extension, mime_type, is_image, is_remote, url, referenced_page, relative_path, absolute_path, cell_type, is_code_generated, is_embedded)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-            """,
-            (
-                file_record.get('filename', ''),
-                file_record.get('extension', ''),
-                file_record.get('mime_type', ''),
-                file_record.get('is_image', 0),
-                file_record.get('is_remote', 0),
-                file_record.get('url', ''),
-                file_record.get('referenced_page', ''),
-                file_record.get('relative_path', ''),
-                file_record.get('absolute_path', ''),
-                file_record.get('cell_type', None),
-                file_record.get('is_code_generated', None),
-                file_record.get('is_embedded', None)
-            )
-        )
-        file_ids.append(cursor.lastrowid)
-    log_event(f"[DEBUG][{os.getpid()}][{threading.get_ident()}] Committing DB in insert_file_records at {time.time()}", level="DEBUG")
+    # Check if table exists
+    cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name=?", (table_name,))
+    if cursor.fetchone() is None:
+        log_event(f"[ERROR] Table '{table_name}' does not exist in the database.", level="ERROR")
+        if close_conn:
+            conn.close()
+        return []
+    row_ids = []
+    for record in records:
+        # Get columns for this table
+        cursor.execute(f"PRAGMA table_info({table_name})")
+        columns = [row[1] for row in cursor.fetchall() if row[1] != 'id']
+        # Build insert statement
+        col_names = []
+        values = []
+        for col in columns:
+            col_names.append(col)
+            values.append(record.get(col, None))
+        sql = f"INSERT INTO {table_name} ({', '.join(col_names)}) VALUES ({', '.join(['?' for _ in col_names])})"
+        cursor.execute(sql, values)
+        row_ids.append(cursor.lastrowid)
+    log_event(f"[DEBUG][{os.getpid()}][{threading.get_ident()}] Committing DB in insert_records for table '{table_name}' at {time.time()}", level="DEBUG")
     try:
         conn.commit()
     except Exception as e:
         import traceback
-        log_event(f"[ERROR][{os.getpid()}][{threading.get_ident()}] Commit failed in insert_file_records: {e}\n{traceback.format_exc()}", level="ERROR")
+        log_event(f"[ERROR][{os.getpid()}][{threading.get_ident()}] Commit failed in insert_records: {e}\n{traceback.format_exc()}", level="ERROR")
         raise
     if close_conn:
-        log_event(f"[DEBUG][{os.getpid()}][{threading.get_ident()}] Closing DB connection in insert_file_records at {time.time()}", level="DEBUG")
+        log_event(f"[DEBUG][{os.getpid()}][{threading.get_ident()}] Closing DB connection in insert_records for table '{table_name}' at {time.time()}", level="DEBUG")
         conn.close()
-    return file_ids
+    return row_ids
 
-def link_files_to_pages(file_page_pairs, db_path=None):
-    """
-    Batch inserts records into the 'pages_files' table to link files to pages.
-
-    Args:
-        file_page_pairs (list of tuple): Each tuple is (file_id, page_path).
-        db_path (str, optional): Path to the SQLite database file.
-
-    This function creates associations between files and the pages where they are referenced.
-    """
 def link_files_to_pages(file_page_pairs, db_path=None, conn=None, cursor=None):
     import threading
     import time
@@ -231,19 +215,7 @@ def link_files_to_pages(file_page_pairs, db_path=None, conn=None, cursor=None):
         log_event(f"[DEBUG][{os.getpid()}][{threading.get_ident()}] Closing DB connection in link_files_to_pages at {time.time()}", level="DEBUG")
         conn.close()
 
-def pretty_print_table(table_name, db_path=None):
-    """
-    Prints a database table in a readable, aligned format with column headers.
 
-    Args:
-        table_name (str): Name of the table to print.
-        db_path (str, optional): Path to the SQLite database file.
-
-    This function is useful for debugging and inspecting table contents.
-    """
-    if db_path is None:
-        project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        db_path = os.path.join(project_root, 'db', 'sqlite.db')
 def pretty_print_table(table_name, db_path=None, conn=None, cursor=None):
     import threading
     import time
