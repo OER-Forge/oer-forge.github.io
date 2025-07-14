@@ -26,7 +26,7 @@ CSS_DST = os.path.join(BUILD_DIR, 'css')
 JS_SRC = os.path.join(PROJECT_ROOT, 'static', 'js')
 JS_DST = os.path.join(BUILD_DIR, 'js')
 NOJEKYLL_PATH = os.path.join(BUILD_DIR, '.nojekyll')
-LOG_PATH = os.path.join(PROJECT_ROOT, 'log')
+LOG_PATH = os.path.join(PROJECT_ROOT, 'log/build.log')
 
 
 def copytree_overwrite(src, dst):
