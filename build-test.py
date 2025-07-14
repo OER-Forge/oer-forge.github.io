@@ -1,23 +1,58 @@
-from oerforge.scan import initialize_database, insert_file_record, print_table, log_event, get_notebook_paths_from_toc
+from oerforge.db_utils import initialize_database, insert_file_records, link_files_to_pages, pretty_print_table
 
 
-# Initialize the database (will drop and recreate tables)
-initialize_database()
+# --- Modular DB function tests ---
+def test_db_utils():
+    print("[TEST] Initializing database...")
+    initialize_database()
+    print("[TEST] Testing insert_file_records...")
+    sample_files = [
+        {
+            'filename': 'test1.png',
+            'extension': 'png',
+            'mime_type': 'image/png',
+            'is_image': 1,
+            'is_remote': 0,
+            'url': '',
+            'referenced_page': 'about.md',
+            'relative_path': 'assets/images/test1.png',
+            'absolute_path': '/tmp/test1.png',
+            'cell_type': None,
+            'is_code_generated': None,
+            'is_embedded': None
+        },
+        {
+            'filename': 'test2.pdf',
+            'extension': 'pdf',
+            'mime_type': 'application/pdf',
+            'is_image': 0,
+            'is_remote': 1,
+            'url': 'https://example.com/test2.pdf',
+            'referenced_page': 'index.md',
+            'relative_path': 'assets/docs/test2.pdf',
+            'absolute_path': '/tmp/test2.pdf',
+            'cell_type': None,
+            'is_code_generated': None,
+            'is_embedded': None
+        }
+    ]
+    file_ids = insert_file_records(sample_files)
+    print(f"Inserted file IDs: {file_ids}")
 
-# Create a sample toc file with .ipynb entries
-toc_path = 'sample_toc.txt'
-with open(toc_path, 'w', encoding='utf-8') as f:
-    f.write('notebook1.ipynb\n')
-    f.write('notebook2.ipynb\n')
-    f.write('README.md\n')
-    f.write('# This is a comment\n')
-    f.write('notebook3.ipynb\n')
+    print("[TEST] Testing link_files_to_pages...")
+    file_page_pairs = [
+        (file_ids[0], 'about.md'),
+        (file_ids[1], 'index.md')
+    ]
+    link_files_to_pages(file_page_pairs)
+    print("Linked files to pages.")
 
-# Test get_notebook_paths_from_toc
-notebook_paths = get_notebook_paths_from_toc(toc_path)
-print("Notebook paths found in TOC:", notebook_paths)
+    print("[TEST] Printing 'files' table:")
+    pretty_print_table('files')
+    print("[TEST] Printing 'pages_files' table:")
+    pretty_print_table('pages_files')
 
-# Clean up sample toc file (optional)
-import os
-os.remove(toc_path)
+
+if __name__ == "__main__":
+    test_db_utils()
 
