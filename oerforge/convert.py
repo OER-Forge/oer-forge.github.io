@@ -51,28 +51,43 @@ def query_images_for_content(content_record, conn):
     log_event(f"[IMAGES] Found {len(images)} images for {content_record['source_path']}", level="DEBUG")
     return images
 
-def copy_images_to_build(images, images_root=IMAGES_ROOT):
+def copy_images_to_build(images, images_root=IMAGES_ROOT, conn=None):
     """
     Copy each image to the top-level images directory. All images go in images/ with their filename only.
+    Uses the content table to resolve the correct source path for each image.
     Returns a list of new build paths (absolute paths).
     """
     os.makedirs(images_root, exist_ok=True)
     copied = []
+    # Build a lookup for content source paths
+    content_lookup = {}
+    if conn is not None:
+        cursor = conn.cursor()
+        cursor.execute("SELECT source_path FROM content")
+        for row in cursor.fetchall():
+            content_lookup[row[0]] = row[0]
     for img in images:
         src = img.get('relative_path') or img.get('absolute_path')
+        referenced_page = img.get('referenced_page')
         log_event(f"[IMAGES][DEBUG] src={src} img={img}", level="DEBUG")
         if not src or img.get('is_remote'):
             log_event(f"[IMAGES] Skipping remote or missing image: {img.get('filename')}", level="WARNING")
             continue
+        # Compute the actual source path
+        if referenced_page and referenced_page in content_lookup and not os.path.isabs(src):
+            # If src is relative, resolve it against the referenced_page's directory
+            src_path = os.path.normpath(os.path.join(os.path.dirname(referenced_page), src))
+        else:
+            src_path = src
         filename = os.path.basename(src)
         dest = os.path.join(images_root, filename)
-        log_event(f"[IMAGES][DEBUG] Copying {src} to {dest}", level="DEBUG")
+        log_event(f"[IMAGES][DEBUG] Copying {src_path} to {dest}", level="DEBUG")
         try:
-            shutil.copy2(src, dest)
-            log_event(f"[IMAGES] Copied image {src} to {dest}", level="INFO")
+            shutil.copy2(src_path, dest)
+            log_event(f"[IMAGES] Copied image {src_path} to {dest}", level="INFO")
             copied.append(dest)
         except Exception as e:
-            log_event(f"[IMAGES] Failed to copy {src} to {dest}: {e}", level="ERROR")
+            log_event(f"[IMAGES] Failed to copy {src_path} to {dest}: {e}", level="ERROR")
     return copied
 
 def update_markdown_image_links(md_path, images, images_root=IMAGES_ROOT):
@@ -235,6 +250,10 @@ def batch_convert_all_content():
             if os.path.exists(src_path):
                 shutil.copy2(src_path, out_path)
                 log_event(f"Copied {src_path} to {out_path}", level="INFO")
+                # Query and copy all referenced images for this file
+                content_record = {'source_path': src_path}
+                images = query_images_for_content(content_record, conn)
+                copy_images_to_build(images, images_root=BUILD_IMAGES_ROOT, conn=conn)
             else:
                 log_event(f"[ERROR] Missing file: {src_path}", level="ERROR")
         conn.close()
