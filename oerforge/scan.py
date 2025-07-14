@@ -1,4 +1,3 @@
-
 """
 scan.py: Asset database logic for pages and files only.
 """
@@ -339,9 +338,10 @@ def populate_site_info_from_config(config_path):
     conn.commit()
     conn.close()
 
-------------------------------------------------------------------------------
+# ----
 # Conversion Capability Helper
-# ------------------------------------------------------------------------------
+# ----
+
 def get_possible_conversions(extension):
     """
     Returns a dict of possible conversions for a given file extension.
@@ -395,12 +395,13 @@ def scan_toc_and_populate_db(config_path):
     cursor.execute("DELETE FROM content")
     seen_paths = set()
     file_paths = []
+    from oerforge.db_utils import insert_file_records
 
     def walk_toc(items):
+        content_records = []
         for item in items:
             file_path = item.get('file')
             if file_path:
-                # Prepend 'content/' if not already present
                 source_path = file_path if file_path.startswith('content/') else f'content/{file_path}'
                 ext = os.path.splitext(source_path)[1].lower()
                 output_path = None
@@ -410,21 +411,30 @@ def scan_toc_and_populate_db(config_path):
                 abs_path = os.path.join(project_root, source_path)
                 if not os.path.exists(abs_path):
                     print(f"[ERROR] TOC: Missing file '{source_path}' (expected at {abs_path})")
-                # Insert into content table
-                cursor.execute(
-                    """
-                    INSERT INTO content (source_path, output_path, is_autobuilt, mime_type)
-                    VALUES (?, ?, ?, ?)
-                    """,
-                    (source_path, output_path, 0, ext)
-                )
+                flags = get_possible_conversions(ext)
+                content_record = {
+                    'source_path': source_path,
+                    'output_path': output_path,
+                    'is_autobuilt': 0,
+                    'mime_type': ext,
+                    'can_convert_md': flags['can_convert_md'],
+                    'can_convert_tex': flags['can_convert_tex'],
+                    'can_convert_pdf': flags['can_convert_pdf'],
+                    'can_convert_docx': flags['can_convert_docx'],
+                    'can_convert_ppt': flags['can_convert_ppt'],
+                    'can_convert_jupyter': flags['can_convert_jupyter'],
+                    'can_convert_ipynb': flags['can_convert_ipynb']
+                }
+                content_records.append(content_record)
                 file_paths.append(abs_path)
             # Recursively process children
             children = item.get('children', [])
             if children:
-                walk_toc(children)
+                content_records.extend(walk_toc(children))
+        return content_records
 
-    walk_toc(toc)
+    all_content_records = walk_toc(toc)
+    insert_file_records(all_content_records, db_path=os.path.join(project_root, 'db', 'sqlite.db'))
     conn.commit()
 
     # Read all files and extract assets

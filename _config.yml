@@ -63,10 +63,10 @@ toc:
         file: sample/notebooks/01_notes.ipynb
         menu: false
       - title: "Mathematical Preliminaries"
-        file: sample/02_notes.ipynb
+        file: sample/notebooks/02_notes.ipynb
         menu: false
       - title: "Critical Points; Phase Space; Trajectories"
-        file: sample/07_notes.ipynb
+        file: sample/notebooks/07_notes.ipynb
         menu: false
       - title: "Metropolis Activity"
         file: sample/activity-metropolis.docx
