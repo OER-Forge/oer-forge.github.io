@@ -444,7 +444,7 @@ def scan_toc_and_populate_db(config_path):
         for idx, item in enumerate(items):
             file_path = item.get('file')
             title = item.get('title', None)
-            this_id = None
+            this_id = None  # Will be set after DB insert, but not used for children here
             if file_path:
                 source_path = file_path if file_path.startswith('content/') else f'content/{file_path}'
                 ext = os.path.splitext(source_path)[1].lower()
@@ -478,10 +478,6 @@ def scan_toc_and_populate_db(config_path):
                     'parent_id': parent_id,
                     'level': level
                 }
-                # Insert record and get its id for children
-                inserted_ids = insert_records('content', [content_record], db_path=os.path.join(project_root, 'db', 'sqlite.db'), conn=conn, cursor=cursor)
-                this_id = inserted_ids[0] if inserted_ids else None
-                content_record['id'] = this_id
                 content_records.append(content_record)
                 file_paths.append(abs_path)
             elif item.get('children'):
@@ -506,9 +502,6 @@ def scan_toc_and_populate_db(config_path):
                     'parent_id': parent_id,
                     'level': level
                 }
-                inserted_ids = insert_records('content', [content_record], db_path=os.path.join(project_root, 'db', 'sqlite.db'), conn=conn, cursor=cursor)
-                this_id = inserted_ids[0] if inserted_ids else None
-                content_record['id'] = this_id
                 content_records.append(content_record)
             children = item.get('children', [])
             if children:
@@ -518,10 +511,17 @@ def scan_toc_and_populate_db(config_path):
 
     # Usage in scan_toc_and_populate_db:
     all_content_records = walk_toc(toc, level=0)
-    # No need to call insert_records for all_content_records here, as
 
-    all_content_records = walk_toc(toc)
-    insert_records('content', all_content_records, db_path=os.path.join(project_root, 'db', 'sqlite.db'), conn=conn, cursor=cursor)
+    # Deduplicate by (source_path, output_path, title, parent_id)
+    unique_records = {}
+    for rec in all_content_records:
+        # Use a tuple of identifying fields as the key
+        key = (rec.get('source_path'), rec.get('output_path'), rec.get('title'), rec.get('parent_id'))
+        if key not in unique_records:
+            unique_records[key] = rec
+    deduped_records = list(unique_records.values())
+
+    insert_records('content', deduped_records, db_path=os.path.join(project_root, 'db', 'sqlite.db'), conn=conn, cursor=cursor)
     log_event(f"[DEBUG][{os.getpid()}][{threading.get_ident()}] Committing DB in scan_toc_and_populate_db at {time.time()}", level="DEBUG")
     try:
         conn.commit()
