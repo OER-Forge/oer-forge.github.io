@@ -3,6 +3,7 @@ scan.py: Asset database logic for pages and files only.
 """
 import os
 import sqlite3
+import re
 
 # ----
 # Logging Helper for scan.py
@@ -439,12 +440,11 @@ def scan_toc_and_populate_db(config_path):
     file_paths = []
     # Removed outdated import of insert_file_records; link_files_to_pages is already imported above
 
-    def walk_toc(items, parent_id=None, level=0):
+    def walk_toc(items, parent_output_path=None, parent_slug=None):
         content_records = []
         for idx, item in enumerate(items):
             file_path = item.get('file')
             title = item.get('title', None)
-            # Assign order based on position in parent's children list
             order = idx
             if file_path:
                 source_path = file_path if file_path.startswith('content/') else f'content/{file_path}'
@@ -462,6 +462,7 @@ def scan_toc_and_populate_db(config_path):
                     log_event(f"[ERROR] TOC: Missing file '{source_path}' (expected at {abs_path})", level="ERROR")
                     pass
                 flags = get_possible_conversions(ext)
+                slug = re.sub(r'[^a-zA-Z0-9]+', '_', title.lower()).strip('_') if title else f'section_{idx}'
                 content_record = {
                     'title': title,
                     'source_path': source_path,
@@ -475,26 +476,17 @@ def scan_toc_and_populate_db(config_path):
                     'can_convert_ppt': flags['can_convert_ppt'],
                     'can_convert_jupyter': flags['can_convert_jupyter'],
                     'can_convert_ipynb': flags['can_convert_ipynb'],
-                    'parent_id': parent_id,
-                    'level': level,
+                    'parent_output_path': parent_output_path,
+                    'slug': slug,
                     'order': order
                 }
                 content_records.append(content_record)
                 file_paths.append(abs_path)
-                # If children, pass this record's index as parent_id
                 children = item.get('children', [])
                 if children:
-                    # Use the index in content_records as the parent_id for children
-                    # But since DB ids are not known yet, use the position in the list
-                    this_idx = len(content_records) - 1
-                    # Use a synthetic id (its index in the final deduped list)
-                    child_records = walk_toc(children, parent_id=None, level=level+1)
-                    # After recursion, set parent_id for each child to this record's index
-                    for child in child_records:
-                        child['parent_id'] = None  # Will be resolved after deduplication
+                    child_records = walk_toc(children, parent_output_path=output_path, parent_slug=slug)
                     content_records.extend(child_records)
             elif item.get('children'):
-                import re
                 slug = re.sub(r'[^a-zA-Z0-9]+', '_', title.lower()).strip('_') if title else f'section_{idx}'
                 output_path = os.path.join('build', slug, 'index.html')
                 content_record = {
@@ -510,22 +502,19 @@ def scan_toc_and_populate_db(config_path):
                     'can_convert_ppt': False,
                     'can_convert_jupyter': False,
                     'can_convert_ipynb': False,
-                    'parent_id': parent_id,
-                    'level': level,
+                    'parent_output_path': parent_output_path,
+                    'slug': slug,
                     'order': order
                 }
                 content_records.append(content_record)
                 children = item.get('children', [])
                 if children:
-                    this_idx = len(content_records) - 1
-                    child_records = walk_toc(children, parent_id=None, level=level+1)
-                    for child in child_records:
-                        child['parent_id'] = None
+                    child_records = walk_toc(children, parent_output_path=output_path, parent_slug=slug)
                     content_records.extend(child_records)
         return content_records
 
     # Usage in scan_toc_and_populate_db:
-    all_content_records = walk_toc(toc, level=0)
+    all_content_records = walk_toc(toc)
 
     # Deduplicate by (source_path, output_path, title)
     unique_records = {}
@@ -534,24 +523,6 @@ def scan_toc_and_populate_db(config_path):
         if key not in unique_records:
             unique_records[key] = rec
     deduped_records = list(unique_records.values())
-
-    # Build a lookup from output_path to index in deduped_records
-    path_to_idx = {rec['output_path']: idx for idx, rec in enumerate(deduped_records)}
-
-    # Second pass: resolve parent_id for each record
-    for rec in deduped_records:
-        parent_path = None
-        # If parent_id is not None, try to find parent's output_path
-        if rec['parent_id'] is not None:
-            # Find parent by output_path in deduped_records
-            # If parent_id is an output_path, use mapping
-            parent_path = rec['parent_id'] if isinstance(rec['parent_id'], str) else None
-            if parent_path and parent_path in path_to_idx:
-                rec['parent_id'] = path_to_idx[parent_path] + 1  # DB ids start at 1
-            else:
-                rec['parent_id'] = None
-        else:
-            rec['parent_id'] = None
 
     # Ensure order is an integer
     for rec in deduped_records:

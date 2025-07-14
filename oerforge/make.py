@@ -416,7 +416,7 @@ def build_all_markdown_files(source_dir, build_dir):
 
 def create_section_index_html(section_title, output_dir, db_path=None, parent_id=None):
     """
-    Generate index.html for a section, listing all children and grandchildren recursively using parent_id and order.
+    Generate index.html for a section, listing all children and grandchildren recursively using the database.
     Each child/grandchild page can have a nav menu linking to top-level pages.
     """
     import sqlite3
@@ -427,34 +427,25 @@ def create_section_index_html(section_title, output_dir, db_path=None, parent_id
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
-    def get_children(parent_id):
-        cursor.execute(
-            'SELECT id, title, output_path FROM content WHERE parent_id=? ORDER BY \"order\"',
-            (parent_id,)
-        )
-        return cursor.fetchall()
-
     # --- Build nav menu from TOC (same as all other pages) ---
     config_path = os.path.join(PROJECT_ROOT, "_config.yml")
     config = load_yaml_config(config_path)
     toc = config.get("toc", [])
     nav_html = generate_nav_menu(toc, current_html_path=os.path.join(output_dir, 'index.html'))
 
-    # --- Render children/grandchildren tree ---
-    def render_tree(parent_id):
-        html = "<ul>"
-        children = get_children(parent_id)
-        for child_id, child_title, child_output_path in children:
-            abs_target_html = os.path.join(PROJECT_ROOT, 'build', child_output_path)
-            rel_link = os.path.relpath(abs_target_html, start=output_dir)
-            mark = '✓' if os.path.exists(abs_target_html) else '✗'
-            grandchildren_html = render_tree(child_id)
-            html += f'<li><a href="{rel_link}">{child_title}</a> [{mark}]{grandchildren_html}</li>'
-        html += "</ul>"
-        return html
-
-    links_html = render_tree(parent_id)
-
+    # --- Render children tree using is_autobuilt and output_path LIKE ---
+    output_dir_rel = os.path.relpath(output_dir, os.path.join(PROJECT_ROOT, 'build'))
+    like_pattern = output_dir_rel + '/%'
+    cursor.execute("SELECT title, output_path FROM content WHERE is_autobuilt=1 AND output_path LIKE ? ORDER BY \"order\"", (like_pattern,))
+    rows = cursor.fetchall()
+    links_html = '<ul>'
+    current_dir = output_dir
+    for child_title, target_html in rows:
+        abs_target_html = os.path.join(PROJECT_ROOT, 'build', target_html) if not os.path.isabs(target_html) else target_html
+        rel_link = os.path.relpath(abs_target_html, start=current_dir)
+        mark = '✓' if os.path.exists(abs_target_html) else '✗'
+        links_html += f'<li><a href="{rel_link}">{child_title}</a> [{mark}]</li>'
+    links_html += '</ul>'
     header = create_header(section_title, nav_html)
     footer = create_footer()
     page_html = render_page(section_title, links_html, header, footer, os.path.join(output_dir, 'index.html'))
@@ -462,7 +453,7 @@ def create_section_index_html(section_title, output_dir, db_path=None, parent_id
     with open(index_html_path, 'w', encoding='utf-8') as f:
         f.write(page_html)
     conn.close()
-    logging.info(f"Created hierarchical section index: {index_html_path}")
+    logging.info(f"Created section index with child links: {index_html_path}")
 
 def get_markdown_source_and_output_paths_from_db(db_path=None):
     """
