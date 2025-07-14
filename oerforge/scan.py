@@ -437,7 +437,7 @@ def scan_toc_and_populate_db(config_path):
     cursor.execute("DELETE FROM content")
     seen_paths = set()
     file_paths = []
-    from oerforge.db_utils import insert_file_records
+    from oerforge.db_utils import insert_file_records, link_files_to_pages
 
     def walk_toc(items):
         content_records = []
@@ -478,7 +478,7 @@ def scan_toc_and_populate_db(config_path):
         return content_records
 
     all_content_records = walk_toc(toc)
-    insert_file_records(all_content_records, db_path=os.path.join(project_root, 'db', 'sqlite.db'))
+    insert_file_records(all_content_records, db_path=os.path.join(project_root, 'db', 'sqlite.db'), conn=conn, cursor=cursor)
     log_event(f"[DEBUG][{os.getpid()}][{threading.get_ident()}] Committing DB in scan_toc_and_populate_db at {time.time()}", level="DEBUG")
     try:
         conn.commit()
@@ -493,11 +493,11 @@ def scan_toc_and_populate_db(config_path):
     for path in rel_file_paths:
         ext = os.path.splitext(path)[1].lower()
         if ext == '.md':
-            batch_extract_assets({path: contents[path]}, 'markdown')
+            batch_extract_assets({path: contents[path]}, 'markdown', conn=conn, cursor=cursor)
         elif ext == '.ipynb':
-            batch_extract_assets({path: contents[path]}, 'notebook')
+            batch_extract_assets({path: contents[path]}, 'notebook', conn=conn, cursor=cursor)
         elif ext == '.docx':
-            batch_extract_assets({path: contents[path]}, 'docx')
+            batch_extract_assets({path: contents[path]}, 'docx', conn=conn, cursor=cursor)
         # Add more types as needed
     log_event(f"[DEBUG][{os.getpid()}][{threading.get_ident()}] Closing DB connection in scan_toc_and_populate_db at {time.time()}", level="DEBUG")
     conn.close()

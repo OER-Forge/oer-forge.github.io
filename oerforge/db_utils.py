@@ -249,6 +249,10 @@ def pretty_print_table(table_name, db_path=None, conn=None, cursor=None):
     import time
     close_conn = False
     if conn is None or cursor is None:
+        # If db_path is None, default to project_root/db/sqlite.db
+        if db_path is None:
+            project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+            db_path = os.path.join(project_root, 'db', 'sqlite.db')
         conn = sqlite3.connect(db_path)
         log_event(f"[DEBUG][{os.getpid()}][{threading.get_ident()}] Opened DB connection in pretty_print_table at {time.time()}", level="DEBUG")
         cursor = conn.cursor()
