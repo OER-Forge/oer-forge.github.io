@@ -319,45 +319,19 @@ def get_canonical_image_path(filename):
     conn.close()
     return row[0] if row else None
 
-def fix_image_paths(html_body):
-    """Rewrite <img> src attributes to use canonical paths from build_images DB."""
-def fix_image_paths(html_body, html_path=None):
-    import sqlite3
-    def replacer(match):
-        before = match.group(1)
-        src = match.group(2)
-        filename = os.path.basename(src)
-        # Query content table for image filename
-        db_path = os.path.join(PROJECT_ROOT, 'db', 'sqlite.db')
-        conn = sqlite3.connect(db_path)
-        cursor = conn.cursor()
-        cursor.execute("SELECT filename FROM files WHERE is_image=1 AND filename=?", (filename,))
-        row = cursor.fetchone()
-        conn.close()
-        if row:
-            # Compute relative path from html_path to build/images/<filename>
-            images_dir = os.path.join(PROJECT_ROOT, 'build', 'images')
-            html_dir = os.path.dirname(html_path) if html_path else '.'
-            rel_img_path = os.path.relpath(os.path.join(images_dir, filename), html_dir)
-            print(f"[DEBUG] fix_image_paths: src={src}, filename={filename}, rel_img_path={rel_img_path}, html_path={html_path}")
-            logging.info(f"fix_image_paths: src={src}, filename={filename}, rel_img_path={rel_img_path}, html_path={html_path}")
-            return f'<img{before}src="{rel_img_path}"'
-        else:
-            logging.warning(f"Image not found in DB: {src}")
-            return match.group(0)
-    html_body = re.sub(r'<img([^>]+)src=["\']([^"\']+)["\']', replacer, html_body)
-    return html_body
-
 def convert_markdown_to_html(md_path, html_path):
-    """Convert a markdown file to HTML and write to html_path using templates and accessibility features."""
+    print(f"[DEBUG] convert_markdown_to_html: Reading markdown file: {md_path}")
+    try:
+        with open(md_path, 'r', encoding='utf-8') as f:
+            md_text = f.read()
+    except Exception as e:
+        print(f"[ERROR] Failed to read {md_path}: {e}")
+        return
+    print(f"[DEBUG] Converting markdown to HTML for: {md_path}")
+    print(f"[DEBUG] Output HTML path: {html_path}")
     import markdown
     import logging
     import re
-
-    logging.debug(f"Reading markdown file: {md_path}")
-    with open(md_path, 'r', encoding='utf-8') as f:
-        md_text = f.read()
-    logging.debug(f"Converting markdown to HTML for: {md_path}")
     html_body = markdown.markdown(md_text, extensions=['fenced_code', 'codehilite', 'tables', 'toc', 'meta'])
     html_body = html_body.replace('<table>', '<table role="table">')
     html_body = html_body.replace('<th>', '<th role="columnheader">')
@@ -380,26 +354,20 @@ def convert_markdown_to_html(md_path, html_path):
     config_path = os.path.join(PROJECT_ROOT, "_config.yml")
     config = load_yaml_config(config_path)
     toc = config.get("toc", [])
-    toc_entry = _find_entry_by_html(html_path, toc)
-    links_html = ''
-    if toc_entry and 'children' in toc_entry and isinstance(toc_entry['children'], list):
-        child_links = _collect_links(toc_entry['children'])
-        current_dir = os.path.dirname(html_path)
-        links_html = '<ul>'
-        for child_title, target_html in child_links:
-            abs_target_html = os.path.join(PROJECT_ROOT, 'build', target_html) if not os.path.isabs(target_html) else target_html
-            rel_link = os.path.relpath(abs_target_html, start=current_dir)
-            mark = '✓' if os.path.exists(abs_target_html) else '✗'
-            links_html += f'<li><a href="{rel_link}">{child_title}</a> [{mark}]</li>'
-        links_html += '</ul>'
-        html_body += links_html
     nav_html = generate_nav_menu(toc, current_html_path=html_path)
     header = create_header(title, nav_html)
     footer = create_footer()
     html_output = render_page(title, html_body, header, footer, html_path)
-    logging.debug(f"Writing HTML output to: {html_path}")
-    with open(html_path, 'w', encoding='utf-8') as f:
-        f.write(html_output)
+    print(f"[DEBUG] Writing HTML output to: {html_path}")
+    try:
+        with open(html_path, 'w', encoding='utf-8') as f:
+            f.write(html_output)
+        print(f"[DEBUG] Wrote HTML file: {html_path}")
+        with open(html_path, 'r', encoding='utf-8') as f:
+            html_preview = f.read(200)
+        print(f"[DEBUG] Preview of written HTML ({html_path}):\n{html_preview}\n...")
+    except Exception as e:
+        print(f"[ERROR] Could not write or preview HTML {html_path}: {e}")
     logging.info(f"Wrote HTML file: {html_path}")
 
 def _find_entry_by_html(html_path, toc):
@@ -418,145 +386,109 @@ def _find_entry_by_html(html_path, toc):
         return None
     return walk(toc)
 
-# def _collect_links(entries):
-#     """Recursively collect child links from TOC entries."""
-#     links = []
-#     for entry in entries:
-#         if 'title' in entry:
-#             title = entry['title']
-#             if 'file' in entry:
-#                 link = os.path.splitext(entry['file'])[0] + '.html'
-#                 links.append((title, link))
-#             if 'children' in entry and isinstance(entry['children'], list):
-#                 links.extend(_collect_links(entry['children']))
-#     return links
-
 # --- Build Structure and TOC Functions ---
 def build_all_markdown_files(source_dir, build_dir):
-    """Find all markdown files in source_dir and convert them to HTML in build_dir."""
+    import logging
     md_files = find_markdown_files(source_dir)
-    logging.debug(f"Found markdown files: {md_files}")
+    print(f"[DEBUG] build_all_markdown_files: Found markdown files ({len(md_files)}):")
     for md_path in md_files:
+        print(f"  [DEBUG] Will convert: {md_path}")
         rel_path = os.path.relpath(md_path, source_dir)
         output_path = os.path.join(build_dir, os.path.splitext(rel_path)[0] + '.html')
         output_dir = os.path.dirname(output_path)
-        logging.debug(f"Preparing to convert: {md_path} -> {output_path}")
+        print(f"  [DEBUG] Output path: {output_path}")
         if not os.path.exists(output_dir):
             os.makedirs(output_dir, exist_ok=True)
-            logging.debug(f"Created output directory: {output_dir}")
+            print(f"  [DEBUG] Created output directory: {output_dir}")
         convert_markdown_to_html(md_path, output_path)
-        logging.info(f"Converted {md_path} to {output_path}")
+        print(f"  [DEBUG] Converted {md_path} to {output_path}")
 
-# def create_section_index_html(section_entry, output_dir, toc):
-#     """Generate index.html for a section, listing links to all children and grandchildren."""
-#     # --- Refactored: Use DB to find autobuilt sections and child pages ---
-#     import sqlite3
-#     title = section_entry.get('title', 'Section')
-#     db_path = os.path.join(PROJECT_ROOT, 'db', 'sqlite.db')
-#     logging.debug(f"[DEBUG] Generating section index for: {title} in {output_dir}")
-#     conn = sqlite3.connect(db_path)
-#     cursor = conn.cursor()
-#     output_dir_rel = os.path.relpath(output_dir, os.path.join(PROJECT_ROOT, 'build'))
-#     like_pattern = output_dir_rel + '/%'
-#     logging.debug(f"[DEBUG] DB query: SELECT title, output_path FROM content WHERE is_autobuilt=1 AND output_path LIKE '{like_pattern}'")
-#     cursor.execute("SELECT title, output_path FROM content WHERE is_autobuilt=1 AND output_path LIKE ?", (like_pattern,))
-#     rows = cursor.fetchall()
-#     logging.debug(f"[DEBUG] Found {len(rows)} child autobuilt pages for section '{title}'")
-#     links_html = '<ul>'
-#     current_dir = output_dir
-#     for child_title, target_html in rows:
-#         abs_target_html = os.path.join(PROJECT_ROOT, 'build', target_html) if not os.path.isabs(target_html) else target_html
-#         rel_link = os.path.relpath(abs_target_html, start=current_dir)
-#         mark = '✓' if os.path.exists(abs_target_html) else '✗'
-#         logging.debug(f"[DEBUG] Link: title={child_title}, abs_target_html={abs_target_html}, rel_link={rel_link}, exists={mark}")
-#         links_html += f'<li><a href="{rel_link}">{child_title}</a> [{mark}]</li>'
-#     links_html += '</ul>'
-#     nav_html = generate_nav_menu(toc, current_html_path=os.path.join(output_dir, 'index.html'))
-#     header = create_header(title, nav_html)
-#     footer = create_footer()
-#     page_html = render_page(title, links_html, header, footer, os.path.join(output_dir, 'index.html'))
-#     index_html_path = os.path.join(output_dir, 'index.html')
-#     with open(index_html_path, 'w', encoding='utf-8') as f:
-#         f.write(page_html)
-#     logging.info(f"Created section index with child links: {index_html_path}")
-#     conn.close()
 def create_section_index_html(section_title, output_dir, db_path=None):
     """
-    Stub: Generate index.html for a section using the database.
+    Generate index.html for a section using the database.
     Args:
         section_title (str): Title of the section.
         output_dir (str): Output directory for the section index.
         db_path (str, optional): Path to the SQLite database file.
     """
-    # TODO: Query the content table for is_autobuilt=1 and output_path LIKE section, then render links.
-    pass
+    import sqlite3
+    if db_path is None:
+        db_path = os.path.join(PROJECT_ROOT, 'db', 'sqlite.db')
+    output_dir_rel = os.path.relpath(output_dir, os.path.join(PROJECT_ROOT, 'build'))
+    like_pattern = output_dir_rel + '/%'
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+    cursor.execute("SELECT source_path, output_path FROM content WHERE is_autobuilt=1 AND output_path LIKE ?", (like_pattern,))
+    rows = cursor.fetchall()
+    conn.close()
+    links_html = '<ul>'
+    current_dir = output_dir
+    for src_path, target_html in rows:
+        abs_target_html = os.path.join(PROJECT_ROOT, 'build', target_html) if not os.path.isabs(target_html) else target_html
+        rel_link = os.path.relpath(abs_target_html, start=current_dir)
+        mark = '✓' if os.path.exists(abs_target_html) else '✗'
+        # Use filename as link text for now
+        link_text = os.path.basename(src_path) if src_path else os.path.basename(target_html)
+        links_html += f'<li><a href="{rel_link}">{link_text}</a> [{mark}]</li>'
+    links_html += '</ul>'
+    header = create_header(section_title, '')
+    footer = create_footer()
+    page_html = render_page(section_title, links_html, header, footer, os.path.join(output_dir, 'index.html'))
+    index_html_path = os.path.join(output_dir, 'index.html')
+    with open(index_html_path, 'w', encoding='utf-8') as f:
+        f.write(page_html)
+    logging.info(f"Created section index with child links: {index_html_path}")
 
-# def get_markdown_source_and_output_paths(toc: list, files_dir: str, build_dir: str) -> list:
-#     """
-#     Recursively walk the toc: structure and compute source/output paths for markdown files.
-#     Returns a list of (source_path, output_path, toc_entry) tuples.
-#     """
-#     results = []
-#     def walk(entries):
-#         for entry in entries:
-#             if 'file' in entry:
-#                 src_path = os.path.join(files_dir, entry['file'])
-#                 out_path = os.path.join(build_dir, os.path.splitext(entry['file'])[0] + '.html')
-#                 results.append((src_path, out_path, entry))
-#             if 'children' in entry and isinstance(entry['children'], list):
-#                 walk(entry['children'])
-#     walk(toc)
-#     return results
 def get_markdown_source_and_output_paths_from_db(db_path=None):
     """
-    Stub: Get all markdown source and output paths using the database.
+    Get all markdown source and output paths using the database.
     Args:
         db_path (str, optional): Path to the SQLite database file.
     Returns:
-        List of (source_path, output_path, title) tuples.
+        List of (source_path, output_path) tuples.
     """
-    # TODO: Query the content table for all markdown files and compute source/output paths.
-    pass
+    import sqlite3
+    if db_path is None:
+        db_path = os.path.join(PROJECT_ROOT, 'db', 'sqlite.db')
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+    cursor.execute("SELECT source_path, output_path FROM content WHERE output_path LIKE '%.html'")
+    rows = cursor.fetchall()
+    conn.close()
+    return [(row[0], row[1]) for row in rows]
+    """
+    Generate index.html for a section using the database.
+    Args:
+        section_title (str): Title of the section.
+        output_dir (str): Output directory for the section index.
+        db_path (str, optional): Path to the SQLite database file.
+    """
+    import sqlite3
+    if db_path is None:
+        db_path = os.path.join(PROJECT_ROOT, 'db', 'sqlite.db')
+    output_dir_rel = os.path.relpath(output_dir, os.path.join(PROJECT_ROOT, 'build'))
+    like_pattern = output_dir_rel + '/%'
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+    cursor.execute("SELECT title, output_path FROM content WHERE is_autobuilt=1 AND output_path LIKE ?", (like_pattern,))
+    rows = cursor.fetchall()
+    conn.close()
+    links_html = '<ul>'
+    current_dir = output_dir
+    for child_title, target_html in rows:
+        abs_target_html = os.path.join(PROJECT_ROOT, 'build', target_html) if not os.path.isabs(target_html) else target_html
+        rel_link = os.path.relpath(abs_target_html, start=current_dir)
+        mark = '✓' if os.path.exists(abs_target_html) else '✗'
+        links_html += f'<li><a href="{rel_link}">{child_title}</a> [{mark}]</li>'
+    links_html += '</ul>'
+    header = create_header(section_title, '')
+    footer = create_footer()
+    page_html = render_page(section_title, links_html, header, footer, os.path.join(output_dir, 'index.html'))
+    index_html_path = os.path.join(output_dir, 'index.html')
+    with open(index_html_path, 'w', encoding='utf-8') as f:
+        f.write(page_html)
+    logging.info(f"Created section index with child links: {index_html_path}")
 
 if __name__ == "__main__":
     setup_logging()
-    config_path = os.path.join(PROJECT_ROOT, "_config.yml")
-    files_dir = os.path.join(PROJECT_ROOT, "content")
-    build_dir = os.path.join(PROJECT_ROOT, "build")
-    logging.debug(f"Starting build script with files_dir={files_dir}, build_dir={build_dir}")
-    config = load_yaml_config(config_path)
-    toc = config.get("toc", [])
-    results = get_markdown_source_and_output_paths(toc, files_dir, build_dir)
-    logging.debug(f"TOC entries found: {len(results)}")
-    for src, out, entry in results:
-        print(f"Source: {src}\nOutput: {out}\nTOC Entry: {entry}\n")
-        logging.debug(f"TOC entry: src={src}, out={out}, entry={entry}")
-    logging.debug(f"[DEBUG] Starting markdown build for {len(results)} files.")
-    if not results:
-        print("[DEBUG] No markdown files found in TOC. Check your _config.yml.")
-        logging.debug("No markdown files found in TOC. Exiting.")
-    else:
-        print("[DEBUG] Attempting to build all markdown files...")
-        logging.debug("Calling build_all_markdown_files...")
-        build_all_markdown_files(files_dir, build_dir)
-        logging.debug("[DEBUG] Finished build_all_markdown_files.")
-        # Autogenerate index.html for each section with children
-
-# def walk_sections(entries):
-#     for entry in entries:
-#         if 'children' in entry and isinstance(entry['children'], list):
-#             section_slug = slugify(entry.get('title', 'section'))
-#             output_dir = os.path.join(build_dir, section_slug)
-#             if not os.path.exists(output_dir):
-#                 os.makedirs(output_dir, exist_ok=True)
-#             create_section_index_html(entry, output_dir, toc)
-#             logging.info(f"Autogenerated index.html for section: {section_slug}")
-#             # Recursively handle nested sections
-#             walk_sections(entry['children'])
-#         walk_sections(toc)
-#         # Generate top-level index.html in build/
-#         top_level_dir = build_dir
-#         create_section_index_html({'title': 'Home', 'children': toc}, top_level_dir, toc)
-#         logging.info("Autogenerated top-level index.html")
-#         print("[DEBUG] Build process completed. Check the log file for details.")
-#         logging.debug("Build process completed.")
+    build_all_markdown_files(BUILD_FILES_DIR, BUILD_HTML_DIR)
