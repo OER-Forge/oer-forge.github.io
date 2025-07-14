@@ -110,9 +110,9 @@ def log_event(message, level="INFO"):
     timestamp = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     log_line = f"[{timestamp}] [{level}] {message}\n"
     print(log_line, end="")
-    # Write to scan.log in project root
+    # Write to db.log in project root
     project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    log_path = os.path.join(project_root, 'scan.log')
+    log_path = os.path.join(project_root, 'db.log')
     try:
         with open(log_path, 'a', encoding='utf-8') as log_file:
             log_file.write(log_line)
@@ -127,7 +127,6 @@ def get_db_connection(db_path=None):
         db_path (str, optional): Path to the SQLite database file.
             If None, defaults to <project_root>/db/sqlite.db.
 
-    Returns:
         sqlite3.Connection: A connection object to the SQLite database.
     """
     if db_path is None:
@@ -143,7 +142,6 @@ def insert_file_records(file_records, db_path=None):
         file_records (list of dict): Each dict contains file metadata fields.
         db_path (str, optional): Path to the SQLite database file.
 
-    Returns:
         list of int: List of inserted file_ids (primary keys).
 
     Example file_record dict keys:
@@ -151,8 +149,15 @@ def insert_file_records(file_records, db_path=None):
           referenced_page, relative_path, absolute_path, cell_type,
           is_code_generated, is_embedded
     """
-    conn = get_db_connection(db_path)
-    cursor = conn.cursor()
+def insert_file_records(file_records, db_path=None, conn=None, cursor=None):
+    import threading
+    import time
+    close_conn = False
+    if conn is None or cursor is None:
+        conn = get_db_connection(db_path)
+        log_event(f"[DEBUG][{os.getpid()}][{threading.get_ident()}] Opened DB connection in insert_file_records at {time.time()}", level="DEBUG")
+        cursor = conn.cursor()
+        close_conn = True
     file_ids = []
     for file_record in file_records:
         cursor.execute(
@@ -176,8 +181,16 @@ def insert_file_records(file_records, db_path=None):
             )
         )
         file_ids.append(cursor.lastrowid)
-    conn.commit()
-    conn.close()
+    log_event(f"[DEBUG][{os.getpid()}][{threading.get_ident()}] Committing DB in insert_file_records at {time.time()}", level="DEBUG")
+    try:
+        conn.commit()
+    except Exception as e:
+        import traceback
+        log_event(f"[ERROR][{os.getpid()}][{threading.get_ident()}] Commit failed in insert_file_records: {e}\n{traceback.format_exc()}", level="ERROR")
+        raise
+    if close_conn:
+        log_event(f"[DEBUG][{os.getpid()}][{threading.get_ident()}] Closing DB connection in insert_file_records at {time.time()}", level="DEBUG")
+        conn.close()
     return file_ids
 
 def link_files_to_pages(file_page_pairs, db_path=None):
@@ -190,8 +203,15 @@ def link_files_to_pages(file_page_pairs, db_path=None):
 
     This function creates associations between files and the pages where they are referenced.
     """
-    conn = get_db_connection(db_path)
-    cursor = conn.cursor()
+def link_files_to_pages(file_page_pairs, db_path=None, conn=None, cursor=None):
+    import threading
+    import time
+    close_conn = False
+    if conn is None or cursor is None:
+        conn = get_db_connection(db_path)
+        log_event(f"[DEBUG][{os.getpid()}][{threading.get_ident()}] Opened DB connection in link_files_to_pages at {time.time()}", level="DEBUG")
+        cursor = conn.cursor()
+        close_conn = True
     for file_id, page_path in file_page_pairs:
         cursor.execute(
             """
@@ -200,8 +220,16 @@ def link_files_to_pages(file_page_pairs, db_path=None):
             """,
             (file_id, page_path)
         )
-    conn.commit()
-    conn.close()
+    log_event(f"[DEBUG][{os.getpid()}][{threading.get_ident()}] Committing DB in link_files_to_pages at {time.time()}", level="DEBUG")
+    try:
+        conn.commit()
+    except Exception as e:
+        import traceback
+        log_event(f"[ERROR][{os.getpid()}][{threading.get_ident()}] Commit failed in link_files_to_pages: {e}\n{traceback.format_exc()}", level="ERROR")
+        raise
+    if close_conn:
+        log_event(f"[DEBUG][{os.getpid()}][{threading.get_ident()}] Closing DB connection in link_files_to_pages at {time.time()}", level="DEBUG")
+        conn.close()
 
 def pretty_print_table(table_name, db_path=None):
     """
@@ -216,8 +244,15 @@ def pretty_print_table(table_name, db_path=None):
     if db_path is None:
         project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         db_path = os.path.join(project_root, 'db', 'sqlite.db')
-    conn = sqlite3.connect(db_path)
-    cursor = conn.cursor()
+def pretty_print_table(table_name, db_path=None, conn=None, cursor=None):
+    import threading
+    import time
+    close_conn = False
+    if conn is None or cursor is None:
+        conn = sqlite3.connect(db_path)
+        log_event(f"[DEBUG][{os.getpid()}][{threading.get_ident()}] Opened DB connection in pretty_print_table at {time.time()}", level="DEBUG")
+        cursor = conn.cursor()
+        close_conn = True
     cursor.execute(f"SELECT * FROM {table_name}")
     rows = cursor.fetchall()
     col_names = [description[0] for description in cursor.description]
@@ -225,10 +260,12 @@ def pretty_print_table(table_name, db_path=None):
     col_widths = [max(len(str(col)), max((len(str(row[i])) for row in rows), default=0)) for i, col in enumerate(col_names)]
     # Print header row
     header = " | ".join(str(col).ljust(col_widths[i]) for i, col in enumerate(col_names))
-    print(header)
-    print("-" * len(header))
+    log_event(header, level="INFO")
+    log_event("-" * len(header), level="INFO")
     # Print each row
     for row in rows:
-        print(" | ".join(str(row[i]).ljust(col_widths[i]) for i in range(len(row))))
-    conn.close()
+        log_event(" | ".join(str(row[i]).ljust(col_widths[i]) for i in range(len(row))), level="INFO")
+    if close_conn:
+        log_event(f"[DEBUG][{os.getpid()}][{threading.get_ident()}] Closing DB connection in pretty_print_table at {time.time()}", level="DEBUG")
+        conn.close()
 

@@ -4,6 +4,25 @@ scan.py: Asset database logic for pages and files only.
 import os
 import sqlite3
 
+# ----
+# Logging Helper for scan.py
+# ----
+def log_event(message, level="INFO"):
+    """
+    Logs an event to both stdout and scan.log in the project root.
+    """
+    import datetime
+    timestamp = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    log_line = f"[{timestamp}] [{level}] {message}\n"
+    print(log_line, end="")
+    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    log_path = os.path.join(project_root, 'scan.log')
+    try:
+        with open(log_path, 'a', encoding='utf-8') as log_file:
+            log_file.write(log_line)
+    except Exception as e:
+        print(f"[ERROR] Could not write to scan.log: {e}")
+
 def batch_read_files(file_paths):
     """
     Reads multiple files and returns their contents as a dict: {path: content}
@@ -22,7 +41,7 @@ def batch_read_files(file_paths):
             else:
                 contents[path] = None
         except Exception as e:
-            print(f"[ERROR] Could not read {path}: {e}")
+            log_event(f"Could not read {path}: {e}", level="ERROR")
             contents[path] = None
     return contents
 
@@ -34,7 +53,7 @@ def read_markdown_file(path):
         with open(path, 'r', encoding='utf-8') as f:
             return f.read()
     except Exception as e:
-        print(f"[ERROR] Could not read markdown file {path}: {e}")
+        log_event(f"Could not read markdown file {path}: {e}", level="ERROR")
         return None
 
 def read_notebook_file(path):
@@ -46,7 +65,7 @@ def read_notebook_file(path):
         with open(path, 'r', encoding='utf-8') as f:
             return json.load(f)
     except Exception as e:
-        print(f"[ERROR] Could not read notebook file {path}: {e}")
+        log_event(f"Could not read notebook file {path}: {e}", level="ERROR")
         return None
 
 def read_docx_file(path):
@@ -62,10 +81,10 @@ def read_docx_file(path):
             text.append(para.text)
         return '\n'.join(text)
     except ImportError:
-        print("[ERROR] python-docx is not installed. Run 'pip install python-docx' in your environment.")
+        log_event("python-docx is not installed. Run 'pip install python-docx' in your environment.", level="ERROR")
         return None
     except Exception as e:
-        print(f"[ERROR] Could not read docx file {path}: {e}")
+        log_event(f"Could not read docx file {path}: {e}", level="ERROR")
         return None
 
 def batch_extract_assets(contents_dict, content_type, **kwargs):
@@ -119,7 +138,10 @@ def batch_extract_assets(contents_dict, content_type, **kwargs):
         '.ipynb': 'application/x-ipynb+json',
     }
     # Insert each source file as a page if not present
+    import threading
+    import time
     conn = get_db_connection()
+    log_event(f"[DEBUG][{os.getpid()}][{threading.get_ident()}] Opened DB connection in batch_extract_assets at {time.time()}", level="DEBUG")
     cursor = conn.cursor()
     # Add mime_type column to content if not present
     cursor.execute("PRAGMA table_info(content)")
@@ -135,7 +157,13 @@ def batch_extract_assets(contents_dict, content_type, **kwargs):
         cursor.execute("SELECT id FROM content WHERE source_path=?", (source_path,))
         if cursor.fetchone() is None:
             cursor.execute("INSERT INTO content (source_path, output_path, is_autobuilt, mime_type) VALUES (?, ?, ?, ?)", (source_path, None, 0, mime_type))
-    conn.commit()
+    log_event(f"[DEBUG][{os.getpid()}][{threading.get_ident()}] Committing DB in batch_extract_assets at {time.time()}", level="DEBUG")
+    try:
+        conn.commit()
+    except Exception as e:
+        import traceback
+        log_event(f"[ERROR][{os.getpid()}][{threading.get_ident()}] Commit failed in batch_extract_assets: {e}\n{traceback.format_exc()}", level="ERROR")
+        raise
     # Extract assets for each file type
     for path, content in contents_dict.items():
         ext = os.path.splitext(path)[1].lower()
@@ -188,6 +216,7 @@ def batch_extract_assets(contents_dict, content_type, **kwargs):
             idx += 1
     if file_page_links:
         link_files_to_pages(file_page_links)
+    log_event(f"[DEBUG][{os.getpid()}][{threading.get_ident()}] Closing DB connection in batch_extract_assets at {time.time()}", level="DEBUG")
     conn.close()
     return assets
 
@@ -288,7 +317,7 @@ def extract_linked_files_from_docx_content(docx_path, page_id=None):
                     'is_embedded': True
                 })
     except Exception as e:
-        print(f"[ERROR] Could not extract assets from docx {docx_path}: {e}")
+        log_event(f"Could not extract assets from docx {docx_path}: {e}", level="ERROR")
     return assets
 
 def populate_site_info_from_config(config_path):
@@ -311,8 +340,11 @@ def populate_site_info_from_config(config_path):
             header_html = hf.read()
     except Exception:
         header_html = ''
-    print('[DEBUG] header_html read from file (first 500 chars):', repr(header_html)[:500])
+    log_event(f"[DEBUG] header_html read from file (first 500 chars): {repr(header_html)[:500]}", level="DEBUG")
+    import threading
+    import time
     conn = sqlite3.connect(db_path)
+    log_event(f"[DEBUG][{os.getpid()}][{threading.get_ident()}] Opened DB connection in populate_site_info_from_config at {time.time()}", level="DEBUG")
     cursor = conn.cursor()
     cursor.execute("DELETE FROM site_info")
     cursor.execute(
@@ -335,7 +367,14 @@ def populate_site_info_from_config(config_path):
             header_html
         )
     )
-    conn.commit()
+    log_event(f"[DEBUG][{os.getpid()}][{threading.get_ident()}] Committing DB in populate_site_info_from_config at {time.time()}", level="DEBUG")
+    try:
+        conn.commit()
+    except Exception as e:
+        import traceback
+        log_event(f"[ERROR][{os.getpid()}][{threading.get_ident()}] Commit failed in populate_site_info_from_config: {e}\n{traceback.format_exc()}", level="ERROR")
+        raise
+    log_event(f"[DEBUG][{os.getpid()}][{threading.get_ident()}] Closing DB connection in populate_site_info_from_config at {time.time()}", level="DEBUG")
     conn.close()
 
 # ----
@@ -390,7 +429,10 @@ def scan_toc_and_populate_db(config_path):
         config = yaml.safe_load(f)
     toc = config.get('toc', [])
 
+    import threading
+    import time
     conn = get_db_connection()
+    log_event(f"[DEBUG][{os.getpid()}][{threading.get_ident()}] Opened DB connection in scan_toc_and_populate_db at {time.time()}", level="DEBUG")
     cursor = conn.cursor()
     cursor.execute("DELETE FROM content")
     seen_paths = set()
@@ -406,11 +448,13 @@ def scan_toc_and_populate_db(config_path):
                 ext = os.path.splitext(source_path)[1].lower()
                 output_path = None
                 if source_path in seen_paths:
-                    print(f"[WARN] TOC: Duplicate file path '{source_path}' in toc")
+                    log_event(f"[WARN] TOC: Duplicate file path '{source_path}' in toc", level="WARN")
+                    pass
                 seen_paths.add(source_path)
                 abs_path = os.path.join(project_root, source_path)
                 if not os.path.exists(abs_path):
-                    print(f"[ERROR] TOC: Missing file '{source_path}' (expected at {abs_path})")
+                    log_event(f"[ERROR] TOC: Missing file '{source_path}' (expected at {abs_path})", level="ERROR")
+                    pass
                 flags = get_possible_conversions(ext)
                 content_record = {
                     'source_path': source_path,
@@ -435,7 +479,13 @@ def scan_toc_and_populate_db(config_path):
 
     all_content_records = walk_toc(toc)
     insert_file_records(all_content_records, db_path=os.path.join(project_root, 'db', 'sqlite.db'))
-    conn.commit()
+    log_event(f"[DEBUG][{os.getpid()}][{threading.get_ident()}] Committing DB in scan_toc_and_populate_db at {time.time()}", level="DEBUG")
+    try:
+        conn.commit()
+    except Exception as e:
+        import traceback
+        log_event(f"[ERROR][{os.getpid()}][{threading.get_ident()}] Commit failed in scan_toc_and_populate_db: {e}\n{traceback.format_exc()}", level="ERROR")
+        raise
 
     # Read all files and extract assets
     rel_file_paths = [os.path.relpath(p, project_root) for p in file_paths if os.path.exists(p)]
@@ -449,4 +499,5 @@ def scan_toc_and_populate_db(config_path):
         elif ext == '.docx':
             batch_extract_assets({path: contents[path]}, 'docx')
         # Add more types as needed
+    log_event(f"[DEBUG][{os.getpid()}][{threading.get_ident()}] Closing DB connection in scan_toc_and_populate_db at {time.time()}", level="DEBUG")
     conn.close()
