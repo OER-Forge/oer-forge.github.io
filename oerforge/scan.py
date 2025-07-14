@@ -77,16 +77,46 @@ def batch_extract_assets(contents_dict, content_type, **kwargs):
     """
     from oerforge.db_utils import insert_file_records, link_files_to_pages, get_db_connection
     assets = {}
-    # Helper: MIME type mapping
+    # Helper: MIME type mapping (media, document, and data types)
     mime_map = {
-        '.md': 'text/markdown',
-        '.ipynb': 'application/x-ipynb+json',
-        '.docx': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        # Images
         '.png': 'image/png',
         '.jpg': 'image/jpeg',
         '.jpeg': 'image/jpeg',
         '.gif': 'image/gif',
         '.svg': 'image/svg+xml',
+        '.bmp': 'image/bmp',
+        '.webp': 'image/webp',
+        # Video
+        '.mp4': 'video/mp4',
+        '.webm': 'video/webm',
+        '.mov': 'video/quicktime',
+        '.avi': 'video/x-msvideo',
+        '.mkv': 'video/x-matroska',
+        # Audio
+        '.mp3': 'audio/mpeg',
+        '.wav': 'audio/wav',
+        '.ogg': 'audio/ogg',
+        '.flac': 'audio/flac',
+        # Documents
+        '.pdf': 'application/pdf',
+        '.docx': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        '.xlsx': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        '.pptx': 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+        # Data files
+        '.csv': 'text/csv',
+        '.tsv': 'text/tab-separated-values',
+        '.json': 'application/json',
+        '.xml': 'application/xml',
+        '.npy': 'application/octet-stream',
+        '.txt': 'text/plain',
+        '.zip': 'application/zip',
+        '.tar': 'application/x-tar',
+        '.gz': 'application/gzip',
+        '.rst': 'text/x-rst',
+        # Markdown/Notebook
+        '.md': 'text/markdown',
+        '.ipynb': 'application/x-ipynb+json',
     }
     # Insert each source file as a page if not present
     conn = get_db_connection()
@@ -100,17 +130,20 @@ def batch_extract_assets(contents_dict, content_type, **kwargs):
     for path, content in contents_dict.items():
         ext = os.path.splitext(path)[1].lower()
         if content_type == 'markdown':
-            assets[path] = extract_linked_files_from_markdown_content(content, page_id=None)
+            assets[path] = [a for a in extract_linked_files_from_markdown_content(content, page_id=None)
+                            if mime_map.get(os.path.splitext(a.get('path',''))[1].lower())]
         elif content_type == 'notebook':
             if content and isinstance(content, dict) and 'cells' in content:
                 cell_assets = []
                 for cell in content['cells']:
-                    cell_assets.extend(extract_linked_files_from_notebook_cell_content(cell, nb_path=path))
+                    cell_assets.extend([a for a in extract_linked_files_from_notebook_cell_content(cell, nb_path=path)
+                                       if mime_map.get(os.path.splitext(a.get('path',''))[1].lower())])
                 assets[path] = cell_assets
             else:
                 assets[path] = []
         elif content_type == 'docx':
-            assets[path] = extract_linked_files_from_docx_content(path, page_id=None) if content else []
+            assets[path] = [a for a in extract_linked_files_from_docx_content(path, page_id=None)
+                            if mime_map.get(os.path.splitext(a.get('path',''))[1].lower())] if content else []
         else:
             assets[path] = []
     # Insert asset records into files table
@@ -172,6 +205,7 @@ def extract_linked_files_from_notebook_cell_content(cell, nb_path=None):
     Returns a list of file records.
     """
     assets = []
+    # Extract markdown-linked images
     if cell.get('cell_type') == 'markdown':
         source = cell.get('source', [])
         if isinstance(source, list):
@@ -181,6 +215,30 @@ def extract_linked_files_from_notebook_cell_content(cell, nb_path=None):
         assets.extend(extract_linked_files_from_markdown_content(text, page_id=None))
         for asset in assets:
             asset['notebook'] = nb_path
+    # Extract embedded/code-produced images from outputs
+    if cell.get('cell_type') == 'code' and 'outputs' in cell:
+        for idx, output in enumerate(cell['outputs']):
+            # Typical image output: {'data': {'image/png': ...}, ...}
+            if 'data' in output:
+                for img_type in ['image/png', 'image/jpeg', 'image/gif', 'image/svg+xml']:
+                    if img_type in output['data']:
+                        ext = {
+                            'image/png': '.png',
+                            'image/jpeg': '.jpg',
+                            'image/gif': '.gif',
+                            'image/svg+xml': '.svg',
+                        }[img_type]
+                        nb_name = os.path.basename(nb_path) if nb_path else 'notebook'
+                        rel_path = f'notebook_embedded/{nb_name}/cell{idx}{ext}'
+                        assets.append({
+                            'type': 'asset',
+                            'path': rel_path,
+                            'notebook': nb_path,
+                            'filename': f'cell{idx}{ext}',
+                            'extension': ext,
+                            'is_embedded': True,
+                            'is_code_generated': True
+                        })
     return assets
 
 def extract_linked_files_from_docx_content(docx_path, page_id=None):
@@ -194,6 +252,7 @@ def extract_linked_files_from_docx_content(docx_path, page_id=None):
         doc = Document(docx_path)
         import re
         asset_pattern = re.compile(r'(https?://[^\s]+|assets/[^\s]+|images/[^\s]+)')
+        # Extract text-based links as before
         for para in doc.paragraphs:
             matches = asset_pattern.findall(para.text)
             for asset_path in matches:
@@ -201,6 +260,22 @@ def extract_linked_files_from_docx_content(docx_path, page_id=None):
                     'type': 'asset',
                     'path': asset_path,
                     'page_id': page_id
+                })
+        # Extract embedded images
+        for rel in doc.part.rels.values():
+            if rel.reltype == 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/image':
+                img_part = rel.target_part
+                img_name = os.path.basename(img_part.partname)
+                img_ext = os.path.splitext(img_name)[1].lower()
+                # Use a relative path for DB, e.g. 'docx_embedded/<docx_filename>/<img_name>'
+                rel_path = f'docx_embedded/{os.path.basename(docx_path)}/{img_name}'
+                assets.append({
+                    'type': 'asset',
+                    'path': rel_path,
+                    'page_id': page_id,
+                    'filename': img_name,
+                    'extension': img_ext,
+                    'is_embedded': True
                 })
     except Exception as e:
         print(f"[ERROR] Could not extract assets from docx {docx_path}: {e}")
