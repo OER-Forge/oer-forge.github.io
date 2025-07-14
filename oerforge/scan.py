@@ -439,10 +439,12 @@ def scan_toc_and_populate_db(config_path):
     file_paths = []
     # Removed outdated import of insert_file_records; link_files_to_pages is already imported above
 
-    def walk_toc(items):
+    def walk_toc(items, parent_id=None):
         content_records = []
-        for item in items:
+        for idx, item in enumerate(items):
             file_path = item.get('file')
+            title = item.get('title', None)
+            this_id = None
             if file_path:
                 source_path = file_path if file_path.startswith('content/') else f'content/{file_path}'
                 ext = os.path.splitext(source_path)[1].lower()
@@ -457,6 +459,7 @@ def scan_toc_and_populate_db(config_path):
                     pass
                 flags = get_possible_conversions(ext)
                 content_record = {
+                    'title': title,
                     'source_path': source_path,
                     'output_path': output_path,
                     'is_autobuilt': 0,
@@ -467,15 +470,25 @@ def scan_toc_and_populate_db(config_path):
                     'can_convert_docx': flags['can_convert_docx'],
                     'can_convert_ppt': flags['can_convert_ppt'],
                     'can_convert_jupyter': flags['can_convert_jupyter'],
-                    'can_convert_ipynb': flags['can_convert_ipynb']
+                    'can_convert_ipynb': flags['can_convert_ipynb'],
+                    'parent_id': parent_id,
+                    'order': idx
                 }
+                # Insert record and get its id for children
+                inserted_ids = insert_records('content', [content_record], db_path=os.path.join(project_root, 'db', 'sqlite.db'), conn=conn, cursor=cursor)
+                this_id = inserted_ids[0] if inserted_ids else None
+                content_record['id'] = this_id
                 content_records.append(content_record)
                 file_paths.append(abs_path)
-            # Recursively process children
             children = item.get('children', [])
             if children:
-                content_records.extend(walk_toc(children))
+                child_records = walk_toc(children, parent_id=this_id)
+                content_records.extend(child_records)
         return content_records
+
+    # Usage in scan_toc_and_populate_db:
+    all_content_records = walk_toc(toc)
+    # No need to call insert_records for all_content_records here, as
 
     all_content_records = walk_toc(toc)
     insert_records('content', all_content_records, db_path=os.path.join(project_root, 'db', 'sqlite.db'), conn=conn, cursor=cursor)

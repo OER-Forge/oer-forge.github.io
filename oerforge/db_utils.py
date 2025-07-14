@@ -57,10 +57,13 @@ def initialize_database():
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS content (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
+            title TEXT,
             source_path TEXT,
             output_path TEXT,
             is_autobuilt BOOLEAN DEFAULT 0,
             mime_type TEXT,
+            parent_id INTEGER DEFAULT NULL,
+            "order" INTEGER DEFAULT NULL,
             can_convert_md BOOLEAN DEFAULT NULL,
             can_convert_tex BOOLEAN DEFAULT NULL,
             can_convert_pdf BOOLEAN DEFAULT NULL,
