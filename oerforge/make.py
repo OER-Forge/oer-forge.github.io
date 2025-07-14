@@ -326,8 +326,13 @@ def fix_image_paths(html_body, html_path=None):
 def convert_markdown_to_html(md_path, html_path):
     """Convert a markdown file to HTML and write to html_path using templates and accessibility features."""
     import markdown
+    import logging
+    import re
+
+    logging.debug(f"Reading markdown file: {md_path}")
     with open(md_path, 'r', encoding='utf-8') as f:
         md_text = f.read()
+    logging.debug(f"Converting markdown to HTML for: {md_path}")
     html_body = markdown.markdown(md_text, extensions=['fenced_code', 'codehilite', 'tables', 'toc', 'meta'])
     html_body = html_body.replace('<table>', '<table role="table">')
     html_body = html_body.replace('<th>', '<th role="columnheader">')
@@ -356,19 +361,21 @@ def convert_markdown_to_html(md_path, html_path):
         child_links = _collect_links(toc_entry['children'])
         current_dir = os.path.dirname(html_path)
         links_html = '<ul>'
-        for title, target_html in child_links:
+        for child_title, target_html in child_links:
             abs_target_html = os.path.join(PROJECT_ROOT, 'build', target_html) if not os.path.isabs(target_html) else target_html
             rel_link = os.path.relpath(abs_target_html, start=current_dir)
             mark = '✓' if os.path.exists(abs_target_html) else '✗'
-            links_html += f'<li><a href="{rel_link}">{title}</a> [{mark}]</li>'
+            links_html += f'<li><a href="{rel_link}">{child_title}</a> [{mark}]</li>'
         links_html += '</ul>'
         html_body += links_html
     nav_html = generate_nav_menu(toc, current_html_path=html_path)
     header = create_header(title, nav_html)
     footer = create_footer()
     html_output = render_page(title, html_body, header, footer, html_path)
+    logging.debug(f"Writing HTML output to: {html_path}")
     with open(html_path, 'w', encoding='utf-8') as f:
         f.write(html_output)
+    logging.info(f"Wrote HTML file: {html_path}")
 
 def _find_entry_by_html(html_path, toc):
     """Find the TOC entry for this page."""
@@ -437,66 +444,41 @@ def create_section_index_html(section_entry, output_dir, toc):
     logging.info(f"Created section index with child links: {index_html_path}")
 
 def get_markdown_source_and_output_paths(toc: list, files_dir: str, build_dir: str) -> list:
-    """Recursively walk the toc: structure and compute source/output paths for markdown files."""
-    import markdown
-    logging.debug(f"Reading markdown file: {md_path}")
-    with open(md_path, 'r', encoding='utf-8') as f:
-        md_text = f.read()
-    logging.debug(f"Converting markdown to HTML for: {md_path}")
-    html_body = markdown.markdown(md_text, extensions=['fenced_code', 'codehilite', 'tables', 'toc', 'meta'])
-    html_body = html_body.replace('<table>', '<table role="table">')
-    html_body = html_body.replace('<th>', '<th role="columnheader">')
-    html_body = html_body.replace('<td>', '<td role="cell">')
-    html_body = html_body.replace('<ul>', '<ul role="list">')
-    html_body = html_body.replace('<ol>', '<ol role="list">')
-    html_body = html_body.replace('<li>', '<li role="listitem">')
-    html_body = html_body.replace('<nav>', '<nav role="navigation">')
-    html_body = html_body.replace('<header>', '<header role="banner">')
-    html_body = html_body.replace('<footer>', '<footer role="contentinfo">')
-    html_body = fix_image_paths(html_body, html_path)
-    mathjax_script = '<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>'
-    html_body += mathjax_script
-    match = re.search(r'^#\s+(.+)', md_text, re.MULTILINE)
-    if match:
-        title = match.group(1).strip()
-        html_body = re.sub(r'<h1[^>]*>.*?</h1>', '', html_body, count=1)
-    else:
-        title = "Untitled"
-    config_path = os.path.join(PROJECT_ROOT, "_config.yml")
-    config = load_yaml_config(config_path)
-    toc = config.get("toc", [])
-    toc_entry = _find_entry_by_html(html_path, toc)
-    links_html = ''
-    if toc_entry and 'children' in toc_entry and isinstance(toc_entry['children'], list):
-        child_links = _collect_links(toc_entry['children'])
-        current_dir = os.path.dirname(html_path)
-        links_html = '<ul>'
-        for title, target_html in child_links:
-            abs_target_html = os.path.join(PROJECT_ROOT, 'build', target_html) if not os.path.isabs(target_html) else target_html
-            rel_link = os.path.relpath(abs_target_html, start=current_dir)
-            mark = '✓' if os.path.exists(abs_target_html) else '✗'
-            links_html += f'<li><a href="{rel_link}">{title}</a> [{mark}]</li>'
-        links_html += '</ul>'
-        html_body += links_html
-    nav_html = generate_nav_menu(toc, current_html_path=html_path)
-    header = create_header(title, nav_html)
-    footer = create_footer()
-    html_output = render_page(title, html_body, header, footer, html_path)
-    logging.debug(f"Writing HTML output to: {html_path}")
-    with open(html_path, 'w', encoding='utf-8') as f:
-        f.write(html_output)
-    logging.info(f"Wrote HTML file: {html_path}")
-    build_all_markdown_files(BUILD_FILES_DIR, BUILD_HTML_DIR)
-    # clean_and_copy_html_to_docs()  # (commented out, not defined)
+    """
+    Recursively walk the toc: structure and compute source/output paths for markdown files.
+    Returns a list of (source_path, output_path, toc_entry) tuples.
+    """
+    results = []
+    def walk(entries):
+        for entry in entries:
+            if 'file' in entry:
+                src_path = os.path.join(files_dir, entry['file'])
+                out_path = os.path.join(build_dir, os.path.splitext(entry['file'])[0] + '.html')
+                results.append((src_path, out_path, entry))
+            if 'children' in entry and isinstance(entry['children'], list):
+                walk(entry['children'])
+    walk(toc)
+    return results
 
 if __name__ == "__main__":
     setup_logging()
     config_path = os.path.join(PROJECT_ROOT, "_config.yml")
-    config = load_yaml_config(config_path)
-    toc = config.get("toc", [])
     files_dir = os.path.join(PROJECT_ROOT, "content")
     build_dir = os.path.join(PROJECT_ROOT, "build")
+    logging.debug(f"Starting build script with files_dir={files_dir}, build_dir={build_dir}")
+    config = load_yaml_config(config_path)
+    toc = config.get("toc", [])
     results = get_markdown_source_and_output_paths(toc, files_dir, build_dir)
+    logging.debug(f"TOC entries found: {len(results)}")
     for src, out, entry in results:
         print(f"Source: {src}\nOutput: {out}\nTOC Entry: {entry}\n")
-    print("Check the log file for missing file errors.")
+        logging.debug(f"TOC entry: src={src}, out={out}, entry={entry}")
+    if not results:
+        print("[DEBUG] No markdown files found in TOC. Check your _config.yml.")
+        logging.debug("No markdown files found in TOC. Exiting.")
+    else:
+        print("[DEBUG] Attempting to build all markdown files...")
+        logging.debug("Calling build_all_markdown_files...")
+        build_all_markdown_files(files_dir, build_dir)
+        print("[DEBUG] Build process completed. Check the log file for details.")
+        logging.debug("Build process completed.")

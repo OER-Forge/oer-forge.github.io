@@ -1,35 +1,4 @@
-# ------------------------------------------------------------------------------
-# General-purpose Query Function
-# ------------------------------------------------------------------------------
-def get_records(table_name, where_clause=None, params=None, db_path=None, conn=None, cursor=None):
-    """
-    Fetch records from a table with optional WHERE clause and parameters.
-    Args:
-        table_name (str): Name of the table to query.
-        where_clause (str, optional): SQL WHERE clause (without 'WHERE').
-        params (tuple or list, optional): Parameters for the WHERE clause.
-        db_path (str, optional): Path to the SQLite database file.
-        conn, cursor: Optional existing connection/cursor.
-    Returns:
-        list of dict: List of records as dictionaries.
-    """
-    close_conn = False
-    if conn is None or cursor is None:
-        conn = get_db_connection(db_path)
-        cursor = conn.cursor()
-        close_conn = True
-    sql = f"SELECT * FROM {table_name}"
-    if where_clause:
-        sql += f" WHERE {where_clause}"
-    if params is None:
-        params = ()
-    cursor.execute(sql, params)
-    rows = cursor.fetchall()
-    col_names = [desc[0] for desc in cursor.description]
-    records = [dict(zip(col_names, row)) for row in rows]
-    if close_conn:
-        conn.close()
-    return records
+# 
 import sqlite3
 import os
 
@@ -126,6 +95,38 @@ def initialize_database():
             header TEXT
         );
     """)
+
+# General-purpose Query Function
+# 
+def get_records(table_name, where_clause=None, params=None, db_path=None, conn=None, cursor=None):
+    """
+    Fetch records from a table with optional WHERE clause and parameters.
+    Args:
+        table_name (str): Name of the table to query.
+        where_clause (str, optional): SQL WHERE clause (without 'WHERE').
+        params (tuple or list, optional): Parameters for the WHERE clause.
+        db_path (str, optional): Path to the SQLite database file.
+        conn, cursor: Optional existing connection/cursor.
+    Returns:
+        list of dict: List of records as dictionaries.
+    """
+    close_conn = False
+    if conn is None or cursor is None:
+        conn = get_db_connection(db_path)
+        cursor = conn.cursor()
+        close_conn = True
+    sql = f"SELECT * FROM {table_name}"
+    if where_clause:
+        sql += f" WHERE {where_clause}"
+    if params is None:
+        params = ()
+    cursor.execute(sql, params)
+    rows = cursor.fetchall()
+    col_names = [desc[0] for desc in cursor.description]
+    records = [dict(zip(col_names, row)) for row in rows]
+    if close_conn:
+        conn.close()
+    return records
 
 def log_event(message, level="INFO"):
     """
