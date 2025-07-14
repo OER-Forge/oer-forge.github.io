@@ -1,3 +1,33 @@
+def batch_read_files(file_paths):
+    """
+    Reads multiple files and returns their contents as a dict: {path: content}
+    """
+    # TODO: Implement batch file reading logic
+    pass
+
+def batch_extract_assets(contents_dict, content_type, **kwargs):
+    """
+    Extracts assets from multiple file contents.
+    contents_dict: {path: content}
+    Returns a dict: {path: [asset_records]}
+    """
+    # TODO: Implement batch asset extraction logic
+    pass
+def insert_file_records(file_records):
+    """
+    Batch inserts multiple file records into the 'files' table.
+    file_records: list of file record dicts.
+    Returns a list of inserted file_ids.
+    """
+    # TODO: Implement batch insertion logic
+    pass
+def link_files_to_pages(file_page_pairs):
+    """
+    Batch inserts records into the 'pages_files' table.
+    file_page_pairs: list of (file_id, page_path) tuples.
+    """
+    # TODO: Implement batch linking logic
+    pass
 """
 scan.py: Asset database logic for pages and files only.
 """
@@ -116,6 +146,45 @@ def populate_site_info_from_config(config_path):
     conn.commit()
     conn.close()
 
+
+def extract_linked_files_from_content(content, content_type, **kwargs):
+    """
+    Dispatches asset extraction based on content_type ('markdown', 'notebook_cell', 'docx').
+    Returns a list of file records.
+    """
+    if content_type == 'markdown':
+        return extract_linked_files_from_markdown_content(content, **kwargs)
+    elif content_type == 'notebook_cell':
+        return extract_linked_files_from_notebook_cell_content(content, **kwargs)
+    elif content_type == 'docx':
+        return extract_linked_files_from_docx_content(content, **kwargs)
+    else:
+        return []
+
+def extract_linked_files_from_markdown_content(md_text, page_id):
+    """
+    Extracts asset links from markdown text.
+    Returns a list of file records.
+    """
+    # TODO: Implement markdown asset extraction logic
+    pass
+
+def extract_linked_files_from_notebook_cell_content(cell, nb_path):
+    """
+    Extracts asset links from a notebook cell.
+    Returns a list of file records.
+    """
+    # TODO: Implement notebook cell asset extraction logic
+    pass
+
+def extract_linked_files_from_docx_content(docx_path, page_id):
+    """
+    Extracts asset links from a docx file.
+    Returns a list of file records.
+    """
+    # TODO: Implement docx asset extraction logic
+    pass
+
 def extract_linked_files_from_markdown(md_path, page_id):
     """
     Parses a markdown file and extracts all linked files (images, PDFs, docs, remote files), ignoring HTML and YouTube links.
@@ -206,18 +275,33 @@ def link_file_to_page(file_id, page_path):
     conn.close()
 
 def scan_and_populate_files_db(md_dir):
+
     """
-    Scans all markdown files in md_dir, extracts linked files, and populates files and pages_files tables.
+    Orchestrates modular asset scanning for markdown, notebook, and docx files.
     """
-    for dirpath, dirnames, filenames in os.walk(md_dir):
-        for filename in filenames:
-            if filename.startswith('.') or not filename.lower().endswith('.md'):
-                continue
-            md_path = os.path.join(dirpath, filename)
-            file_records = extract_linked_files_from_markdown(md_path, md_path)
-            for file_record in file_records:
-                file_id = insert_file_record(file_record)
-                link_file_to_page(file_id, md_path)
+    # Example usage: scan_and_populate_files_db(md_dir, toc_path)
+    pass
+
+def scan_markdown_files(md_dir, toc_path):
+    """
+    Scans markdown files listed in toc and populates files and pages_files tables.
+    """
+    # TODO: Implement markdown scanning logic
+    pass
+
+def scan_notebook_files(notebook_paths):
+    """
+    Scans notebook files and populates files and pages_files tables.
+    """
+    # TODO: Implement notebook scanning logic
+    pass
+
+def scan_docx_files(docx_paths):
+    """
+    Scans docx files and populates files and pages_files tables.
+    """
+    # TODO: Implement docx scanning logic
+    pass
 
 def print_table(table_name):
     """
@@ -239,11 +323,25 @@ def print_table(table_name):
 # --- Notebook Asset Scanning Stubs ---
 def get_notebook_paths_from_toc(toc_path):
     """
-    Parses the toc file and returns a list of notebook (.ipynb) paths to scan.
+    Parses a toc file (plain text, one file per line) and returns a list of .ipynb notebook paths to scan.
     Only returns notebooks listed in toc.
+    Logs found and ignored entries.
     """
-    # TODO: Implement parsing logic
-    return []
+    notebook_paths = []
+    try:
+        with open(toc_path, 'r', encoding='utf-8') as f:
+            for line in f:
+                entry = line.strip()
+                if not entry or entry.startswith('#'):
+                    continue
+                if entry.lower().endswith('.ipynb'):
+                    notebook_paths.append(entry)
+                    log_event(f"TOC: Found notebook entry: {entry}", level="INFO")
+                else:
+                    log_event(f"TOC: Ignored non-notebook entry: {entry}", level="DEBUG")
+    except Exception as e:
+        log_event(f"Error reading TOC file {toc_path}: {e}", level="ERROR")
+    return notebook_paths
 
 def scan_notebook_for_assets(nb_path):
     """
@@ -266,10 +364,19 @@ def log_event(message, level="INFO"):
     """
     Logs an event to both stdout and a log file in the project root.
     """
-    # TODO: Implement logging logic
-    print(f"[{level}] {message}")
-    # Append to log file
-    pass
+    import datetime
+    import os
+    timestamp = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    log_line = f"[{timestamp}] [{level}] {message}\n"
+    print(log_line, end="")
+    # Write to scan.log in project root
+    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    log_path = os.path.join(project_root, 'scan.log')
+    try:
+        with open(log_path, 'a', encoding='utf-8') as log_file:
+            log_file.write(log_line)
+    except Exception as e:
+        print(f"[ERROR] Could not write to log file: {e}")
 
 def insert_notebook_file_record(file_record):
     """
