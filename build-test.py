@@ -18,21 +18,41 @@ def test_full_scan_and_admin():
     copy_static_assets_to_admin(admin_output_dir)
     print(f"[TEST] Admin HTML pages generated in {admin_output_dir}")
 
-    # Minimal test for image handling workflow
-    print("\n[TEST] Running image handling workflow for a sample content record...")
-    import sqlite3
-    from oerforge.convert import handle_images_for_markdown
-    conn = sqlite3.connect("db/sqlite.db")
-    cursor = conn.cursor()
-    cursor.execute("SELECT source_path FROM content WHERE source_path LIKE 'content/sample/notebooks/%' LIMIT 1")
-    row = cursor.fetchone()
-    if row:
-        content_record = {"source_path": row[0]}
-        handle_images_for_markdown(content_record, conn)
-        print(f"[TEST] Image handling completed for {content_record['source_path']}")
+    # Test: Run batch conversion and validate all TOC-referenced files are copied
+    print("\n[TEST] Running batch conversion for all TOC-referenced files...")
+    from oerforge.convert import batch_convert_all_content
+    batch_convert_all_content()
+
+    # Validate files copied
+    import yaml
+    import os
+    with open("_config.yml", "r", encoding="utf-8") as f:
+        config = yaml.safe_load(f)
+    toc = config.get("toc", [])
+
+    def walk_toc_all_files(items):
+        files = []
+        for item in items:
+            file_path = item.get("file")
+            if file_path:
+                files.append(file_path)
+            children = item.get("children", [])
+            if children:
+                files.extend(walk_toc_all_files(children))
+        return files
+
+    all_files = walk_toc_all_files(toc)
+    missing = []
+    for file_path in all_files:
+        build_path = os.path.join("build/files", file_path)
+        if not os.path.exists(build_path):
+            missing.append(build_path)
+    if missing:
+        print("[TEST][FAIL] Missing files in build/files:")
+        for m in missing:
+            print("  ", m)
     else:
-        print("[TEST] No sample notebook found in content table for image handling test.")
-    conn.close()
+        print("[TEST][PASS] All TOC-referenced files copied to build/files/ correctly.")
 
 if __name__ == "__main__":
     test_full_scan_and_admin()

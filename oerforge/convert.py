@@ -24,12 +24,15 @@ from nbconvert import MarkdownExporter
 from nbconvert.preprocessors import ExecutePreprocessor, ExtractOutputPreprocessor
 from traitlets.config import Config
 import re
+from markdown_it import MarkdownIt
 
 # --- Constants ---
 DB_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "db", "sqlite.db")
 CONTENT_ROOT = "content"
-BUILD_ROOT = "build/images"
-IMAGES_ROOT = "images"  # Top-level images directory for all copied images
+BUILD_ROOT = "build"
+BUILD_FILES_ROOT = os.path.join(BUILD_ROOT, "files")
+BUILD_IMAGES_ROOT = os.path.join(BUILD_ROOT, "images")
+IMAGES_ROOT = BUILD_IMAGES_ROOT  # For compatibility in image functions
 LOG_DIR = "log"
 
 # --- Modular Image Handling for Markdown ---
@@ -81,31 +84,54 @@ def update_markdown_image_links(md_path, images, images_root=IMAGES_ROOT):
         return
     with open(md_path, "r", encoding="utf-8") as f:
         content = f.read()
-    # Replace all image links to use images/<filename> relative to the markdown file
+
+    md = MarkdownIt()
+    tokens = md.parse(content)
+    # Build a mapping from all possible image filenames to 'images/<filename>'
+    img_map = {}
     for img in images:
         src = img.get('relative_path') or img.get('absolute_path')
         if not src:
             continue
         filename = os.path.basename(src)
-        new_path = f'images/{filename}'
-        # Replace any markdown image link that references this filename, regardless of subfolder
-        pattern = r'(!\[[^\]]*\]\()([^)]*' + re.escape(filename) + r')\)'
-        replacement = r'\1' + new_path + r')'
-        log_event(f"[IMAGES][DEBUG] Updating markdown links for {filename}: pattern={pattern} replacement={replacement}", level="DEBUG")
-        content = re.sub(pattern, replacement, content)
+        img_map[filename] = f'images/{filename}'
+
+    # Rebuild markdown with updated image links
+    lines = content.splitlines()
+    new_lines = lines.copy()
+    # For each line, replace any image markdown src with images/<filename>
+    for idx, line in enumerate(lines):
+        # Find all markdown image patterns: ![alt](src)
+        matches = re.findall(r'!\[[^\]]*\]\(([^)]+)\)', line)
+        for old_src in matches:
+            filename = os.path.basename(old_src)
+            if filename in img_map:
+                new_src = img_map[filename]
+                # Replace only the src part
+                new_lines[idx] = new_lines[idx].replace(old_src, new_src)
     with open(md_path, "w", encoding="utf-8") as f:
-        f.write(content)
-    log_event(f"[IMAGES] Updated image links in {md_path}", level="INFO")
+        f.write("\n".join(new_lines))
+    log_event(f"[IMAGES] Updated image links in {md_path} to always use images/<filename>", level="INFO")
 
 def handle_images_for_markdown(content_record, conn):
     """
     Orchestrate image handling for a Markdown file: query, copy, update links.
     """
     images = query_images_for_content(content_record, conn)
-    copied = copy_images_to_build(images)
+    copied = copy_images_to_build(images, images_root=BUILD_IMAGES_ROOT)
     rel_path = os.path.relpath(content_record['source_path'], CONTENT_ROOT)
-    md_path = os.path.join(BUILD_ROOT, rel_path)
-    update_markdown_image_links(md_path, images)
+    md_path = os.path.join(BUILD_FILES_ROOT, rel_path)
+    os.makedirs(os.path.dirname(md_path), exist_ok=True)
+    # Copy original markdown to build/files if not already there
+    abs_src_path = os.path.join(CONTENT_ROOT, rel_path)
+    if not os.path.exists(md_path):
+        try:
+            shutil.copy2(abs_src_path, md_path)
+            log_event(f"Copied original md to {md_path}", level="INFO")
+        except Exception as e:
+            log_event(f"Failed to copy md: {e}", level="ERROR")
+            return
+    update_markdown_image_links(md_path, images, images_root=BUILD_IMAGES_ROOT)
     log_event(f"[IMAGES] Finished handling images for {md_path}", level="INFO")
     
 def convert_md_to_docx(content_record, conn):
@@ -180,19 +206,37 @@ def batch_convert_all_content():
     """
     print("[DEBUG] Starting batch conversion for all content records.")
     log_event("Starting batch conversion for all content records.", level="INFO")
+    import yaml
+    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    config_path = os.path.join(project_root, "_config.yml")
+    with open(config_path, 'r', encoding='utf-8') as f:
+        config = yaml.safe_load(f)
+    toc = config.get('toc', [])
+
+    def walk_toc_all_files(items, parent_path=""):
+        file_entries = []
+        for item in items:
+            file_path = item.get('file')
+            if file_path:
+                out_path = os.path.join(BUILD_FILES_ROOT, file_path)
+                src_path = os.path.join(CONTENT_ROOT, file_path)
+                file_entries.append((src_path, out_path))
+            children = item.get('children', [])
+            if children:
+                file_entries.extend(walk_toc_all_files(children, parent_path))
+        return file_entries
+
+    all_files = walk_toc_all_files(toc)
     try:
         conn = sqlite3.connect(DB_PATH)
-        cursor = conn.cursor()
-        cursor.execute("SELECT * FROM content")
-        columns = [desc[0] for desc in cursor.description]
-        for row in cursor.fetchall():
-            content_record = dict(zip(columns, row))
-            src_path = content_record['source_path']
-            print(f"[DEBUG] Processing {src_path}")
-            log_event(f"Processing {src_path}", level="INFO")
-            # Only handle images for markdown files for now
-            if src_path.endswith('.md'):
-                handle_images_for_markdown(content_record, conn)
+        for src_path, out_path in all_files:
+            print(f"[DEBUG] Copying {src_path} to {out_path}")
+            os.makedirs(os.path.dirname(out_path), exist_ok=True)
+            if os.path.exists(src_path):
+                shutil.copy2(src_path, out_path)
+                log_event(f"Copied {src_path} to {out_path}", level="INFO")
+            else:
+                log_event(f"[ERROR] Missing file: {src_path}", level="ERROR")
         conn.close()
     except Exception as e:
         log_event(f"Batch conversion failed: {e}", level="ERROR")
