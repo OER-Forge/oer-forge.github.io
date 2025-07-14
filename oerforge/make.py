@@ -1,3 +1,5 @@
+from scan import get_descendants_for_parent
+
 def convert_wcag_reports_to_html():
     print("[DEBUG] Running convert_wcag_reports_to_html...")
     src_dir = os.path.join(PROJECT_ROOT, 'build', 'files', 'wcag-reports')
@@ -322,8 +324,13 @@ def fix_image_paths(html, db_path=None):
         cursor.execute("SELECT image_rel_path FROM build_images WHERE image_filename = ?", (filename,))
         row = cursor.fetchone()
         if row:
-            # Use relative path from build/images/
-            return f'src="images/{filename}"'
+            # Use canonical relative path from build_images table
+            canonical_rel_path = row[0]
+            # If the canonical path is already correct, use it; otherwise, fix it
+            if canonical_rel_path.startswith('images/'):
+                return f'src="{canonical_rel_path}"'
+            else:
+                return f'src="images/{filename}"'
         else:
             return f'src="{src}"'
     html = re.sub(r'src="([^"]+)"', replace_src, html)
@@ -419,13 +426,9 @@ def create_section_index_html(section_title, output_dir, db_path=None, parent_id
     Generate index.html for a section, listing all children and grandchildren recursively using the database.
     Each child/grandchild page can have a nav menu linking to top-level pages.
     """
-    import sqlite3
     import os
-
     if db_path is None:
         db_path = os.path.join(PROJECT_ROOT, 'db', 'sqlite.db')
-    conn = sqlite3.connect(db_path)
-    cursor = conn.cursor()
 
     # --- Build nav menu from TOC (same as all other pages) ---
     config_path = os.path.join(PROJECT_ROOT, "_config.yml")
@@ -433,18 +436,17 @@ def create_section_index_html(section_title, output_dir, db_path=None, parent_id
     toc = config.get("toc", [])
     nav_html = generate_nav_menu(toc, current_html_path=os.path.join(output_dir, 'index.html'))
 
-    # --- Render children tree using is_autobuilt and output_path LIKE ---
-    output_dir_rel = os.path.relpath(output_dir, os.path.join(PROJECT_ROOT, 'build'))
-    like_pattern = output_dir_rel + '/%'
-    cursor.execute("SELECT title, output_path FROM content WHERE is_autobuilt=1 AND output_path LIKE ? ORDER BY \"order\"", (like_pattern,))
-    rows = cursor.fetchall()
+    # --- Use recursive CTE to get all descendants ---
+    parent_output_path = os.path.join('build', os.path.relpath(output_dir, os.path.join(PROJECT_ROOT, 'build')), 'index.html')
+    descendants = get_descendants_for_parent(parent_output_path, db_path)
     links_html = '<ul>'
     current_dir = output_dir
-    for child_title, target_html in rows:
-        abs_target_html = os.path.join(PROJECT_ROOT, 'build', target_html) if not os.path.isabs(target_html) else target_html
+    for d in descendants:
+        abs_target_html = os.path.join(PROJECT_ROOT, d['output_path']) if not os.path.isabs(d['output_path']) else d['output_path']
         rel_link = os.path.relpath(abs_target_html, start=current_dir)
         mark = '✓' if os.path.exists(abs_target_html) else '✗'
-        links_html += f'<li><a href="{rel_link}">{child_title}</a> [{mark}]</li>'
+        indent = '&nbsp;' * (d['level'] * 4)
+        links_html += f'<li>{indent}<a href="{rel_link}">{d["title"]}</a> [{mark}]</li>'
     links_html += '</ul>'
     header = create_header(section_title, nav_html)
     footer = create_footer()
@@ -452,8 +454,25 @@ def create_section_index_html(section_title, output_dir, db_path=None, parent_id
     index_html_path = os.path.join(output_dir, 'index.html')
     with open(index_html_path, 'w', encoding='utf-8') as f:
         f.write(page_html)
-    conn.close()
-    logging.info(f"Created section index with child links: {index_html_path}")
+    logging.info(f"Created section index with descendant links: {index_html_path}")
+
+# --- Manual test block ---
+if __name__ == "__main__":
+    setup_logging()
+    build_all_markdown_files(BUILD_FILES_DIR, BUILD_HTML_DIR)
+    # Autogenerate index.html for top-level sections
+    top_sections = [
+        ("Docs", os.path.join(BUILD_HTML_DIR, "docs")),
+        ("Sample", os.path.join(BUILD_HTML_DIR, "sample")),
+        ("WCAG", os.path.join(BUILD_HTML_DIR, "wcag")),
+        ("Dev", os.path.join(BUILD_HTML_DIR, "dev")),
+        ("Sample Materials", os.path.join(BUILD_HTML_DIR, "sample-materials")),
+    ]
+    for section_title, output_dir in top_sections:
+        if not os.path.exists(output_dir):
+            os.makedirs(output_dir, exist_ok=True)
+        print(f"[TEST] Generating section index for: {section_title} at {output_dir}")
+        create_section_index_html(section_title, output_dir)
 
 def get_markdown_source_and_output_paths_from_db(db_path=None):
     """

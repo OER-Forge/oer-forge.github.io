@@ -554,3 +554,42 @@ def scan_toc_and_populate_db(config_path):
         # Add more types as needed
     log_event(f"[DEBUG][{os.getpid()}][{threading.get_ident()}] Closing DB connection in scan_toc_and_populate_db at {time.time()}", level="DEBUG")
     conn.close()
+
+# ----
+# Recursive CTE Helper for Section Index Generation
+# ----
+def get_descendants_for_parent(parent_output_path, db_path):
+    """
+    Returns all children and grandchildren (and deeper) for a given parent_output_path,
+    using a recursive CTE. Each result includes: id, title, output_path, parent_output_path, slug, level.
+    """
+    import sqlite3
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+    query = '''
+    WITH RECURSIVE content_hierarchy(id, title, output_path, parent_output_path, slug, level) AS (
+      SELECT id, title, output_path, parent_output_path, slug, 0 as level
+      FROM content
+      WHERE output_path = ?
+      UNION ALL
+      SELECT c.id, c.title, c.output_path, c.parent_output_path, c.slug, ch.level + 1
+      FROM content c
+      JOIN content_hierarchy ch ON c.parent_output_path = ch.output_path
+    )
+    SELECT id, title, output_path, parent_output_path, slug, level FROM content_hierarchy WHERE level > 0 ORDER BY level, output_path;
+    '''
+    cursor.execute(query, (parent_output_path,))
+    rows = cursor.fetchall()
+    conn.close()
+    # Return as list of dicts
+    return [
+        {
+            'id': row[0],
+            'title': row[1],
+            'output_path': row[2],
+            'parent_output_path': row[3],
+            'slug': row[4],
+            'level': row[5]
+        }
+        for row in rows
+    ]
