@@ -407,19 +407,26 @@ def _find_entry_by_html(html_path, toc):
 # --- Build Structure and TOC Functions ---
 def build_all_markdown_files(source_dir, build_dir):
     import logging
-    md_files = find_markdown_files(source_dir)
-    print(f"[DEBUG] build_all_markdown_files: Found markdown files ({len(md_files)}):")
-    for md_path in md_files:
-        print(f"  [DEBUG] Will convert: {md_path}")
-        rel_path = os.path.relpath(md_path, source_dir)
-        output_path = os.path.join(build_dir, os.path.splitext(rel_path)[0] + '.html')
-        output_dir = os.path.dirname(output_path)
-        print(f"  [DEBUG] Output path: {output_path}")
+    import sqlite3
+    db_path = os.path.join(PROJECT_ROOT, 'db', 'sqlite.db')
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+    cursor.execute("SELECT source_path, output_path FROM content WHERE source_path LIKE '%.md' AND output_path LIKE '%.html'")
+    rows = cursor.fetchall()
+    conn.close()
+    print(f"[DEBUG] build_all_markdown_files: Found markdown files ({len(rows)}):")
+    for src_path, out_path in rows:
+        if not src_path or not out_path:
+            continue
+        abs_src_path = os.path.join(PROJECT_ROOT, src_path) if not os.path.isabs(src_path) else src_path
+        abs_out_path = os.path.join(PROJECT_ROOT, out_path) if not os.path.isabs(out_path) else out_path
+        output_dir = os.path.dirname(abs_out_path)
+        print(f"  [DEBUG] Will convert: {abs_src_path} -> {abs_out_path}")
         if not os.path.exists(output_dir):
             os.makedirs(output_dir, exist_ok=True)
             print(f"  [DEBUG] Created output directory: {output_dir}")
-        convert_markdown_to_html(md_path, output_path)
-        print(f"  [DEBUG] Converted {md_path} to {output_path}")
+        convert_markdown_to_html(abs_src_path, abs_out_path)
+        print(f"  [DEBUG] Converted {abs_src_path} to {abs_out_path}")
 
 def create_section_index_html(section_title, output_dir, db_path=None, parent_id=None):
     """
