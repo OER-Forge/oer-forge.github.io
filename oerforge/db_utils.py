@@ -59,7 +59,22 @@ def initialize_database():
             source_path TEXT,
             output_path TEXT,
             is_autobuilt BOOLEAN DEFAULT 0,
-            mime_type TEXT
+            mime_type TEXT,
+            can_convert_md BOOLEAN DEFAULT NULL,
+            can_convert_tex BOOLEAN DEFAULT NULL,
+            can_convert_pdf BOOLEAN DEFAULT NULL,
+            can_convert_docx BOOLEAN DEFAULT NULL,
+            can_convert_ppt BOOLEAN DEFAULT NULL,
+            can_convert_jupyter BOOLEAN DEFAULT NULL,
+            can_convert_ipynb BOOLEAN DEFAULT NULL,
+            converted_md BOOLEAN DEFAULT NULL,
+            converted_tex BOOLEAN DEFAULT NULL,
+            converted_pdf BOOLEAN DEFAULT NULL,
+            converted_docx BOOLEAN DEFAULT NULL,
+            converted_ppt BOOLEAN DEFAULT NULL,
+            converted_jupyter BOOLEAN DEFAULT NULL,
+            converted_ipynb BOOLEAN DEFAULT NULL,
+            wcag_status_html TEXT DEFAULT NULL
         )
     """)
     cursor.execute("""
