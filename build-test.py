@@ -1,10 +1,18 @@
 from oerforge.db_utils import initialize_database, insert_file_records, link_files_to_pages, pretty_print_table
+from oerforge.scan import populate_site_info_from_config
 
 
 # --- Modular DB function tests ---
 def test_db_utils():
     print("[TEST] Initializing database...")
     initialize_database()
+
+    print("[TEST] Testing site info scan...")
+    config_path = '_config.yml'
+    populate_site_info_from_config(config_path)
+    print("[TEST] Printing 'site_info' table:")
+    pretty_print_table('site_info')
+
     print("[TEST] Testing insert_file_records...")
     sample_files = [
         {

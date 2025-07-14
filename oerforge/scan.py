@@ -7,20 +7,68 @@ import sqlite3
 def batch_read_files(file_paths):
     """
     Reads multiple files and returns their contents as a dict: {path: content}
+    Supports markdown (.md), notebook (.ipynb), docx (.docx), and other file types.
     """
-    # TODO: Implement batch file reading logic
-    pass
+    contents = {}
+    # TODO: Implement batch file reading logic for supported types
+    return contents
+
+def read_markdown_file(path):
+    """
+    Reads a markdown (.md) file and returns its content as a string.
+    """
+    # TODO: Implement markdown file reading
+    return ""
+
+def read_notebook_file(path):
+    """
+    Reads a Jupyter notebook (.ipynb) file and returns its content as a dict.
+    """
+    # TODO: Implement notebook file reading
+    return {}
+
+def read_docx_file(path):
+    """
+    Reads a docx file and returns its content as a python-docx Document object or similar.
+    """
+    # TODO: Implement docx file reading
+    return None
 
 def batch_extract_assets(contents_dict, content_type, **kwargs):
     """
-    Extracts assets from multiple file contents.
+    Extracts assets from multiple file contents in one pass.
     contents_dict: {path: content}
+    content_type: 'markdown', 'notebook', 'docx', etc.
     Returns a dict: {path: [asset_records]}
     """
-    # TODO: Implement batch asset extraction logic
-    pass
+    assets = {}
+    # TODO: Implement batch asset extraction logic for each content type
+    return assets
 
-    
+def extract_linked_files_from_markdown_content(md_text, page_id=None):
+    """
+    Extracts asset links from markdown text.
+    Returns a list of file records.
+    """
+    # TODO: Implement markdown asset extraction logic
+    return []
+
+def extract_linked_files_from_notebook_cell_content(cell, nb_path=None):
+    """
+    Extracts asset links from a notebook cell.
+    Returns a list of file records.
+    """
+    # TODO: Implement notebook cell asset extraction logic
+    return []
+
+def extract_linked_files_from_docx_content(docx_path, page_id=None):
+    """
+    Extracts asset links from a docx file.
+    Returns a list of file records.
+    """
+    # TODO: Implement docx asset extraction logic
+    return []
+
 def populate_site_info_from_config(config_path):
     """
     Reads _config.yml and populates the site_info table with site and footer info.
@@ -130,152 +178,3 @@ def parse_toc_and_populate_pages(config_path):
     walk_toc(toc, parent_id=None, depth=0)
     conn.commit()
     conn.close()
-
-
-def extract_linked_files_from_content(content, content_type, **kwargs):
-    """
-    Dispatches asset extraction based on content_type ('markdown', 'notebook_cell', 'docx').
-    Returns a list of file records.
-    """
-    if content_type == 'markdown':
-        return extract_linked_files_from_markdown_content(content, **kwargs)
-    elif content_type == 'notebook_cell':
-        return extract_linked_files_from_notebook_cell_content(content, **kwargs)
-    elif content_type == 'docx':
-        return extract_linked_files_from_docx_content(content, **kwargs)
-    else:
-        return []
-
-def extract_linked_files_from_markdown_content(md_text, page_id):
-    """
-    Extracts asset links from markdown text.
-    Returns a list of file records.
-    """
-    # TODO: Implement markdown asset extraction logic
-    pass
-
-def extract_linked_files_from_notebook_cell_content(cell, nb_path):
-    """
-    Extracts asset links from a notebook cell.
-    Returns a list of file records.
-    """
-    # TODO: Implement notebook cell asset extraction logic
-    pass
-
-def extract_linked_files_from_docx_content(docx_path, page_id):
-    """
-    Extracts asset links from a docx file.
-    Returns a list of file records.
-    """
-    # TODO: Implement docx asset extraction logic
-    pass
-
-def extract_linked_files_from_markdown(md_path, page_id):
-    """
-    Parses a markdown file and extracts all linked files (images, PDFs, docs, remote files), ignoring HTML and YouTube links.
-    Returns a list of file records to be inserted into the files table.
-    """
-    import re
-    from mimetypes import guess_type
-    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    full_md_path = os.path.join(project_root, md_path)
-    file_records = []
-    try:
-        with open(full_md_path, 'r', encoding='utf-8') as f:
-            md_text = f.read()
-        # Find all markdown image links ![alt](src)
-        img_links = re.findall(r'!\[[^\]]*\]\(([^)]+)\)', md_text)
-        # Find all markdown file links [text](src)
-        file_links = re.findall(r'(?<!\!)\[[^\]]*\]\(([^)]+)\)', md_text)
-        all_links = set(img_links + file_links)
-        for src in all_links:
-            ext = os.path.splitext(src)[1][1:].lower()
-            mime_type, _ = guess_type(src)
-            is_image = 1 if mime_type and mime_type.startswith('image/') else 0
-            is_remote = 1 if src.startswith('http://') or src.startswith('https://') else 0
-            filename = os.path.basename(src)
-            file_record = {
-                'filename': filename,
-                'extension': ext,
-                'mime_type': mime_type or '',
-                'is_image': is_image,
-                'is_remote': is_remote,
-                'url': src if is_remote else '',
-                'referenced_page': md_path,
-                'relative_path': src if not is_remote else '',
-                'absolute_path': os.path.abspath(os.path.join(os.path.dirname(full_md_path), src)) if not is_remote else ''
-            }
-            file_records.append(file_record)
-    except Exception as e:
-        print(f"[ERROR] Failed to extract linked files from {md_path}: {e}")
-    return file_records
-
-
-def scan_and_populate_files_db(md_dir):
-
-    """
-    Orchestrates modular asset scanning for markdown, notebook, and docx files.
-    """
-    # Example usage: scan_and_populate_files_db(md_dir, toc_path)
-    pass
-
-def scan_markdown_files(md_dir, toc_path):
-    """
-    Scans markdown files listed in toc and populates files and pages_files tables.
-    """
-    # TODO: Implement markdown scanning logic
-    pass
-
-def scan_notebook_files(notebook_paths):
-    """
-    Scans notebook files and populates files and pages_files tables.
-    """
-    # TODO: Implement notebook scanning logic
-    pass
-
-def scan_docx_files(docx_paths):
-    """
-    Scans docx files and populates files and pages_files tables.
-    """
-    # TODO: Implement docx scanning logic
-    pass
-
-# --- Notebook Asset Scanning Stubs ---
-def get_notebook_paths_from_toc(toc_path):
-    """
-    Parses a toc file (plain text, one file per line) and returns a list of .ipynb notebook paths to scan.
-    Only returns notebooks listed in toc.
-    Logs found and ignored entries.
-    """
-    notebook_paths = []
-    try:
-        with open(toc_path, 'r', encoding='utf-8') as f:
-            for line in f:
-                entry = line.strip()
-                if not entry or entry.startswith('#'):
-                    continue
-                if entry.lower().endswith('.ipynb'):
-                    notebook_paths.append(entry)
-                    log_event(f"TOC: Found notebook entry: {entry}", level="INFO")
-                else:
-                    log_event(f"TOC: Ignored non-notebook entry: {entry}", level="DEBUG")
-    except Exception as e:
-        log_event(f"Error reading TOC file {toc_path}: {e}", level="ERROR")
-    return notebook_paths
-
-def scan_notebook_for_assets(nb_path):
-    """
-    Scans a notebook for assets (images/files) in all cells.
-    Calls extract_images_from_notebook_cell for each cell.
-    """
-    # TODO: Implement notebook scanning logic
-    pass
-
-def extract_images_from_notebook_cell(cell, nb_path):
-    """
-    Extracts images/files from a single notebook cell.
-    Records cell_type, is_code_generated, is_embedded, and logs warnings if expected images are missing.
-    Returns a list of file records.
-    """
-    # TODO: Implement image extraction logic
-    return []
