@@ -1,3 +1,4 @@
+
 """
 scan.py: Asset database logic for pages and files only.
 """
@@ -338,6 +339,44 @@ def populate_site_info_from_config(config_path):
     conn.commit()
     conn.close()
 
+------------------------------------------------------------------------------
+# Conversion Capability Helper
+# ------------------------------------------------------------------------------
+def get_possible_conversions(extension):
+    """
+    Returns a dict of possible conversions for a given file extension.
+    Keys are can_convert_md, can_convert_tex, can_convert_pdf, can_convert_docx, can_convert_ppt, can_convert_jupyter, can_convert_ipynb.
+    Values are booleans (True/False) indicating if conversion is possible.
+    """
+    ext = extension.lower()
+    # Default all to False
+    flags = {
+        'can_convert_md': False,
+        'can_convert_tex': False,
+        'can_convert_pdf': False,
+        'can_convert_docx': False,
+        'can_convert_ppt': False,
+        'can_convert_jupyter': False,
+        'can_convert_ipynb': False
+    }
+    if ext == '.ipynb':
+        flags['can_convert_md'] = True
+        flags['can_convert_docx'] = True
+        flags['can_convert_tex'] = True
+        flags['can_convert_jupyter'] = True
+        flags['can_convert_pdf'] = True
+    elif ext == '.md':
+        flags['can_convert_docx'] = True
+        flags['can_convert_pdf'] = True
+        flags['can_convert_tex'] = True
+        flags['can_convert_jupyter'] = True
+    elif ext == '.docx':
+        flags['can_convert_md'] = True
+        flags['can_convert_tex'] = True
+        flags['can_convert_pdf'] = True
+        flags['can_convert_docx'] = True
+        flags['can_convert_jupyter'] = True
+    return flags
 
 def scan_toc_and_populate_db(config_path):
     """
