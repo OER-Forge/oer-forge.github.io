@@ -13,7 +13,7 @@ Main features:
 Author: [Your Name]
 """
 
-from db_utils import log_event
+from oerforge.db_utils import log_event, get_records
 
 import sys
 import os
@@ -28,40 +28,86 @@ import re
 # --- Constants ---
 DB_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "db", "sqlite.db")
 CONTENT_ROOT = "content"
-BUILD_ROOT = "build/files"
+BUILD_ROOT = "build/images"
+IMAGES_ROOT = "images"  # Top-level images directory for all copied images
 LOG_DIR = "log"
 
-# --- Logging Utility ---
-# Use log_event from db_utils.py for all logging
+# --- Modular Image Handling for Markdown ---
+def query_images_for_content(content_record, conn):
+    """
+    Query sqlite.db for all images associated with this content file.
+    Returns a list of image records (dicts).
+    """
+    from oerforge.db_utils import get_records
+    images = get_records(
+        "files",
+        "is_image=1 AND referenced_page=?",
+        (content_record['source_path'],),
+        conn=conn
+    )
+    log_event(f"[IMAGES] Found {len(images)} images for {content_record['source_path']}", level="DEBUG")
+    return images
 
-# --- Image Handling Utility ---
-def copy_and_update_images_for_file(content_record, conn):
+def copy_images_to_build(images, images_root=IMAGES_ROOT):
     """
-    Copy all images associated with a file (from content_record) to the build directory.
-    Update image references in converted files as needed.
-    Use image info from sqlite.db (e.g., page_images table).
+    Copy each image to the top-level images directory. All images go in images/ with their filename only.
+    Returns a list of new build paths (absolute paths).
     """
-    # TODO: Query image info from DB, copy images, update references in output files
-    log_event(f"[STUB] Copying/updating images for {content_record['source_path']}", level="DEBUG")
-    pass
+    os.makedirs(images_root, exist_ok=True)
+    copied = []
+    for img in images:
+        src = img.get('relative_path') or img.get('absolute_path')
+        log_event(f"[IMAGES][DEBUG] src={src} img={img}", level="DEBUG")
+        if not src or img.get('is_remote'):
+            log_event(f"[IMAGES] Skipping remote or missing image: {img.get('filename')}", level="WARNING")
+            continue
+        filename = os.path.basename(src)
+        dest = os.path.join(images_root, filename)
+        log_event(f"[IMAGES][DEBUG] Copying {src} to {dest}", level="DEBUG")
+        try:
+            shutil.copy2(src, dest)
+            log_event(f"[IMAGES] Copied image {src} to {dest}", level="INFO")
+            copied.append(dest)
+        except Exception as e:
+            log_event(f"[IMAGES] Failed to copy {src} to {dest}: {e}", level="ERROR")
+    return copied
 
-# --- Conversion Stubs ---
-def convert_ipynb_to_md(content_record, conn):
+def update_markdown_image_links(md_path, images, images_root=IMAGES_ROOT):
     """
-    Convert a Jupyter notebook (.ipynb) to Markdown (.md).
-    Copy original file to build/files. Extract and copy images. Update DB conversion status.
+    Update image links in the Markdown file to point to the copied images in the top-level images directory.
     """
-    log_event(f"[STUB] Converting ipynb to md for {content_record['source_path']}", level="DEBUG")
-    pass
+    if not os.path.exists(md_path):
+        log_event(f"[IMAGES] Markdown file not found: {md_path}", level="WARNING")
+        return
+    with open(md_path, "r", encoding="utf-8") as f:
+        content = f.read()
+    # Replace all image links to use images/<filename> relative to the markdown file
+    for img in images:
+        src = img.get('relative_path') or img.get('absolute_path')
+        if not src:
+            continue
+        filename = os.path.basename(src)
+        new_path = f'images/{filename}'
+        # Replace any markdown image link that references this filename, regardless of subfolder
+        pattern = r'(!\[[^\]]*\]\()([^)]*' + re.escape(filename) + r')\)'
+        replacement = r'\1' + new_path + r')'
+        log_event(f"[IMAGES][DEBUG] Updating markdown links for {filename}: pattern={pattern} replacement={replacement}", level="DEBUG")
+        content = re.sub(pattern, replacement, content)
+    with open(md_path, "w", encoding="utf-8") as f:
+        f.write(content)
+    log_event(f"[IMAGES] Updated image links in {md_path}", level="INFO")
 
-def convert_docx_to_md(content_record, conn):
+def handle_images_for_markdown(content_record, conn):
     """
-    Convert a DOCX file to Markdown (.md).
-    Copy original file to build/files. Extract and copy images. Update DB conversion status.
+    Orchestrate image handling for a Markdown file: query, copy, update links.
     """
-    log_event(f"[STUB] Converting docx to md for {content_record['source_path']}", level="DEBUG")
-    pass
-
+    images = query_images_for_content(content_record, conn)
+    copied = copy_images_to_build(images)
+    rel_path = os.path.relpath(content_record['source_path'], CONTENT_ROOT)
+    md_path = os.path.join(BUILD_ROOT, rel_path)
+    update_markdown_image_links(md_path, images)
+    log_event(f"[IMAGES] Finished handling images for {md_path}", level="INFO")
+    
 def convert_md_to_docx(content_record, conn):
     """
     Convert a Markdown file to DOCX using Pandoc.
@@ -144,24 +190,9 @@ def batch_convert_all_content():
             src_path = content_record['source_path']
             print(f"[DEBUG] Processing {src_path}")
             log_event(f"Processing {src_path}", level="INFO")
-            # Copy original file to build/files (mirroring TOC hierarchy)
-            # TODO: Implement TOC-based directory structure
-            # Conversion logic
-            if content_record.get('can_convert_md'):
-                if src_path.endswith('.ipynb'):
-                    convert_ipynb_to_md(content_record, conn)
-                elif src_path.endswith('.docx'):
-                    convert_docx_to_md(content_record, conn)
-            # Once .md exists, convert to other formats as flagged
-            if src_path.endswith('.md') or content_record.get('can_convert_md'):
-                if content_record.get('can_convert_docx'):
-                    convert_md_to_docx(content_record, conn)
-                if content_record.get('can_convert_pdf'):
-                    convert_md_to_pdf(content_record, conn)
-                if content_record.get('can_convert_tex'):
-                    convert_md_to_tex(content_record, conn)
-            # Image handling
-            copy_and_update_images_for_file(content_record, conn)
+            # Only handle images for markdown files for now
+            if src_path.endswith('.md'):
+                handle_images_for_markdown(content_record, conn)
         conn.close()
     except Exception as e:
         log_event(f"Batch conversion failed: {e}", level="ERROR")
