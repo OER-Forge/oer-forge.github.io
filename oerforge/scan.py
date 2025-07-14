@@ -207,7 +207,7 @@ def batch_extract_assets(contents_dict, content_type, **kwargs):
                 'is_embedded': None
             }
             file_records.append(file_record)
-    file_ids = insert_records('files', file_records)
+    file_ids = insert_records('files', file_records, conn=conn, cursor=cursor)
     # Link files to pages
     idx = 0
     for source_path, asset_list in assets.items():
@@ -215,7 +215,7 @@ def batch_extract_assets(contents_dict, content_type, **kwargs):
             file_page_links.append((file_ids[idx], source_path))
             idx += 1
     if file_page_links:
-        link_files_to_pages(file_page_links)
+        link_files_to_pages(file_page_links, conn=conn, cursor=cursor)
     log_event(f"[DEBUG][{os.getpid()}][{threading.get_ident()}] Closing DB connection in batch_extract_assets at {time.time()}", level="DEBUG")
     conn.close()
     return assets
@@ -439,7 +439,7 @@ def scan_toc_and_populate_db(config_path):
     file_paths = []
     # Removed outdated import of insert_file_records; link_files_to_pages is already imported above
 
-    def walk_toc(items, parent_id=None):
+    def walk_toc(items, parent_id=None, level=0):
         content_records = []
         for idx, item in enumerate(items):
             file_path = item.get('file')
@@ -448,7 +448,11 @@ def scan_toc_and_populate_db(config_path):
             if file_path:
                 source_path = file_path if file_path.startswith('content/') else f'content/{file_path}'
                 ext = os.path.splitext(source_path)[1].lower()
-                output_path = None
+                # Compute output_path for HTML conversion
+                rel_path = source_path[8:] if source_path.startswith('content/') else source_path
+                out_dir = os.path.dirname(rel_path)
+                base_name = os.path.splitext(os.path.basename(rel_path))[0]
+                output_path = os.path.join('build', out_dir, base_name + '.html') if out_dir else os.path.join('build', base_name + '.html')
                 if source_path in seen_paths:
                     log_event(f"[WARN] TOC: Duplicate file path '{source_path}' in toc", level="WARN")
                     pass
@@ -472,7 +476,7 @@ def scan_toc_and_populate_db(config_path):
                     'can_convert_jupyter': flags['can_convert_jupyter'],
                     'can_convert_ipynb': flags['can_convert_ipynb'],
                     'parent_id': parent_id,
-                    'order': idx
+                    'level': level
                 }
                 # Insert record and get its id for children
                 inserted_ids = insert_records('content', [content_record], db_path=os.path.join(project_root, 'db', 'sqlite.db'), conn=conn, cursor=cursor)
@@ -480,14 +484,40 @@ def scan_toc_and_populate_db(config_path):
                 content_record['id'] = this_id
                 content_records.append(content_record)
                 file_paths.append(abs_path)
+            elif item.get('children'):
+                # Top-level menu item with children but no file: create index page
+                # Slugify title for directory name
+                import re
+                slug = re.sub(r'[^a-zA-Z0-9]+', '_', title.lower()).strip('_') if title else f'section_{idx}'
+                output_path = os.path.join('build', slug, 'index.html')
+                content_record = {
+                    'title': title,
+                    'source_path': None,
+                    'output_path': output_path,
+                    'is_autobuilt': 1,
+                    'mime_type': 'section',
+                    'can_convert_md': False,
+                    'can_convert_tex': False,
+                    'can_convert_pdf': False,
+                    'can_convert_docx': False,
+                    'can_convert_ppt': False,
+                    'can_convert_jupyter': False,
+                    'can_convert_ipynb': False,
+                    'parent_id': parent_id,
+                    'level': level
+                }
+                inserted_ids = insert_records('content', [content_record], db_path=os.path.join(project_root, 'db', 'sqlite.db'), conn=conn, cursor=cursor)
+                this_id = inserted_ids[0] if inserted_ids else None
+                content_record['id'] = this_id
+                content_records.append(content_record)
             children = item.get('children', [])
             if children:
-                child_records = walk_toc(children, parent_id=this_id)
+                child_records = walk_toc(children, parent_id=this_id, level=level+1)
                 content_records.extend(child_records)
         return content_records
 
     # Usage in scan_toc_and_populate_db:
-    all_content_records = walk_toc(toc)
+    all_content_records = walk_toc(toc, level=0)
     # No need to call insert_records for all_content_records here, as
 
     all_content_records = walk_toc(toc)

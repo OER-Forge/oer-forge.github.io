@@ -434,35 +434,26 @@ def create_section_index_html(section_title, output_dir, db_path=None, parent_id
         )
         return cursor.fetchall()
 
-    def render_tree(parent_id, parent_path):
+    # --- Build nav menu from TOC (same as all other pages) ---
+    config_path = os.path.join(PROJECT_ROOT, "_config.yml")
+    config = load_yaml_config(config_path)
+    toc = config.get("toc", [])
+    nav_html = generate_nav_menu(toc, current_html_path=os.path.join(output_dir, 'index.html'))
+
+    # --- Render children/grandchildren tree ---
+    def render_tree(parent_id):
         html = "<ul>"
         children = get_children(parent_id)
         for child_id, child_title, child_output_path in children:
             abs_target_html = os.path.join(PROJECT_ROOT, 'build', child_output_path)
             rel_link = os.path.relpath(abs_target_html, start=output_dir)
             mark = '✓' if os.path.exists(abs_target_html) else '✗'
-            # Recursively render grandchildren
-            grandchildren_html = render_tree(child_id, os.path.dirname(child_output_path))
+            grandchildren_html = render_tree(child_id)
             html += f'<li><a href="{rel_link}">{child_title}</a> [{mark}]{grandchildren_html}</li>'
         html += "</ul>"
         return html
 
-    # Render the tree for this section (parent_id should be set for the section root)
-    links_html = render_tree(parent_id, '')
-
-    # Build nav menu for top-level pages
-    def get_top_level_pages():
-        cursor.execute(
-            'SELECT id, title, output_path FROM content WHERE parent_id IS NULL ORDER BY \"order\"'
-        )
-        return cursor.fetchall()
-
-    nav_html = '<nav class="site-nav" role="navigation" aria-label="Main menu"><ul>'
-    for top_id, top_title, top_output_path in get_top_level_pages():
-        abs_target_html = os.path.join(PROJECT_ROOT, 'build', top_output_path)
-        rel_link = os.path.relpath(abs_target_html, start=output_dir)
-        nav_html += f'<li><a href="{rel_link}">{top_title}</a></li>'
-    nav_html += '</ul></nav>'
+    links_html = render_tree(parent_id)
 
     header = create_header(section_title, nav_html)
     footer = create_footer()
@@ -533,7 +524,7 @@ if __name__ == "__main__":
         ("Sample", os.path.join(BUILD_HTML_DIR, "sample")),
         ("WCAG", os.path.join(BUILD_HTML_DIR, "wcag")),
         ("Dev", os.path.join(BUILD_HTML_DIR, "dev")),
-        # Add more as needed
+        ("Sample Materials", os.path.join(BUILD_HTML_DIR, "sample-materials")),
     ]
     for section_title, output_dir in top_sections:
         if not os.path.exists(output_dir):
