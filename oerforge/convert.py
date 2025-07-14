@@ -93,40 +93,46 @@ def copy_images_to_build(images, images_root=IMAGES_ROOT, conn=None):
 def update_markdown_image_links(md_path, images, images_root=IMAGES_ROOT):
     """
     Update image links in the Markdown file to point to the copied images in the top-level images directory.
+    Uses sqlite.db to look up image records for this markdown file.
     """
     if not os.path.exists(md_path):
         log_event(f"[IMAGES] Markdown file not found: {md_path}", level="WARNING")
         return
+    # Compute the source_path for this markdown file
+    rel_path = os.path.relpath(md_path, BUILD_FILES_ROOT)
+    source_path = os.path.join(CONTENT_ROOT, rel_path)
+    # Query DB for images for this markdown file
+    img_map = {}
+    try:
+        conn = sqlite3.connect(DB_PATH)
+        cursor = conn.cursor()
+        cursor.execute("SELECT relative_path, absolute_path, filename FROM files WHERE is_image=1 AND referenced_page=?", (source_path,))
+        for row in cursor.fetchall():
+            rel, abs_path, filename = row
+            src = rel or abs_path
+            if not src:
+                continue
+            # Always use ../../images/<filename> for image references
+            rel_img_path = os.path.join('..', '..', 'images', filename)
+            img_map[os.path.basename(src)] = rel_img_path
+        conn.close()
+    except Exception as e:
+        log_event(f"[IMAGES] DB lookup failed for {md_path}: {e}", level="ERROR")
     with open(md_path, "r", encoding="utf-8") as f:
         content = f.read()
-
-    md = MarkdownIt()
-    tokens = md.parse(content)
-    # Build a mapping from all possible image filenames to 'images/<filename>'
-    img_map = {}
-    for img in images:
-        src = img.get('relative_path') or img.get('absolute_path')
-        if not src:
-            continue
-        filename = os.path.basename(src)
-        img_map[filename] = f'images/{filename}'
-
-    # Rebuild markdown with updated image links
     lines = content.splitlines()
     new_lines = lines.copy()
-    # For each line, replace any image markdown src with images/<filename>
+    # For each line, replace any image markdown src with correct relative path
     for idx, line in enumerate(lines):
-        # Find all markdown image patterns: ![alt](src)
         matches = re.findall(r'!\[[^\]]*\]\(([^)]+)\)', line)
         for old_src in matches:
             filename = os.path.basename(old_src)
             if filename in img_map:
                 new_src = img_map[filename]
-                # Replace only the src part
                 new_lines[idx] = new_lines[idx].replace(old_src, new_src)
     with open(md_path, "w", encoding="utf-8") as f:
         f.write("\n".join(new_lines))
-    log_event(f"[IMAGES] Updated image links in {md_path} to always use images/<filename>", level="INFO")
+    log_event(f"[IMAGES] Updated image links in {md_path} to use correct relative paths (DB-driven)", level="INFO")
 
 def handle_images_for_markdown(content_record, conn):
     """
@@ -254,6 +260,9 @@ def batch_convert_all_content():
                 content_record = {'source_path': src_path}
                 images = query_images_for_content(content_record, conn)
                 copy_images_to_build(images, images_root=BUILD_IMAGES_ROOT, conn=conn)
+                # If the file is markdown, update image links in the copied file
+                if out_path.endswith('.md'):
+                    update_markdown_image_links(out_path, images, images_root=BUILD_IMAGES_ROOT)
             else:
                 log_event(f"[ERROR] Missing file: {src_path}", level="ERROR")
         conn.close()
