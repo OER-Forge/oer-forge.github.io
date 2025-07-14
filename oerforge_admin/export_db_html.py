@@ -88,19 +88,19 @@ def copy_static_assets_to_admin(output_dir):
     project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     static_css = os.path.join(project_root, "static", "css")
     static_js = os.path.join(project_root, "static", "js")
-    admin_css = os.path.join(output_dir, "css")
-    admin_js = os.path.join(output_dir, "js")
-    os.makedirs(admin_css, exist_ok=True)
-    os.makedirs(admin_js, exist_ok=True)
+    build_css = os.path.join(project_root, "build", "css")
+    build_js = os.path.join(project_root, "build", "js")
+    os.makedirs(build_css, exist_ok=True)
+    os.makedirs(build_js, exist_ok=True)
     # Copy only theme-dark.css and theme-light.css
     for css_file in ["theme-dark.css", "theme-light.css"]:
         src = os.path.join(static_css, css_file)
-        dst = os.path.join(admin_css, css_file)
+        dst = os.path.join(build_css, css_file)
         if os.path.exists(src):
             shutil.copy2(src, dst)
     # Copy main.js
     js_src = os.path.join(static_js, "main.js")
-    js_dst = os.path.join(admin_js, "main.js")
+    js_dst = os.path.join(build_js, "main.js")
     if os.path.exists(js_src):
         shutil.copy2(js_src, js_dst)
 if __name__ == "__main__":

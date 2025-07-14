@@ -26,7 +26,7 @@ def initialize_database():
     cursor = conn.cursor()
     cursor.execute("DROP TABLE IF EXISTS files")
     cursor.execute("DROP TABLE IF EXISTS pages_files")
-    cursor.execute("DROP TABLE IF EXISTS pages")
+    cursor.execute("DROP TABLE IF EXISTS content")
     cursor.execute("DROP TABLE IF EXISTS site_info")
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS files (
@@ -54,11 +54,12 @@ def initialize_database():
         )
     """)
     cursor.execute("""
-        CREATE TABLE IF NOT EXISTS pages (
+        CREATE TABLE IF NOT EXISTS content (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             source_path TEXT,
             output_path TEXT,
-            is_autobuilt BOOLEAN DEFAULT 0
+            is_autobuilt BOOLEAN DEFAULT 0,
+            mime_type TEXT
         )
     """)
     cursor.execute("""

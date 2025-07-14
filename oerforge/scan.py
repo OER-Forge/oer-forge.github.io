@@ -121,10 +121,20 @@ def batch_extract_assets(contents_dict, content_type, **kwargs):
     # Insert each source file as a page if not present
     conn = get_db_connection()
     cursor = conn.cursor()
+    # Add mime_type column to content if not present
+    cursor.execute("PRAGMA table_info(content)")
+    columns = [row[1] for row in cursor.fetchall()]
+    if 'mime_type' not in columns:
+        try:
+            cursor.execute("ALTER TABLE content ADD COLUMN mime_type TEXT")
+        except Exception:
+            pass
     for source_path in contents_dict:
-        cursor.execute("SELECT id FROM pages WHERE source_path=?", (source_path,))
+        ext = os.path.splitext(source_path)[1].lower()
+        mime_type = mime_map.get(ext, '')
+        cursor.execute("SELECT id FROM content WHERE source_path=?", (source_path,))
         if cursor.fetchone() is None:
-            cursor.execute("INSERT INTO pages (source_path, output_path, is_autobuilt) VALUES (?, ?, ?)", (source_path, None, 0))
+            cursor.execute("INSERT INTO content (source_path, output_path, is_autobuilt, mime_type) VALUES (?, ?, ?, ?)", (source_path, None, 0, mime_type))
     conn.commit()
     # Extract assets for each file type
     for path, content in contents_dict.items():
