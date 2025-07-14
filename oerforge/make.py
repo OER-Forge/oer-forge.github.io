@@ -112,7 +112,7 @@ import re
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BUILD_FILES_DIR = os.path.join(PROJECT_ROOT, 'build', 'files')
 BUILD_HTML_DIR = os.path.join(PROJECT_ROOT, 'build')
-LOG_PATH = os.path.join(PROJECT_ROOT, 'log')
+LOG_PATH = os.path.join(PROJECT_ROOT, 'log', 'build.log')
 
 __all__ = [
     "get_markdown_source_and_output_paths",
@@ -297,22 +297,28 @@ def get_canonical_image_path(filename):
 def fix_image_paths(html_body):
     """Rewrite <img> src attributes to use canonical paths from build_images DB."""
 def fix_image_paths(html_body, html_path=None):
+    import sqlite3
     def replacer(match):
         before = match.group(1)
         src = match.group(2)
         filename = os.path.basename(src)
-        canonical_path = get_canonical_image_path(filename)
-        rel_path = canonical_path
-        # Always use root-relative path for images (starting with 'files/')
-        if canonical_path:
-            # Remove any leading slashes just in case
-            rel_path = canonical_path.lstrip('/')
-        print(f"[DEBUG] fix_image_paths: src={src}, filename={filename}, canonical_path={canonical_path}, html_path={html_path}, rel_path={rel_path}")
-        logging.info(f"fix_image_paths: src={src}, filename={filename}, canonical_path={canonical_path}, html_path={html_path}, rel_path={rel_path}")
-        if canonical_path:
-            return f'<img{before}src="{rel_path}"'
+        # Query content table for image filename
+        db_path = os.path.join(PROJECT_ROOT, 'db', 'sqlite.db')
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+        cursor.execute("SELECT filename FROM files WHERE is_image=1 AND filename=?", (filename,))
+        row = cursor.fetchone()
+        conn.close()
+        if row:
+            # Compute relative path from html_path to build/images/<filename>
+            images_dir = os.path.join(PROJECT_ROOT, 'build', 'images')
+            html_dir = os.path.dirname(html_path) if html_path else '.'
+            rel_img_path = os.path.relpath(os.path.join(images_dir, filename), html_dir)
+            print(f"[DEBUG] fix_image_paths: src={src}, filename={filename}, rel_img_path={rel_img_path}, html_path={html_path}")
+            logging.info(f"fix_image_paths: src={src}, filename={filename}, rel_img_path={rel_img_path}, html_path={html_path}")
+            return f'<img{before}src="{rel_img_path}"'
         else:
-            logging.warning(f"Image not found in build_images DB: {src}")
+            logging.warning(f"Image not found in DB: {src}")
             return match.group(0)
     html_body = re.sub(r'<img([^>]+)src=["\']([^"\']+)["\']', replacer, html_body)
     return html_body
@@ -397,12 +403,15 @@ def _collect_links(entries):
 def build_all_markdown_files(source_dir, build_dir):
     """Find all markdown files in source_dir and convert them to HTML in build_dir."""
     md_files = find_markdown_files(source_dir)
+    logging.debug(f"Found markdown files: {md_files}")
     for md_path in md_files:
         rel_path = os.path.relpath(md_path, source_dir)
         output_path = os.path.join(build_dir, os.path.splitext(rel_path)[0] + '.html')
         output_dir = os.path.dirname(output_path)
+        logging.debug(f"Preparing to convert: {md_path} -> {output_path}")
         if not os.path.exists(output_dir):
             os.makedirs(output_dir, exist_ok=True)
+            logging.debug(f"Created output directory: {output_dir}")
         convert_markdown_to_html(md_path, output_path)
         logging.info(f"Converted {md_path} to {output_path}")
 
@@ -429,57 +438,56 @@ def create_section_index_html(section_entry, output_dir, toc):
 
 def get_markdown_source_and_output_paths(toc: list, files_dir: str, build_dir: str) -> list:
     """Recursively walk the toc: structure and compute source/output paths for markdown files."""
-    results = []
-    def walk_toc(entries, parent_path=[]):
-        for entry in entries:
-            current_path = parent_path.copy()
-            if 'title' in entry:
-                current_path.append(slugify(entry['title']))
-            if 'file' in entry:
-                source_md_path = os.path.join(files_dir, entry['file'])
-                output_dir = os.path.join(build_dir, *current_path[:-1]) if len(current_path) > 1 else build_dir
-                output_html_path = os.path.join(output_dir, os.path.splitext(os.path.basename(entry['file']))[0] + '.html')
-                if not os.path.exists(source_md_path):
-                    logging.error(f"Missing markdown file: {source_md_path} for toc entry: {entry.get('title', '')}")
-                results.append((source_md_path, output_html_path, entry))
-            if 'children' in entry and isinstance(entry['children'], list):
-                walk_toc(entry['children'], current_path)
-    walk_toc(toc)
-    return results
-
-def ensure_build_structure(toc: list):
-    """Ensure the build/ directory mirrors the toc: structure."""
-    def walk_toc(entries, parent_path=[]):
-        for entry in entries:
-            current_path = parent_path.copy()
-            if 'title' in entry:
-                current_path.append(slugify(entry['title']))
-            if 'children' in entry and isinstance(entry['children'], list) and 'file' not in entry:
-                output_dir = os.path.join(BUILD_HTML_DIR, *current_path)
-                if not os.path.exists(output_dir):
-                    os.makedirs(output_dir, exist_ok=True)
-                    logging.info(f"Created directory for section: {output_dir}")
-                create_section_index_html(entry, output_dir, toc)
-                logging.info(f"Created section index with child links: {os.path.join(output_dir, 'index.html')}")
-                walk_toc(entry['children'], current_path)
-            elif 'children' in entry and isinstance(entry['children'], list):
-                walk_toc(entry['children'], current_path)
-    walk_toc(toc)
-
-def copy_files_to_toc_structure(toc: list, files_dir: str, build_dir: str):
-    """Stub: Recursively process toc: structure and copy/move files."""
-    pass
-
-def create_index_html_for_menu(title: str, header: str, footer: str, output_dir: str):
-    """Stub: Create an index.html file for a top-level menu item without a file."""
-    pass
-
-# --- Main Script ---
-def run_make(debug: bool = False):
-    """Converts all markdown files to HTML, logs events, prints errors to console."""
-    setup_logging()
+    import markdown
+    logging.debug(f"Reading markdown file: {md_path}")
+    with open(md_path, 'r', encoding='utf-8') as f:
+        md_text = f.read()
+    logging.debug(f"Converting markdown to HTML for: {md_path}")
+    html_body = markdown.markdown(md_text, extensions=['fenced_code', 'codehilite', 'tables', 'toc', 'meta'])
+    html_body = html_body.replace('<table>', '<table role="table">')
+    html_body = html_body.replace('<th>', '<th role="columnheader">')
+    html_body = html_body.replace('<td>', '<td role="cell">')
+    html_body = html_body.replace('<ul>', '<ul role="list">')
+    html_body = html_body.replace('<ol>', '<ol role="list">')
+    html_body = html_body.replace('<li>', '<li role="listitem">')
+    html_body = html_body.replace('<nav>', '<nav role="navigation">')
+    html_body = html_body.replace('<header>', '<header role="banner">')
+    html_body = html_body.replace('<footer>', '<footer role="contentinfo">')
+    html_body = fix_image_paths(html_body, html_path)
+    mathjax_script = '<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>'
+    html_body += mathjax_script
+    match = re.search(r'^#\s+(.+)', md_text, re.MULTILINE)
+    if match:
+        title = match.group(1).strip()
+        html_body = re.sub(r'<h1[^>]*>.*?</h1>', '', html_body, count=1)
+    else:
+        title = "Untitled"
+    config_path = os.path.join(PROJECT_ROOT, "_config.yml")
+    config = load_yaml_config(config_path)
+    toc = config.get("toc", [])
+    toc_entry = _find_entry_by_html(html_path, toc)
+    links_html = ''
+    if toc_entry and 'children' in toc_entry and isinstance(toc_entry['children'], list):
+        child_links = _collect_links(toc_entry['children'])
+        current_dir = os.path.dirname(html_path)
+        links_html = '<ul>'
+        for title, target_html in child_links:
+            abs_target_html = os.path.join(PROJECT_ROOT, 'build', target_html) if not os.path.isabs(target_html) else target_html
+            rel_link = os.path.relpath(abs_target_html, start=current_dir)
+            mark = '✓' if os.path.exists(abs_target_html) else '✗'
+            links_html += f'<li><a href="{rel_link}">{title}</a> [{mark}]</li>'
+        links_html += '</ul>'
+        html_body += links_html
+    nav_html = generate_nav_menu(toc, current_html_path=html_path)
+    header = create_header(title, nav_html)
+    footer = create_footer()
+    html_output = render_page(title, html_body, header, footer, html_path)
+    logging.debug(f"Writing HTML output to: {html_path}")
+    with open(html_path, 'w', encoding='utf-8') as f:
+        f.write(html_output)
+    logging.info(f"Wrote HTML file: {html_path}")
     build_all_markdown_files(BUILD_FILES_DIR, BUILD_HTML_DIR)
-    clean_and_copy_html_to_docs()
+    # clean_and_copy_html_to_docs()  # (commented out, not defined)
 
 if __name__ == "__main__":
     setup_logging()

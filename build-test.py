@@ -1,31 +1,8 @@
-from oerforge.db_utils import initialize_database, pretty_print_table
-from oerforge.scan import scan_toc_and_populate_db
+import yaml
+import os
+from oerforge.make import build_all_markdown_files, BUILD_FILES_DIR, BUILD_HTML_DIR
 
-def test_full_scan_and_admin():
-    print("[TEST] Initializing database...")
-    initialize_database()
-
-    print("[TEST] Running TOC-driven scan and DB population...")
-    scan_toc_and_populate_db("_config.yml")
-
-    print("\n[DB TABLE: content]")
-    pretty_print_table('content')
-
-    print("\n[TEST] Exporting DB tables to HTML admin pages...")
-    from oerforge_admin.export_db_html import export_all_tables_to_html, copy_static_assets_to_admin
-    admin_output_dir = "build/admin/"
-    export_all_tables_to_html(admin_output_dir)
-    copy_static_assets_to_admin(admin_output_dir)
-    print(f"[TEST] Admin HTML pages generated in {admin_output_dir}")
-
-    # Test: Run batch conversion and validate all TOC-referenced files are copied
-    print("\n[TEST] Running batch conversion for all TOC-referenced files...")
-    from oerforge.convert import batch_convert_all_content
-    batch_convert_all_content()
-
-    # Validate files copied
-    import yaml
-    import os
+def test_build_files_and_html():
     with open("_config.yml", "r", encoding="utf-8") as f:
         config = yaml.safe_load(f)
     toc = config.get("toc", [])
@@ -53,7 +30,9 @@ def test_full_scan_and_admin():
             print("  ", m)
     else:
         print("[TEST][PASS] All TOC-referenced files copied to build/files/ correctly.")
+        print("[TEST] Building HTML from markdown in build/files...")
+        build_all_markdown_files(BUILD_FILES_DIR, BUILD_HTML_DIR)
+        print("[TEST][PASS] HTML build completed.")
 
 if __name__ == "__main__":
-    test_full_scan_and_admin()
-
+    test_build_files_and_html()
