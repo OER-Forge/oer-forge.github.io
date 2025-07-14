@@ -23,3 +23,49 @@ def test_batch_read_files():
 if __name__ == "__main__":
     test_batch_read_files()
 
+    # --- Batch asset extraction test ---
+    from oerforge.scan import batch_extract_assets
+
+    file_paths = [
+        "content/about.md",
+        "content/sample/notebooks/01_notes.ipynb",
+        "content/sample/activity-metropolis.docx",
+        "content/sample/notes-phase_space.docx"
+    ]
+    contents = batch_read_files(file_paths)
+
+    # Markdown asset extraction
+    md_files = [p for p in file_paths if p.endswith('.md')]
+    md_contents = {p: contents[p] for p in md_files}
+    md_assets = batch_extract_assets(md_contents, 'markdown')
+    print("\n[ASSETS extracted from markdown files]:")
+    for path, assets in md_assets.items():
+        print(f"{path}: {assets}")
+
+    # Notebook asset extraction
+    nb_files = [p for p in file_paths if p.endswith('.ipynb')]
+    nb_contents = {p: contents[p] for p in nb_files}
+    nb_assets = batch_extract_assets(nb_contents, 'notebook')
+    print("\n[ASSETS extracted from notebook files]:")
+    for path, assets in nb_assets.items():
+        print(f"{path}: {assets}")
+
+    # Docx asset extraction
+    docx_files = [p for p in file_paths if p.endswith('.docx')]
+    docx_contents = {p: contents[p] for p in docx_files}
+    docx_assets = batch_extract_assets(docx_contents, 'docx')
+    print("\n[ASSETS extracted from docx files]:")
+    for path, assets in docx_assets.items():
+        print(f"{path}: {assets}")
+
+    # --- Pretty print all DB tables ---
+    from oerforge.db_utils import pretty_print_table
+    print("\n[DB TABLE: files]")
+    pretty_print_table('files')
+    print("\n[DB TABLE: pages]")
+    pretty_print_table('pages')
+    print("\n[DB TABLE: pages_files]")
+    pretty_print_table('pages_files')
+    print("\n[DB TABLE: site_info]")
+    pretty_print_table('site_info')
+
