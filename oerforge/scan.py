@@ -75,8 +75,77 @@ def batch_extract_assets(contents_dict, content_type, **kwargs):
     content_type: 'markdown', 'notebook', 'docx', etc.
     Returns a dict: {path: [asset_records]}
     """
+    from oerforge.db_utils import insert_file_records, link_files_to_pages, get_db_connection
     assets = {}
-    # TODO: Implement batch asset extraction logic for each content type
+    # Helper: MIME type mapping
+    mime_map = {
+        '.md': 'text/markdown',
+        '.ipynb': 'application/x-ipynb+json',
+        '.docx': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        '.png': 'image/png',
+        '.jpg': 'image/jpeg',
+        '.jpeg': 'image/jpeg',
+        '.gif': 'image/gif',
+        '.svg': 'image/svg+xml',
+    }
+    # Insert each source file as a page if not present
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    for source_path in contents_dict:
+        cursor.execute("SELECT id FROM pages WHERE source_path=?", (source_path,))
+        if cursor.fetchone() is None:
+            cursor.execute("INSERT INTO pages (source_path, output_path, is_autobuilt) VALUES (?, ?, ?)", (source_path, None, 0))
+    conn.commit()
+    # Extract assets for each file type
+    for path, content in contents_dict.items():
+        ext = os.path.splitext(path)[1].lower()
+        if content_type == 'markdown':
+            assets[path] = extract_linked_files_from_markdown_content(content, page_id=None)
+        elif content_type == 'notebook':
+            if content and isinstance(content, dict) and 'cells' in content:
+                cell_assets = []
+                for cell in content['cells']:
+                    cell_assets.extend(extract_linked_files_from_notebook_cell_content(cell, nb_path=path))
+                assets[path] = cell_assets
+            else:
+                assets[path] = []
+        elif content_type == 'docx':
+            assets[path] = extract_linked_files_from_docx_content(path, page_id=None) if content else []
+        else:
+            assets[path] = []
+    # Insert asset records into files table
+    file_records = []
+    file_page_links = []
+    for source_path, asset_list in assets.items():
+        for asset in asset_list:
+            asset_path = asset.get('path', '')
+            asset_ext = os.path.splitext(asset_path)[1].lower()
+            mime_type = mime_map.get(asset_ext, '')
+            file_record = {
+                'filename': os.path.basename(asset_path),
+                'extension': asset_ext,
+                'mime_type': mime_type,
+                'is_image': int(asset_ext in ['.png','.jpg','.jpeg','.gif','.svg']),
+                'is_remote': int(asset_path.startswith('http')),
+                'url': asset_path,
+                'referenced_page': source_path,
+                'relative_path': asset_path,
+                'absolute_path': None,
+                'cell_type': asset.get('type', None),
+                'is_code_generated': None,
+                'is_embedded': None
+            }
+            file_records.append(file_record)
+    file_ids = insert_file_records(file_records)
+    # Link files to pages
+    idx = 0
+    for source_path, asset_list in assets.items():
+        for _ in asset_list:
+            file_page_links.append((file_ids[idx], source_path))
+            idx += 1
+    if file_page_links:
+        link_files_to_pages(file_page_links)
+    conn.close()
     return assets
 
 def extract_linked_files_from_markdown_content(md_text, page_id=None):
@@ -84,24 +153,58 @@ def extract_linked_files_from_markdown_content(md_text, page_id=None):
     Extracts asset links from markdown text.
     Returns a list of file records.
     """
-    # TODO: Implement markdown asset extraction logic
-    return []
+    import re
+    asset_pattern = re.compile(r'!\[[^\]]*\]\(([^)]+)\)|\[[^\]]*\]\(([^)]+)\)')
+    assets = []
+    for match in asset_pattern.finditer(md_text):
+        asset_path = match.group(1) or match.group(2)
+        if asset_path:
+            assets.append({
+                'type': 'asset',
+                'path': asset_path,
+                'page_id': page_id
+            })
+    return assets
 
 def extract_linked_files_from_notebook_cell_content(cell, nb_path=None):
     """
     Extracts asset links from a notebook cell.
     Returns a list of file records.
     """
-    # TODO: Implement notebook cell asset extraction logic
-    return []
+    assets = []
+    if cell.get('cell_type') == 'markdown':
+        source = cell.get('source', [])
+        if isinstance(source, list):
+            text = ''.join(source)
+        else:
+            text = str(source)
+        assets.extend(extract_linked_files_from_markdown_content(text, page_id=None))
+        for asset in assets:
+            asset['notebook'] = nb_path
+    return assets
 
 def extract_linked_files_from_docx_content(docx_path, page_id=None):
     """
     Extracts asset links from a docx file.
     Returns a list of file records.
     """
-    # TODO: Implement docx asset extraction logic
-    return []
+    assets = []
+    try:
+        from docx import Document
+        doc = Document(docx_path)
+        import re
+        asset_pattern = re.compile(r'(https?://[^\s]+|assets/[^\s]+|images/[^\s]+)')
+        for para in doc.paragraphs:
+            matches = asset_pattern.findall(para.text)
+            for asset_path in matches:
+                assets.append({
+                    'type': 'asset',
+                    'path': asset_path,
+                    'page_id': page_id
+                })
+    except Exception as e:
+        print(f"[ERROR] Could not extract assets from docx {docx_path}: {e}")
+    return assets
 
 def populate_site_info_from_config(config_path):
     """
