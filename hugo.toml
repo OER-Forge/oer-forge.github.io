@@ -1,0 +1,86 @@
+baseURL = "https://oer-forge.github.io/"
+languageCode = 'en-us'
+title = 'OER-Forge'
+theme = 'PaperMod'
+enableRobotsTXT = true
+enableInlineShortcodes = true
+
+[pagination]
+  pagerSize = 20
+
+[taxonomies]
+  tag = "tags"
+
+[params]
+  env = "production"
+  description = "OER-Forge: Open-source tools for education"
+  author = "danny caballero"
+  DateFormat = "January 2006"
+  defaultTheme = "dark"
+  hideFooter = false
+  disableThemeToggle = false
+  ShowShareButtons = false
+  ShowReadingTime = true
+  disableSpecial1stPost = true
+  ShowPostNavLinks = true
+  ShowBreadCrumbs = true
+  ShowCodeCopyButtons = true
+  MainSections = ["posts"]
+  comments = false
+
+  [params.label]
+    text = "OER-Forge"
+    icon = "favicon-32x32.png"
+    iconHeight = 18
+
+  [params.profileMode]
+    enabled = true
+    title = "OER-Forge"
+    subtitle = "Open-source tools for education"
+    imageUrl = "/logo.png"
+    imageWidth = 200
+    imageHeight = 200
+
+    [[params.profileMode.buttons]]
+      name = "About"
+      url = "/about/"
+
+    [[params.profileMode.buttons]]
+      name = "RaiseMyHand"
+      url = "/raisemyhand/"
+
+    [[params.profileMode.buttons]]
+      name = "WikiAccess"
+      url = "/wikiaccess/"
+
+    [[params.profileMode.buttons]]
+      name = "Announcements"
+      url = "/posts/"
+
+  [[params.socialIcons]]
+    name = "github"
+    url = "https://github.com/OER-Forge"
+
+  [[params.socialIcons]]
+    name = "bluesky"
+    url = "https://bsky.app/profile/oerforge.org"
+
+  [[params.socialIcons]]
+    name = "email"
+    url = "mailto:hello@oerforge.org"
+
+[outputs]
+  home = ["HTML", "JSON"]
+
+
+[[menu.main]]
+  name = "github"
+  url = "https://github.com/OER-Forge"
+  weight = 1
+
+[markup]
+  [markup.goldmark.renderer]
+    unsafe = true
+  [markup.highlight]
+    guessSyntax = true
+    style = "autumn"

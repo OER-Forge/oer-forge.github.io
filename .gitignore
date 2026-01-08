@@ -1,11 +1,4 @@
-# Python build artifacts
-build/
-dist/
-*.egg-info/
-*.egg
-*.whl
-
-# Logging files
-*.log
-log/
-logs/
+public/
+resources/
+.DS_Store
+.env
