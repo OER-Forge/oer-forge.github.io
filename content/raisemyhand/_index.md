@@ -10,7 +10,7 @@ A real-time web-based classroom question management system that enables anonymou
 
 ## Overview
 
-RaiseMyHand addresses limitations of traditional hand-raising by removing participation barriers. It creates a more inclusive and responsive learning environment by letting students contribute anonymously while helping instructors focus on questions that matter most to the class.
+[RaiseMyHand](https://github.com/OER-Forge/raisemyhand/) addresses limitations of traditional hand-raising by removing participation barriers. It creates a more inclusive and responsive learning environment by letting students contribute anonymously while helping instructors focus on questions that matter most to the class.
 
 ## Key Features
 

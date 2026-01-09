@@ -42,20 +42,16 @@ enableInlineShortcodes = true
     imageHeight = 200
 
     [[params.profileMode.buttons]]
-      name = "About"
-      url = "/about/"
-
-    [[params.profileMode.buttons]]
-      name = "RaiseMyHand"
+      name = "raisemyhand"
       url = "/raisemyhand/"
 
     [[params.profileMode.buttons]]
-      name = "WikiAccess"
+      name = "wikiaccess"
       url = "/wikiaccess/"
 
     [[params.profileMode.buttons]]
-      name = "Announcements"
-      url = "/posts/"
+      name = "jupyter2hugo"
+      url = "/jupyter2hugo/"
 
   [[params.socialIcons]]
     name = "github"
@@ -74,9 +70,19 @@ enableInlineShortcodes = true
 
 
 [[menu.main]]
+  name = "about"
+  url = "/about/"
+  weight = 1
+
+[[menu.main]]
+  name = "news"
+  url = "/posts/"
+  weight = 2
+
+[[menu.main]]
   name = "github"
   url = "https://github.com/OER-Forge"
-  weight = 1
+  weight = 3
 
 [markup]
   [markup.goldmark.renderer]
