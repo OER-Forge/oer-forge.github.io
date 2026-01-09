@@ -37,7 +37,7 @@ enableInlineShortcodes = true
     enabled = true
     title = "OER-Forge"
     subtitle = "Open-source tools for education"
-    imageUrl = "/logo.png"
+    imageUrl = "./logo.png"
     imageWidth = 200
     imageHeight = 200
 
@@ -71,12 +71,12 @@ enableInlineShortcodes = true
 
 [[menu.main]]
   name = "about"
-  url = "/about/"
+  url = "./about/"
   weight = 1
 
 [[menu.main]]
   name = "news"
-  url = "/posts/"
+  url = "./posts/"
   weight = 2
 
 [[menu.main]]
