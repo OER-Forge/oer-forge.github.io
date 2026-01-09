@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on OER-Forge</title>
+    <link>https://oer-forge.github.io/posts/</link>
+    <description>Recent content in Posts on OER-Forge</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 07 Jan 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://oer-forge.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Welcome to OER-Forge</title>
+      <link>https://oer-forge.github.io/posts/welcome-to-oer-forge/</link>
+      <pubDate>Tue, 07 Jan 2025 00:00:00 +0000</pubDate>
+      <guid>https://oer-forge.github.io/posts/welcome-to-oer-forge/</guid>
+      <description>&lt;p&gt;Welcome to OER-Forge, a collection of open-source tools built to solve real problems in education.&lt;/p&gt;&#xA;&lt;h2 id=&#34;our-mission&#34;&gt;Our Mission&lt;/h2&gt;&#xA;&lt;p&gt;We create focused, purpose-built tools that educators can use, modify, and share. Each tool does one thing well and works independently, but together they form a cohesive ecosystem for building and sharing quality educational resources.&lt;/p&gt;&#xA;&lt;h2 id=&#34;current-tools&#34;&gt;Current Tools&lt;/h2&gt;&#xA;&lt;p&gt;&lt;strong&gt;RaiseMyHand&lt;/strong&gt; – Real-time classroom question management. Anonymous student questions ranked by peer upvotes help instructors focus on what matters most.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

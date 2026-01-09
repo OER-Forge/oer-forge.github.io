@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://oer-forge.github.io/tags/launch/</loc>
+    <lastmod>2025-01-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://oer-forge.github.io/tags/oer-forge/</loc>
+    <lastmod>2025-01-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://oer-forge.github.io/</loc>
+    <lastmod>2025-01-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://oer-forge.github.io/posts/</loc>
+    <lastmod>2025-01-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://oer-forge.github.io/tags/</loc>
+    <lastmod>2025-01-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://oer-forge.github.io/posts/welcome-to-oer-forge/</loc>
+    <lastmod>2025-01-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://oer-forge.github.io/jupyter2hugo/</loc>
+  </url><url>
+    <loc>https://oer-forge.github.io/about/</loc>
+  </url><url>
+    <loc>https://oer-forge.github.io/raisemyhand/</loc>
+  </url><url>
+    <loc>https://oer-forge.github.io/wikiaccess/</loc>
+  </url>
+</urlset>
